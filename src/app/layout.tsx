@@ -24,7 +24,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={headingFont.variable}>
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes, viewport-fit=cover" />
+        <meta name="format-detection" content="telephone=no" />
         <link rel="preload" href="/fonts/Pretendard.otf" as="font" type="font/otf" crossOrigin="anonymous" />
         <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/favicon.png" />

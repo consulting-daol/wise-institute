@@ -35,13 +35,13 @@ export default function Navbar() {
     <nav className={`fixed top-0 w-full z-[999] transition-all duration-300 bg-white ${
       scrolled ? 'shadow-sm' : ''
     }`}>
-      <div className="flex items-stretch h-16 lg:h-20 w-full">
+      <div className="flex items-stretch h-16 lg:h-20 w-full overflow-hidden">
         {/* Left Section - Logo */}
-        <div className="flex items-center pl-4 sm:pl-5 lg:pl-6 flex-shrink-0">
-          <h1 className="logo flex items-center">
-            <Link href="/" className="flex items-center">
+        <div className="flex items-center pl-3 sm:pl-4 lg:pl-6 flex-shrink-0 overflow-hidden">
+          <h1 className="logo flex items-center overflow-hidden">
+            <Link href="/" className="flex items-center overflow-hidden">
               {/* Smaller logo on mobile, larger on desktop */}
-              <div className="lg:hidden">
+              <div className="lg:hidden flex-shrink-0 max-w-[120px] sm:max-w-[140px]">
                 <Logo size="sm" />
               </div>
               <div className="hidden lg:block">
@@ -55,7 +55,7 @@ export default function Navbar() {
         </div>
 
         {/* Navigation Links - Center */}
-        <nav className="gnb hidden lg:flex items-center flex-1 justify-center">
+        <nav className="gnb hidden lg:flex items-center flex-1 justify-center min-w-0">
           <ul className="flex items-center space-x-6 xl:space-x-8">
             {navigation.map((item) => (
               <li key={item.name} className="relative group">
@@ -112,7 +112,7 @@ export default function Navbar() {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden relative text-secondary-700 hover:text-primary-600 transition-colors p-2 mr-4 sm:mr-5 flex items-center justify-center"
+            className="lg:hidden relative text-secondary-700 hover:text-primary-600 transition-colors p-2 mr-3 sm:mr-4 flex items-center justify-center flex-shrink-0"
             aria-label="Toggle menu"
           >
             {/* Hamburger Menu Icon */}

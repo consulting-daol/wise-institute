@@ -117,7 +117,7 @@ export default function HomePage() {
         <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[10%] bg-white z-[10]" />
         
         {/* Hero Content - 70% height */}
-        <div className="relative" style={{ minHeight: '70vh', height: '70vh' }}>
+        <div className="relative" style={{ minHeight: '70vh', height: '70vh', maxHeight: '600px' }}>
           {/* Bottom ribbon container - behind image - Full width on mobile, 90% with left margin on desktop */}
           <div className="absolute bottom-0 left-0 right-0 w-full lg:w-[90%] lg:ml-[10%] z-[5]">
             {/* Diagonal Ribbon - behind image, positioned to show below image */}

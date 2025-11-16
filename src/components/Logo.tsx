@@ -36,14 +36,14 @@ export default function Logo({ className = '', size = 'md', showTagline = false,
   return (
     <div className={`flex flex-col items-center ${className}`}>
       {/* Logo Image */}
-      <div className={`${sizeClasses[size]} flex items-center justify-center`}>
+      <div className={`${sizeClasses[size]} flex items-center justify-center w-auto`}>
         <Image
           src={logoSrc}
           alt="WISE Institute Logo"
           width={200}
           height={200}
           quality={100}
-          className="w-full h-full object-contain"
+          className="h-full w-auto object-contain"
           priority
         />
       </div>
