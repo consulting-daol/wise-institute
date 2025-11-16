@@ -35,9 +35,9 @@ export default function Navbar() {
     <nav className={`fixed top-0 w-full z-[999] transition-all duration-300 bg-white ${
       scrolled ? 'shadow-sm' : ''
     }`}>
-      <div className="flex items-stretch h-16 lg:h-20">
+      <div className="flex items-stretch h-16 lg:h-20 justify-between">
         {/* Left Section - Logo */}
-        <div className="flex items-center pl-4 sm:pl-5 lg:pl-6">
+        <div className="flex items-center pl-4 sm:pl-5 lg:pl-6 flex-shrink-0">
           <h1 className="logo flex items-center">
             <Link href="/" className="flex items-center">
               {/* Smaller logo on mobile, larger on desktop */}
@@ -88,7 +88,7 @@ export default function Navbar() {
         </nav>
 
         {/* Right Section - ENG and CTA Button */}
-        <aside className="flex items-stretch ml-auto">
+        <aside className="flex items-stretch flex-shrink-0">
           {/* ENG Link */}
           <div className="side-link hidden lg:flex items-center px-4 lg:px-6">
             <Link
@@ -109,7 +109,7 @@ export default function Navbar() {
           </Link>
 
           {/* Mobile menu button - Right edge on mobile */}
-          <div className="gnb-open lg:hidden flex items-center pr-0">
+          <div className="gnb-open lg:hidden flex items-center pr-4 sm:pr-5">
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
