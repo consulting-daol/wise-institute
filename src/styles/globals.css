@@ -14,6 +14,15 @@
   html {
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     scroll-behavior: smooth;
+    width: 100dvw;
+    height: 100dvh;
+    overflow-x: hidden;
+    /* 모바일 스와이프 방지 */
+    touch-action: pan-y;
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: auto;
+    /* iOS에서 스와이프로 뒤로가기 방지 */
+    -webkit-overflow-scrolling: touch;
   }
 
   h1,
@@ -27,11 +36,21 @@
   
   body {
     background: linear-gradient(135deg, #fafafa 0%, #f8fafc 100%);
-    min-height: 100vh;
+    width: 100dvw;
+    min-height: 100dvh;
+    height: 100dvh;
+    overflow-x: hidden;
+    /* 모바일 스와이프 방지 */
+    touch-action: pan-y;
+    overscroll-behavior-x: none;
+    overscroll-behavior-y: auto;
+    position: relative;
   }
 
   * {
     @apply border-secondary-200;
+    /* 모든 요소에서 가로 스크롤 방지 */
+    max-width: 100dvw;
   }
 }
 

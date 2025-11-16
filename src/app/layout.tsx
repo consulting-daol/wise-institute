@@ -24,14 +24,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={headingFont.variable}>
       <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
         <link rel="preload" href="/fonts/Pretendard.otf" as="font" type="font/otf" crossOrigin="anonymous" />
         <link rel="icon" href="/favicon.png" type="image/png" />
         <link rel="apple-touch-icon" href="/favicon.png" />
       </head>
-      <body className="font-pretendard">
+      <body className="font-pretendard w-full overflow-x-hidden">
         <AOSProvider>
           <Navbar />
-          <main className="min-h-screen">
+          <main className="min-h-screen w-full overflow-x-hidden">
             {children}
           </main>
           <Footer />
