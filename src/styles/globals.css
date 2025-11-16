@@ -44,6 +44,7 @@
     min-height: 100vh;
     min-height: -webkit-fill-available; /* iOS Safari 대응 */
     overflow-x: hidden;
+    overflow-y: auto;
     /* 모바일 스와이프 방지 */
     touch-action: pan-y;
     overscroll-behavior-x: none;
@@ -52,6 +53,8 @@
     /* 모바일 브라우저 호환성 */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* 모바일 스크롤 개선 */
+    -webkit-overflow-scrolling: touch;
   }
 
   * {

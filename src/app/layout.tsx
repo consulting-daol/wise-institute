@@ -33,7 +33,7 @@ export default function RootLayout({
       <body className="font-pretendard w-full overflow-x-hidden">
         <AOSProvider>
           <Navbar />
-          <main className="w-full">
+          <main className="w-full overflow-visible">
             {children}
           </main>
           <Footer />

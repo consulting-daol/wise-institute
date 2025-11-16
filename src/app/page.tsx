@@ -112,7 +112,7 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero Section - 70% height */}
-      <section className="relative pt-16 lg:pt-20 bg-white">
+      <section className="relative pt-16 lg:pt-20 bg-white overflow-visible">
         {/* White left margin (10%) - Hidden on mobile */}
         <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[10%] bg-white z-[10]" />
         
