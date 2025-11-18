@@ -4,7 +4,7 @@ import { ArrowRight, Users, Calendar, Award, ChevronLeft, ChevronRight, Clock } 
 import Link from 'next/link'
 import Script from 'next/script'
 import Logo from '@/components/Logo'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, type TouchEvent } from 'react'
 import Image from 'next/image'
 import DiagonalRibbon from '@/components/DiagonalRibbon'
 import SectionHeader from '@/components/SectionHeader'
@@ -112,6 +112,35 @@ export default function HomePage() {
   }
 
   const [isDesktop, setIsDesktop] = useState(false)
+
+  // Touch handlers for campaign slider (mobile swipe)
+  const touchStartXRef = useRef<number | null>(null)
+  const [touchOffset, setTouchOffset] = useState(0)
+  const [isDraggingCampaign, setIsDraggingCampaign] = useState(false)
+
+  const handleCampaignTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+    touchStartXRef.current = event.touches[0].clientX
+    setTouchOffset(0)
+    setIsDraggingCampaign(true)
+  }
+
+  const handleCampaignTouchMove = (event: TouchEvent<HTMLDivElement>) => {
+    if (touchStartXRef.current === null) return
+    setTouchOffset(event.touches[0].clientX - touchStartXRef.current)
+  }
+
+  const handleCampaignTouchEnd = () => {
+    if (touchStartXRef.current === null) return
+    const swipeThreshold = 50
+    if (touchOffset <= -swipeThreshold) {
+      nextCampaign()
+    } else if (touchOffset >= swipeThreshold) {
+      prevCampaign()
+    }
+    setIsDraggingCampaign(false)
+    setTouchOffset(0)
+    touchStartXRef.current = null
+  }
 
   useEffect(() => {
     const updateViewport = () => {
@@ -305,7 +334,7 @@ export default function HomePage() {
       {/* WISE Institute Intro Section (Second Section) */}
       <section className="relative section-padding bg-white overflow-hidden" data-aos="fade-up">
         {/* Watermark text */}
-        <div className="pointer-events-none select-none absolute inset-0 hidden xl:block">
+        <div className="pointer-events-none select-none absolute inset-0 hidden lg:block z-0">
           <span className="absolute top-8 left-0 text-[16rem] leading-none font-extrabold text-secondary-200/30 tracking-tight">
             WISE
           </span>
@@ -313,8 +342,7 @@ export default function HomePage() {
             INSTITUTE
           </span>
         </div>
-
-        <div className="container-custom relative">
+        <div className="container-custom relative z-10">
           {/* Heading */}
           <SectionHeader
             eyebrow="Wise Institute"
@@ -326,30 +354,56 @@ export default function HomePage() {
           {/* Content */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
             {/* Left column: image with ribbon */}
-            <div className="relative" data-aos="fade-right">
+            <div
+              className="relative max-w-sm mx-auto w-full lg:max-w-none"
+              data-aos="fade-right"
+              onTouchStart={handleCampaignTouchStart}
+              onTouchMove={handleCampaignTouchMove}
+              onTouchEnd={handleCampaignTouchEnd}
+            >
+              {/* Mobile watermark near image */}
+              <div className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 flex flex-col items-center text-center lg:hidden z-0">
+                <span className="text-[9rem] leading-none font-extrabold text-secondary-200/50 tracking-tight">
+                  WISE
+                </span>
+                <span className="text-4xl font-extrabold text-secondary-200/50 tracking-tight">
+                  INSTITUTE
+                </span>
+              </div>
               {/* Bottom ribbon container - behind image */}
               <div className="absolute bottom-0 left-0 right-0 z-[5]">
                 <DiagonalRibbon
-                  wrapperClassName="absolute left-6 right-6 -bottom-2 pointer-events-none z-[5]"
-                  heightClass="h-20"
+                  wrapperClassName="absolute left-12 right-12 -bottom-2 pointer-events-none z-[5]"
+                  heightClass="h-10"
                   colorClass="bg-primary-600"
                   rotateClass="rotate-[-6deg]"
                 />
               </div>
               
               {/* Image container - on top of ribbon with white background to hide ribbon overlap */}
-              <div className="relative z-[50] overflow-hidden shadow-xl border border-secondary-100 bg-white">
-                <div className="absolute inset-0 bg-white" />
-                <div className="relative aspect-[3/4] overflow-hidden">
-                  {/* Current Image - instant change, no animation */}
-                  <Image 
-                    src={campaignItems[campaignIndex].src} 
-                    alt={campaignItems[campaignIndex].title} 
-                    fill 
-                    className="object-cover" 
-                    priority={campaignIndex === 0}
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
+              <div className="relative z-[50] overflow-hidden shadow-xl border border-secondary-100 bg-transparent max-w-[80%] sm:max-w-[75%] mx-auto lg:max-w-full">
+                <div className="absolute inset-0 bg-white z-0" />
+                <div className="relative aspect-[3/4] overflow-hidden z-20">
+                  <div
+                    className="absolute inset-0 flex h-full"
+                    style={{
+                      transform: `translateX(calc(-${campaignIndex * 100}% + ${touchOffset}px))`,
+                      transition: isDraggingCampaign ? 'none' : 'transform 400ms ease-out',
+                    }}
+                  >
+                    {campaignItems.map((item, index) => (
+                      <div key={item.src} className="relative w-full h-full shrink-0">
+                        <Image
+                          src={item.src}
+                          alt={item.title}
+                          fill
+                          className="object-cover"
+                          priority={index === 0}
+                          sizes="(max-width: 768px) 100vw, 50vw"
+                        />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -357,7 +411,7 @@ export default function HomePage() {
             {/* Right column: top image + content card */}
             <div className="space-y-8" data-aos="fade-left">
               {/* Top right small image with arrows */}
-              <div className="relative" data-aos="fade-left" data-aos-delay="100">
+              <div className="relative hidden md:block" data-aos="fade-left" data-aos-delay="100">
                 <div className="overflow-hidden shadow-xl border border-secondary-100 bg-white">
                   <div className="absolute inset-0 bg-white" />
                   <div className="relative aspect-[16/10] overflow-hidden">
