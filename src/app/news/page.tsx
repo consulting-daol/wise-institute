@@ -31,7 +31,7 @@ const newsItems: NewsItem[] = [
     category: 'Press Release',
     categoryColor: 'teal',
     title: 'WISE Institute Partners with HiOssen for Enhanced Training',
-    date: '2024-12-10',
+    date: '2025-12-10',
     views: 0,
     href: '/news/9'
   },
@@ -39,8 +39,8 @@ const newsItems: NewsItem[] = [
     id: 8,
     category: 'Institute News',
     categoryColor: 'blue',
-    title: 'Record Number of Doctors Complete 2024 Residency Program',
-    date: '2024-11-20',
+    title: 'Record Number of Doctors Complete 2025 Residency Program',
+    date: '2025-11-20',
     views: 0,
     href: '/news/8'
   },
@@ -48,8 +48,8 @@ const newsItems: NewsItem[] = [
     id: 7,
     category: 'Press Release',
     categoryColor: 'teal',
-    title: 'WISE Institute Live Surgery Featured at PDC 2024',
-    date: '2024-10-05',
+    title: 'WISE Institute Live Surgery Featured at PDC 2025',
+    date: '2025-10-05',
     views: 0,
     href: '/news/7'
   },
@@ -57,8 +57,8 @@ const newsItems: NewsItem[] = [
     id: 6,
     category: 'Institute News',
     categoryColor: 'blue',
-    title: '2024 Fall Residency Program Successfully Completed',
-    date: '2024-09-15',
+    title: '2025 Fall Residency Program Successfully Completed',
+    date: '2025-09-15',
     views: 0,
     href: '/news/6'
   },
@@ -67,7 +67,7 @@ const newsItems: NewsItem[] = [
     category: 'Press Release',
     categoryColor: 'teal',
     title: 'New Hands-on Training Facilities Open',
-    date: '2024-08-20',
+    date: '2025-08-20',
     views: 0,
     href: '/news/5'
   },
@@ -76,7 +76,7 @@ const newsItems: NewsItem[] = [
     category: 'Institute News',
     categoryColor: 'blue',
     title: 'Summer Live Surgery Study Club Concludes',
-    date: '2024-07-10',
+    date: '2025-07-10',
     views: 0,
     href: '/news/4'
   },
@@ -85,7 +85,7 @@ const newsItems: NewsItem[] = [
     category: 'Press Release',
     categoryColor: 'teal',
     title: 'WISE Institute Announces Partnership with Local Clinics',
-    date: '2024-06-25',
+    date: '2025-06-25',
     views: 0,
     href: '/news/3'
   },
@@ -94,7 +94,7 @@ const newsItems: NewsItem[] = [
     category: 'Institute News',
     categoryColor: 'blue',
     title: 'Spring Residency Program Graduates 40 Doctors',
-    date: '2024-05-15',
+    date: '2025-05-15',
     views: 0,
     href: '/news/2'
   },
@@ -103,7 +103,7 @@ const newsItems: NewsItem[] = [
     category: 'Press Release',
     categoryColor: 'teal',
     title: 'WISE Institute Expands Course Offerings',
-    date: '2024-04-10',
+    date: '2025-04-10',
     views: 0,
     href: '/news/1'
   }

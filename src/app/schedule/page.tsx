@@ -31,10 +31,10 @@ export default function SchedulePage() {
   const upcomingPrograms = [
     {
       id: 1,
-      title: "FOUNDATIONS OF IMPLANT DENTISTRY (Spring 2024)",
+      title: "FOUNDATIONS OF IMPLANT DENTISTRY (Spring 2025)",
       type: "Residency",
-      startDate: "March 15, 2024",
-      endDate: "March 22, 2024",
+      startDate: "March 15, 2025",
+      endDate: "March 22, 2025",
       duration: "8 days",
       capacity: "20 doctors",
       location: "Vancouver, BC",
@@ -45,8 +45,8 @@ export default function SchedulePage() {
       id: 2,
       title: "Live Surgery Study Club – Session 1",
       type: "Study Club",
-      startDate: "April 5, 2024",
-      endDate: "April 7, 2024",
+      startDate: "April 5, 2025",
+      endDate: "April 7, 2025",
       duration: "3 days",
       capacity: "12 doctors",
       location: "Vancouver, BC",
@@ -55,10 +55,10 @@ export default function SchedulePage() {
     },
     {
       id: 3,
-      title: "Implant Residency - Fall 2024",
+      title: "Implant Residency - Fall 2025",
       type: "Residency",
-      startDate: "September 12, 2024",
-      endDate: "September 19, 2024",
+      startDate: "September 12, 2025",
+      endDate: "September 19, 2025",
       duration: "8 days",
       capacity: "20 doctors",
       location: "Vancouver, BC",
@@ -69,8 +69,8 @@ export default function SchedulePage() {
       id: 4,
       title: "Live Surgery Study Club – Session 2",
       type: "Study Club",
-      startDate: "October 18, 2024",
-      endDate: "October 20, 2024",
+      startDate: "October 18, 2025",
+      endDate: "October 20, 2025",
       duration: "3 days",
       capacity: "12 doctors",
       location: "Vancouver, BC",
@@ -463,7 +463,7 @@ export default function SchedulePage() {
             <p className="uppercase tracking-wider text-primary-600 font-bold text-sm sm:text-base lg:text-lg mb-3">
               Timeline
             </p>
-            <h2 className="text-2xl sm:text-4xl font-bold text-secondary mt-3 mb-2">2024 Program Calendar</h2>
+            <h2 className="text-2xl sm:text-4xl font-bold text-secondary mt-3 mb-2">2025 Program Calendar</h2>
             <p className="text-secondary-600 text-sm sm:text-lg max-w-3xl mx-auto">
               Residency and study club windows laid out so you can plan clinic coverage early.
             </p>

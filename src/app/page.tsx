@@ -559,23 +559,23 @@ export default function HomePage() {
               categoryColor: 'teal',
               title: 'WISE Institute Partners with HiOssen for Enhanced Training',
               description: 'We are excited to announce our continued collaboration with HiOssen AIC Education, bringing advanced implant training to general dentists across Western Canada.',
-              date: '2024-12-10',
+              date: '2025-12-10',
               href: '/news'
             },
             {
               category: 'Institute News',
               categoryColor: 'blue',
-              title: 'Record Number of Doctors Complete 2024 Residency Program',
+              title: 'Record Number of Doctors Complete 2025 Residency Program',
               description: 'Over 80 doctors completed our implant residency program this year, with 200+ hours of hands-on training and live surgery sessions.',
-              date: '2024-11-20',
+              date: '2025-11-20',
               href: '/news'
             },
             {
               category: 'Press Release',
               categoryColor: 'teal',
-              title: 'WISE Institute Live Surgery Featured at PDC 2024',
+              title: 'WISE Institute Live Surgery Featured at PDC 2025',
               description: 'Dr. Chris Lee and Dr. Stephen Yoon presented live surgery demonstrations at the Pacific Dental Conference, showcasing our hands-on training approach.',
-              date: '2024-10-05',
+              date: '2025-10-05',
               href: '/news'
             }
           ]}
