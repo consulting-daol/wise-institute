@@ -466,8 +466,8 @@ export default function SchedulePage() {
                 { title: 'Study Club — Session 2', dates: 'October 18 – 20', status: 'Open', tag: 'Study Club' },
                 { title: 'Study Club — Session 3', dates: 'December 6 – 8', status: 'Waitlist', tag: 'Study Club' },
               ].map((item, idx) => (
-                <div key={item.title} className="relative pl-10 sm:pl-0" data-aos="fade-up" data-aos-delay={idx * 80}>
-                  <div className="absolute left-4 sm:left-1/2 transform sm:-translate-x-1/2 top-3 w-3 h-3 rounded-full bg-secondary-500 border-2 border-white shadow" />
+                <div key={item.title} className="relative pl-0" data-aos="fade-up" data-aos-delay={idx * 80}>
+                  <div className="absolute left-1/2 -translate-x-1/2 top-3 w-3 h-3 rounded-full bg-secondary-500 border-2 border-white shadow" />
                   <div className="sm:ml-16 bg-white rounded-2xl border border-secondary-100 shadow-sm p-4 sm:p-6">
                     <div className="flex items-center gap-3 mb-3">
                       <span

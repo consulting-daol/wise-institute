@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { Calendar, Users, BookOpen, Stethoscope, Award, Clock, MapPin, Home } from 'lucide-react'
 import PageHero from '../../components/PageHero'
+import CallToActionBanner from '../../components/CallToActionBanner'
 
 export default function ProgramsPage() {
   return (
@@ -309,26 +310,18 @@ export default function ProgramsPage() {
       </section>
 
       {/* Call to Action */}
-      <section className="section-padding bg-primary-600 text-white">
-        <div className="container-custom text-center">
-          <div data-aos="fade-up" className="space-y-4 sm:space-y-6">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold">
-              Ready to Start Your Implant Journey?
-            </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-white/80 max-w-2xl mx-auto">
-              Join our next cohort and transform your practice with hands-on surgical education.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/schedule" className="bg-white text-primary-600 px-8 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors duration-300">
-                View Schedule
-              </Link>
-              <Link href="/contact" className="border-2 border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white hover:text-primary-600 transition-colors duration-300">
-                Contact Us
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <CallToActionBanner
+        title="Ready to Start Your Implant Journey?"
+        description="Join our next cohort and transform your practice with hands-on surgical education."
+        primaryAction={{
+          label: 'View Schedule',
+          href: '/schedule'
+        }}
+        secondaryAction={{
+          label: 'Contact Us',
+          href: '/contact'
+        }}
+      />
     </div>
   )
 }

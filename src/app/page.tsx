@@ -2,6 +2,7 @@
 
 import { ArrowRight, Users, Calendar, Award, ChevronLeft, ChevronRight, Clock } from 'lucide-react'
 import Link from 'next/link'
+import Script from 'next/script'
 import Logo from '@/components/Logo'
 import { useState, useEffect, useRef } from 'react'
 import Image from 'next/image'
@@ -112,18 +113,19 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero Section - 70% height */}
-      <section className="relative pt-16 lg:pt-20 bg-white overflow-visible">
+      <section className="relative pt-16 lg:pt-20 bg-white overflow-visible" style={{ zIndex: 0 }}>
         {/* White left margin (10%) - Hidden on mobile */}
-        <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[10%] bg-white z-[10]" />
+        <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[10%] bg-white" style={{ zIndex: 0 }}>
+        </div>
         
         {/* Hero Content - 70% height */}
-        <div className="relative" style={{ minHeight: '70vh', height: '70vh', maxHeight: '600px' }}>
+        <div className="relative" style={{ minHeight: '70vh', height: '70vh', maxHeight: '600px', zIndex: 0 }}>
           {/* Bottom ribbon container - behind image - Full width on mobile, 90% with left margin on desktop */}
-          <div className="absolute bottom-0 left-0 right-0 w-full lg:w-[90%] lg:ml-[10%] z-[5]">
+          <div className="absolute bottom-0 left-0 right-0 w-full lg:w-[90%] lg:ml-[10%]" style={{ zIndex: 0 }}>
             {/* Diagonal Ribbon - behind image, positioned to show below image */}
             {/* Mobile: left-6, Desktop: left-24 */}
             <DiagonalRibbon 
-              wrapperClassName="absolute left-6 lg:left-24 right-6 -bottom-2 lg:-bottom-8 z-[5] pointer-events-none" 
+              wrapperClassName="absolute left-6 lg:left-24 right-6 -bottom-2 lg:-bottom-8 pointer-events-none" 
               heightClass="h-24" 
               colorClass="bg-primary-600"
               rotateClass="rotate-[-8deg] lg:rotate-[-4deg]"
@@ -131,15 +133,16 @@ export default function HomePage() {
           </div>
           
           {/* Slides Container - Full width on mobile, 90% with left margin on desktop */}
-          <div className="relative w-full lg:w-[90%] lg:ml-[10%] h-full z-[50] bg-white">
+          <div className="relative w-full lg:w-[90%] lg:ml-[10%] h-full bg-white" style={{ zIndex: 0 }}>
             {slides.map((slide, index) => (
               <div
                 key={index}
                 className={`absolute inset-0 ${
                   index === currentSlide 
-                    ? 'opacity-100 z-10' 
-                    : 'opacity-0 z-[5] pointer-events-none'
+                    ? 'opacity-100' 
+                    : 'opacity-0 pointer-events-none'
                 } transition-opacity duration-1000`}
+                style={{ zIndex: index === currentSlide ? 1 : 0 }}
               >
                 {/* Background Image Container - covers everything, always has white background */}
                 {slide.image && (
@@ -162,8 +165,9 @@ export default function HomePage() {
 
                 {/* Slide Content - above image */}
                 <div
-                  className="relative z-[60] container-custom h-full flex items-center pointer-events-none"
+                  className="relative container-custom h-full flex items-center pointer-events-none"
                   data-aos="fade-up"
+                  style={{ zIndex: 0 }}
                 >
                   <div className="w-full max-w-3xl">
                     {/* Text shadow for readability on light images */}
@@ -206,7 +210,7 @@ export default function HomePage() {
           </div>
 
           {/* Bottom Navigation Bar - above image */}
-          <div className="absolute bottom-0 left-0 right-0 z-[60]" data-aos="fade-up">
+          <div className="absolute bottom-0 left-0 right-0" data-aos="fade-up" style={{ zIndex: 0 }}>
             {/* Bottom Navigation Bar */}
             <div className="relative bg-transparent text-white pointer-events-auto">
               <div className="container-custom pb-4 lg:pb-5">
@@ -563,7 +567,20 @@ export default function HomePage() {
           viewAllText="View all news"
           viewAllHref="/news"
         />
+
+        {/* Instagram Feed */}
+        <section className="section-padding bg-white">
+          <div className="container-custom">
+            <div className="elfsight-app-2e86006e-ae57-4f36-a3a5-1d7a2a0b162f" data-elfsight-app-lazy></div>
+          </div>
+        </section>
       </div>
+
+      {/* Elfsight Script */}
+      <Script
+        src="https://elfsightcdn.com/platform.js"
+        strategy="lazyOnload"
+      />
     </div>
   )
 }

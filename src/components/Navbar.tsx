@@ -2,21 +2,37 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Menu, X, ArrowRight } from 'lucide-react'
+import { Menu, X, ArrowRight, Instagram } from 'lucide-react'
 import Logo from './Logo'
 
 const navigation = [
-  { name: 'News', href: '/news' },
+  { 
+    name: 'Programs', 
+    href: '/programs',
+    megaMenu: [
+      { name: 'Program Overview', href: '/programs' },
+      { name: 'Course Structure', href: '/schedule' },
+      { name: 'Support & Resources', href: '/contact' },
+    ]
+  },
   {
     name: 'About',
     href: '/about',
-    children: [
+    megaMenu: [
       { name: 'About Us', href: '/about' },
       { name: 'Our Directors', href: '/directors' },
     ],
   },
-  { name: 'Upcoming Courses', href: '/schedule' },
-  { name: 'Contact Us', href: '/contact' },
+  { 
+    name: 'Resources', 
+    href: '/programs',
+    megaMenu: [
+      { name: 'Residency Highlights', href: '/programs' },
+      { name: 'Contact Us', href: '/contact' },
+      { name: 'News', href: '/news' },
+    ]
+  },
+  { name: 'Registration', href: '/schedule' },
 ]
 
 export default function Navbar() {
@@ -32,16 +48,16 @@ export default function Navbar() {
   }, [])
 
   return (
-    <nav className={`fixed top-0 w-full z-[999] transition-all duration-300 bg-white ${
+    <nav className={`fixed top-0 w-full z-[99999] transition-all duration-300 bg-white ${
       scrolled ? 'shadow-sm' : ''
     }`}>
-      <div className="flex items-stretch h-16 lg:h-20 w-full overflow-hidden">
+      <div className="flex items-stretch h-16 lg:h-20 w-full">
         {/* Left Section - Logo */}
         <div className="flex items-center pl-3 sm:pl-4 lg:pl-6 flex-shrink-0 overflow-hidden">
           <h1 className="logo flex items-center overflow-hidden">
             <Link href="/" className="flex items-center overflow-hidden">
               {/* Smaller logo on mobile, larger on desktop */}
-              <div className="lg:hidden flex-shrink-0 max-w-[120px] sm:max-w-[140px]">
+              <div className="lg:hidden flex-shrink-0 max-w-[200px] sm:max-w-[200px]">
                 <Logo size="sm" />
               </div>
               <div className="hidden lg:block">
@@ -55,48 +71,66 @@ export default function Navbar() {
         </div>
 
         {/* Navigation Links - Center */}
-        <nav className="gnb hidden lg:flex items-center flex-1 justify-center min-w-0">
+        <nav className="gnb hidden lg:flex items-center flex-1 justify-center min-w-0 group/nav">
           <ul className="flex items-center space-x-6 xl:space-x-8">
             {navigation.map((item) => (
-              <li key={item.name} className="relative group">
+              <li key={item.name} className="relative">
                 <Link
                   href={item.href}
                   className="text-secondary-900 font-semibold text-xl hover:text-primary-600 transition-colors inline-flex items-center gap-1"
                 >
                   {item.name}
                 </Link>
+              </li>
+            ))}
+          </ul>
 
-                {item.children && (
-                  <div className="pointer-events-none absolute left-0 top-full w-56 rounded-2xl border border-secondary-100 bg-white shadow-soft opacity-0 translate-y-2 group-hover:opacity-100 group-hover:pointer-events-auto group-hover:translate-y-0 transition-all duration-200 ease-out">
-                    <ul className="py-3">
-                      {item.children.map((child) => (
-                        <li key={child.name}>
+          {/* Combined Mega Menu - Shows all items when hovering over nav */}
+          <div className="fixed left-0 right-0 top-20 w-full bg-white border-t border-secondary-200 shadow-xl opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-200 ease-out pointer-events-none group-hover/nav:pointer-events-auto" style={{ zIndex: 100000 }}>
+            <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
+              <div className="grid grid-cols-5 gap-8">
+                {/* Empty column for symmetry */}
+                <div className="col-span-1"></div>
+                
+                {/* Mega Menu Items - Centered */}
+                {navigation.filter(item => item.megaMenu).map((item) => (
+                  <div key={item.name} className="col-span-1">
+                    <h3 className="text-lg font-bold text-secondary-900 mb-4">{item.name}</h3>
+                    <ul className="space-y-1">
+                      {item.megaMenu?.map((menuItem) => (
+                        <li key={menuItem.name}>
                           <Link
-                            href={child.href}
-                            className="block px-5 py-2.5 text-base text-secondary-700 hover:text-primary-600 hover:bg-primary-50 transition-colors"
+                            href={menuItem.href}
+                            className="block px-4 py-2.5 text-base text-secondary-700 hover:text-primary-600 hover:bg-primary-50 rounded transition-colors"
                           >
-                            {child.name}
+                            {menuItem.name}
                           </Link>
                         </li>
                       ))}
                     </ul>
                   </div>
-                )}
-              </li>
-            ))}
-          </ul>
+                ))}
+                
+                {/* Empty column for symmetry */}
+                <div className="col-span-1"></div>
+              </div>
+            </div>
+          </div>
         </nav>
 
-        {/* Right Section - ENG and CTA Button */}
+        {/* Right Section - Instagram Link and CTA Button */}
         <aside className="flex items-stretch ml-auto flex-shrink-0">
-          {/* ENG Link */}
+          {/* Instagram Link */}
           <div className="side-link hidden lg:flex items-center px-4 lg:px-6">
-            <Link
-              href="/en"
-              className="text-sm text-secondary-600 hover:text-secondary-900 transition-colors"
+            <a
+              href="https://www.instagram.com/wise_institute"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-secondary-600 hover:text-primary-600 transition-colors"
+              aria-label="Visit WISE Institute Instagram"
             >
-              ENG
-            </Link>
+              <Instagram className="w-5 h-5" />
+            </a>
           </div>
 
           {/* CTA Button - Full Height, Extends to Right Edge - Hidden on mobile */}
@@ -138,18 +172,22 @@ export default function Navbar() {
       {/* Mobile Navigation - Full Screen Overlay */}
       {mobileMenuOpen && (
         <div className="lg:hidden fixed inset-0 top-16 bg-white z-[998] overflow-y-auto">
-          {/* Header Section with ENG and View Schedule */}
+          {/* Header Section with Instagram and View Schedule */}
           <div className="border-b border-secondary-200">
             <div className="flex items-stretch h-14">
-              {/* ENG Link */}
+              {/* Instagram Link */}
               <div className="flex items-center px-4 sm:px-6">
-                <Link
-                  href="/en"
+                <a
+                  href="https://www.instagram.com/wise_institute"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm text-secondary-600 hover:text-secondary-900 transition-colors font-medium"
+                  className="flex items-center gap-2 text-secondary-600 hover:text-primary-600 transition-colors"
+                  aria-label="Visit WISE Institute Instagram"
                 >
-                  ENG
-                </Link>
+              <Instagram className="w-5 h-5" />
+              <span className="text-sm font-medium">Follow Us</span>
+                </a>
               </div>
               
               {/* View Schedule Button - Full Height, Extends to Right Edge */}
