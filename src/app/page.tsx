@@ -113,19 +113,18 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero Section - 70% height */}
-      <section className="relative pt-16 lg:pt-20 bg-white overflow-visible" style={{ zIndex: 0 }}>
+      <section className="relative pt-16 lg:pt-20 bg-white overflow-visible">
         {/* White left margin (10%) - Hidden on mobile */}
-        <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[10%] bg-white" style={{ zIndex: 0 }}>
-        </div>
+        <div className="hidden lg:block absolute left-0 top-0 bottom-0 w-[10%] bg-white z-[10]" />
         
         {/* Hero Content - 70% height */}
-        <div className="relative" style={{ minHeight: '70vh', height: '70vh', maxHeight: '600px', zIndex: 0 }}>
+        <div className="relative" style={{ minHeight: '70vh', height: '70vh', maxHeight: '600px' }}>
           {/* Bottom ribbon container - behind image - Full width on mobile, 90% with left margin on desktop */}
-          <div className="absolute bottom-0 left-0 right-0 w-full lg:w-[90%] lg:ml-[10%]" style={{ zIndex: 0 }}>
+          <div className="absolute bottom-0 left-0 right-0 w-full lg:w-[90%] lg:ml-[10%] z-[5]">
             {/* Diagonal Ribbon - behind image, positioned to show below image */}
             {/* Mobile: left-6, Desktop: left-24 */}
             <DiagonalRibbon 
-              wrapperClassName="absolute left-6 lg:left-24 right-6 -bottom-2 lg:-bottom-8 pointer-events-none" 
+              wrapperClassName="absolute left-6 lg:left-24 right-6 -bottom-2 lg:-bottom-8 pointer-events-none z-[5]" 
               heightClass="h-24" 
               colorClass="bg-primary-600"
               rotateClass="rotate-[-8deg] lg:rotate-[-4deg]"
@@ -133,16 +132,15 @@ export default function HomePage() {
           </div>
           
           {/* Slides Container - Full width on mobile, 90% with left margin on desktop */}
-          <div className="relative w-full lg:w-[90%] lg:ml-[10%] h-full bg-white" style={{ zIndex: 0 }}>
+          <div className="relative w-full lg:w-[90%] lg:ml-[10%] h-full z-[50] bg-white">
             {slides.map((slide, index) => (
               <div
                 key={index}
-                className={`absolute inset-0 ${
+                className={`absolute inset-0 transition-opacity duration-1000 ${
                   index === currentSlide 
-                    ? 'opacity-100' 
-                    : 'opacity-0 pointer-events-none'
-                } transition-opacity duration-1000`}
-                style={{ zIndex: index === currentSlide ? 1 : 0 }}
+                    ? 'opacity-100 z-[20]' 
+                    : 'opacity-0 z-[10] pointer-events-none'
+                }`}
               >
                 {/* Background Image Container - covers everything, always has white background */}
                 {slide.image && (
@@ -165,9 +163,8 @@ export default function HomePage() {
 
                 {/* Slide Content - above image */}
                 <div
-                  className="relative container-custom h-full flex items-center pointer-events-none"
+                  className="relative z-[60] container-custom h-full flex items-center pointer-events-none"
                   data-aos="fade-up"
-                  style={{ zIndex: 0 }}
                 >
                   <div className="w-full max-w-3xl">
                     {/* Text shadow for readability on light images */}
@@ -210,7 +207,7 @@ export default function HomePage() {
           </div>
 
           {/* Bottom Navigation Bar - above image */}
-          <div className="absolute bottom-0 left-0 right-0" data-aos="fade-up" style={{ zIndex: 0 }}>
+          <div className="absolute bottom-0 left-0 right-0 z-[60]" data-aos="fade-up">
             {/* Bottom Navigation Bar */}
             <div className="relative bg-transparent text-white pointer-events-auto">
               <div className="container-custom pb-4 lg:pb-5">
