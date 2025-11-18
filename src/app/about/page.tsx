@@ -6,6 +6,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen pt-16">
       <PageHero
+        eyebrow="Wise Institute"
         title="About Us"
         backgroundImage="/gallery/wise.png"
         heightClassName="h-[50vh] min-h-[400px]"

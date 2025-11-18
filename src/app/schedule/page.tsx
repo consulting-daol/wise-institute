@@ -113,6 +113,7 @@ export default function SchedulePage() {
   return (
     <div className="min-h-screen pt-16">
       <PageHero
+        eyebrow="Wise Institute"
         title="Schedule & Registration"
         description="Join our upcoming programs and advance your implant surgical skills with hands-on experience."
         backgroundClassName="bg-gradient-to-br from-background to-primary/5"

@@ -48,7 +48,8 @@ export default function HomePage() {
       ctaText: "",
       ctaLink: "",
       slideLabel: "WISE Institute Education",
-      image: "/gallery/wise.png"
+      image: "/gallery/wise.png",
+      desktopImage: "/gallery/hero.png"
     },
     {
       subtitle: "Hands-on surgical implant education",
@@ -110,6 +111,19 @@ export default function HomePage() {
     setIsPaused(false)
   }
 
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  useEffect(() => {
+    const updateViewport = () => {
+      if (typeof window !== 'undefined') {
+        setIsDesktop(window.innerWidth >= 1024)
+      }
+    }
+    updateViewport()
+    window.addEventListener('resize', updateViewport)
+    return () => window.removeEventListener('resize', updateViewport)
+  }, [])
+
   return (
     <div>
       {/* Hero Section - 70% height */}
@@ -133,7 +147,13 @@ export default function HomePage() {
           
           {/* Slides Container - Full width on mobile, 90% with left margin on desktop */}
           <div className="relative w-full lg:w-[90%] lg:ml-[10%] h-full z-[50] bg-white">
-            {slides.map((slide, index) => (
+            {slides.map((slide, index) => {
+              const slideImageSrc =
+                isDesktop && slide.desktopImage
+                  ? slide.desktopImage
+                  : slide.image
+
+              return (
               <div
                 key={index}
                 className={`absolute inset-0 transition-opacity duration-1000 ${
@@ -143,10 +163,10 @@ export default function HomePage() {
                 }`}
               >
                 {/* Background Image Container - covers everything, always has white background */}
-                {slide.image && (
+                {slideImageSrc ? (
                   <div className="absolute inset-0 overflow-hidden bg-white">
                     <Image
-                      src={slide.image}
+                      src={slideImageSrc}
                       alt={slide.title}
                       fill
                       className="object-cover w-full h-full"
@@ -155,9 +175,7 @@ export default function HomePage() {
                       style={{ objectFit: 'cover', objectPosition: 'center top' }}
                     />
                   </div>
-                )}
-                {/* Fallback white background if no image - ensures ribbon is always covered */}
-                {!slide.image && (
+                ) : (
                   <div className="absolute inset-0 bg-white" />
                 )}
 
@@ -203,7 +221,7 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
 
           {/* Bottom Navigation Bar - above image */}

@@ -15,6 +15,7 @@ type BreadcrumbItem = {
 type PageHeroProps = {
   title: string
   description?: string
+  eyebrow?: string
   breadcrumbs?: BreadcrumbItem[]
   align?: 'left' | 'center'
   backgroundImage?: string
@@ -33,6 +34,7 @@ type PageHeroProps = {
 export default function PageHero({
   title,
   description,
+  eyebrow,
   breadcrumbs,
   align = 'center',
   backgroundImage,
@@ -84,6 +86,16 @@ export default function PageHero({
                 contentProps?.className
               )}
             >
+              {eyebrow ? (
+                <p
+                  className={clsx(
+                    'uppercase tracking-wider font-bold text-sm sm:text-base lg:text-lg mb-3',
+                    hasImage ? 'text-white/80' : 'text-primary-600'
+                  )}
+                >
+                  {eyebrow}
+                </p>
+              ) : null}
               <h1
                 className={clsx(
                   'text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold',

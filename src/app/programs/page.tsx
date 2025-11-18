@@ -9,6 +9,7 @@ export default function ProgramsPage() {
   return (
     <div className="min-h-screen pt-16">
       <PageHero
+        eyebrow="Wise Institute"
         title="Our Programs"
         description="Comprehensive implant education designed for busy clinicians who want to maximize learning in minimal time."
         backgroundClassName="bg-gradient-to-br from-background to-primary/5"
