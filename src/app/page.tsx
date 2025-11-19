@@ -45,7 +45,7 @@ export default function HomePage() {
       subtitle: "From hands-on training to surgical excellence",
       title: "WISE Institute",
       description: "AI-powered dental implant education for general dentists across Western Canada",
-      ctaText: "Learn More",
+      ctaText: "LEARN MORE",
       ctaLink: "/about",
       slideLabel: "WISE Institute Education",
       image: "/gallery/wise.png",
@@ -55,7 +55,7 @@ export default function HomePage() {
       subtitle: "Hands-on surgical implant education",
       title: "Live Surgery Training",
       description: "Real patient cases under expert supervision",
-      ctaText: "View Programs",
+      ctaText: "VIEW PROGRAMS",
       ctaLink: "/programs",
       slideLabel: "Live Surgery Study Club",
       image: "/gallery/wise2.png"
@@ -64,7 +64,7 @@ export default function HomePage() {
       subtitle: "Comprehensive 8-day program",
       title: "Implant Residency",
       description: "Maximize learning in minimal time with 2 live surgery days",
-      ctaText: "Register Now",
+      ctaText: "REGISTER NOW",
       ctaLink: "/schedule",
       slideLabel: "HiOssen F.I.D Course",
       image: "/gallery/wise3.png"
@@ -240,7 +240,7 @@ export default function HomePage() {
                         <div className="pt-4 pointer-events-auto">
                           <Link 
                             href={slide.ctaLink}
-                            className="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors text-lg"
+                            className="inline-flex items-center gap-2 bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 font-extrabold transition-colors text-lg"
                           >
                             {slide.ctaText}
                           </Link>
