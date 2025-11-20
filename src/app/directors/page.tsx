@@ -64,7 +64,7 @@ export default function DirectorsPage() {
   return (
     <div className="min-h-screen pt-16">
       <PageHero
-        eyebrow="Wise Institute"
+        eyebrow="WISE Institute"
         title="Our Directors"
         description="Meet the experienced practitioners who founded WISE Institute and continue to guide our educational mission."
         backgroundClassName="hero-gradient"

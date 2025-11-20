@@ -21,7 +21,6 @@ export default function HomePage() {
   // Campaign slider state (second section)
   const [campaignIndex, setCampaignIndex] = useState(0)
 
-  // You can replace these with your own images later
   const campaignItems = [
     { src: '/gallery/wise.png', title: 'Implant Residency Campaign' },
     { src: '/gallery/wise2.png', title: 'Live Surgery Study Club' },
@@ -29,7 +28,7 @@ export default function HomePage() {
     { src: '/gallery/wise4.png', title: 'Mentorship & Support' },
     { src: '/gallery/wise5.png', title: 'Hands-on Every Day' },
     { src: '/gallery/wise6.png', title: 'Course Materials' },
-    { src: '/gallery/wise7.png', title: 'Course Materials' },
+    { src: '/gallery/wise7.png', title: 'Advanced Training Resources' },
   ]
 
   const nextCampaign = () => {
@@ -44,7 +43,7 @@ export default function HomePage() {
     {
       subtitle: "From hands-on training to surgical excellence",
       title: "WISE Institute",
-      description: "AI-powered dental implant education for general dentists across Western Canada",
+      description: "Advanced dental implant education for general dentists across Western Canada",
       ctaText: "LEARN MORE",
       ctaLink: "/about",
       slideLabel: "WISE Institute Education",
@@ -345,7 +344,7 @@ export default function HomePage() {
         <div className="container-custom relative z-10">
           {/* Heading */}
           <SectionHeader
-            eyebrow="Wise Institute"
+            eyebrow="WISE Institute"
             title="Hands-on Implant Education"
             description="We design practical, live-surgery focused education so general dentists can confidently bring new skills back to their clinics."
             dataAos="fade-up"
@@ -444,7 +443,7 @@ export default function HomePage() {
                 </p>
                 <div className="mt-5">
                   <Link href="/schedule" className="inline-flex items-center gap-2 text-secondary-900 font-bold hover:text-primary-700">
-                    Apply Now
+                    APPLY NOW
                     <span className="w-2 h-2 rounded-full bg-primary-500" />
                   </Link>
                 </div>

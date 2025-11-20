@@ -29,7 +29,7 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen pt-16">
       <PageHero
-        eyebrow="Wise Institute"
+        eyebrow="WISE Institute"
         title="Contact Us"
         description="Interested in joining WISE? We'd love to hear from you and answer any questions about our programs."
         backgroundClassName="bg-gradient-to-br from-background to-primary/5"

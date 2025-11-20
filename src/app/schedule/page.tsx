@@ -201,7 +201,7 @@ export default function SchedulePage() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm text-secondary-500">
             <div className="flex flex-col gap-0.5">
               <span className="font-semibold text-secondary-600">Co-led by Dr. Chris Lee & Dr. Stephen Yoon</span>
-              <span>Powered by Hiossen Education</span>
+              <span>Powered by HiOssen AIC Education</span>
             </div>
             <a
               href="#registration-form"
@@ -219,7 +219,7 @@ export default function SchedulePage() {
   return (
     <div className="min-h-screen pt-16">
       <PageHero
-        eyebrow="Wise Institute"
+        eyebrow="WISE Institute"
         title="Schedule & Registration"
         description="Join our upcoming programs and advance your implant surgical skills with hands-on experience."
         backgroundClassName="bg-gradient-to-br from-background to-primary/5"

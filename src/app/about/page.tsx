@@ -25,7 +25,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen pt-16">
       <PageHero
-        eyebrow="Wise Institute"
+        eyebrow="WISE Institute"
         title="About Us"
         backgroundImage="/gallery/wise.png"
         heightClassName="h-[50vh] min-h-[400px]"
@@ -99,7 +99,7 @@ export default function AboutPage() {
                   Started with 12 Doctors + 2 Mentors
                 </h3>
                 <p className="text-base sm:text-lg text-gray-700 leading-relaxed">
-                  Doctors would bring their own patients to place implants. We go over the cases in our waiting areas or staff rooms which got converted into classroom.
+                  Doctors would bring their own patients to place implants. We go over the cases in our waiting areas or staff rooms which got converted into classrooms.
                 </p>
               </div>
 

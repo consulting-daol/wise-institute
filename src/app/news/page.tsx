@@ -213,7 +213,7 @@ export default function NewsPage() {
   return (
     <div className="min-h-screen bg-white">
       <PageHero
-        eyebrow="Wise Institute"
+        eyebrow="WISE Institute"
         title="WISE Institute News"
         backgroundImage="/gallery/wise3.png"
         overlayClassName="bg-black/50"
