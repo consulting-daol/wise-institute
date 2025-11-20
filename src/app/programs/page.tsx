@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Calendar, Users, BookOpen, Stethoscope, Award, Clock, MapPin, Home } from 'lucide-react'
+import { Calendar, Users, BookOpen, Stethoscope, Award, Clock, MapPin, Home, Activity, Scissors, Heart, Target } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '../../components/CallToActionBanner'
 
@@ -68,35 +68,43 @@ export default function ProgramsPage() {
               </Link>
             </div>
 
-            <div data-aos="fade-left" className="bg-primary/5 rounded-xl p-8">
-              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary mb-4 sm:mb-6">What You'll Learn</h3>
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <Stethoscope className="h-5 w-5 text-primary mt-1" />
-                  <div>
-                    <h4 className="text-sm sm:text-base font-semibold text-secondary">Surgical Techniques</h4>
-                    <p className="text-xs sm:text-sm text-gray-600">Flap reflection, bone grafting, suturing</p>
+            <div data-aos="fade-left" className="bg-primary/5 rounded-xl p-6 sm:p-8">
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary mb-6 sm:mb-8">What You'll Learn</h3>
+              <div className="space-y-5 sm:space-y-6">
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Scissors className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-sm sm:text-base font-semibold text-secondary mb-1">Surgical Techniques</h4>
+                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">Flap reflection, bone grafting, suturing</p>
                   </div>
                 </div>
-                <div className="flex items-start space-x-3">
-                  <Stethoscope className="h-5 w-5 text-primary mt-1" />
-                  <div>
-                    <h4 className="text-sm sm:text-base font-semibold text-secondary">Hands-On Practice</h4>
-                    <p className="text-xs sm:text-sm text-gray-600">We use pig jaws to give more realistic feel for things like incision, flap reflection, bone grafting and suturing</p>
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-sm sm:text-base font-semibold text-secondary mb-1">Hands-On Practice</h4>
+                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">We use pig jaws to give more realistic feel for things like incision, flap reflection, bone grafting and suturing</p>
                   </div>
                 </div>
-                <div className="flex items-start space-x-3">
-                  <Stethoscope className="h-5 w-5 text-primary mt-1" />
-                  <div>
-                    <h4 className="text-sm sm:text-base font-semibold text-secondary">Live Surgery</h4>
-                    <p className="text-xs sm:text-sm text-gray-600">Real patient cases under supervision</p>
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Heart className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-sm sm:text-base font-semibold text-secondary mb-1">Live Surgery</h4>
+                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">Real patient cases under supervision</p>
                   </div>
                 </div>
-                <div className="flex items-start space-x-3">
-                  <Stethoscope className="h-5 w-5 text-primary mt-1" />
-                  <div>
-                    <h4 className="text-sm sm:text-base font-semibold text-secondary">Clinical Application</h4>
-                    <p className="text-xs sm:text-sm text-gray-600">Ready to apply skills in your practice</p>
+                <div className="flex items-start space-x-4">
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <Target className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-sm sm:text-base font-semibold text-secondary mb-1">Clinical Application</h4>
+                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">Ready to apply skills in your practice</p>
                   </div>
                 </div>
               </div>

@@ -22,10 +22,22 @@ export default function SchedulePage() {
     })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission here
-    console.log('Form submitted:', formData)
+    try {
+      // TODO: Implement form submission API endpoint
+      // const response = await fetch('/api/registration', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(formData),
+      // })
+      // if (response.ok) {
+      //   // Show success message
+      //   setFormData({ name: '', email: '', clinic: '', experience: '', program: '', message: '' })
+      // }
+    } catch (error) {
+      // Handle error
+    }
   }
 
   const upcomingPrograms = [

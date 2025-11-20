@@ -26,7 +26,10 @@ export async function GET() {
     const data = await response.json()
     return NextResponse.json(data)
   } catch (error) {
-    console.error('Instagram API Error:', error)
+    // Log error in development, but don't expose details in production
+    if (process.env.NODE_ENV === 'development') {
+      console.error('Instagram API Error:', error)
+    }
     return NextResponse.json(
       { error: 'Failed to fetch Instagram posts' },
       { status: 500 }

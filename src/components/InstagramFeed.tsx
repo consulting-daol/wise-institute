@@ -57,7 +57,10 @@ export default function InstagramFeed({
         setPosts((data.data || []).slice(0, limit))
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load Instagram feed')
-        console.error('Instagram API Error:', err)
+        // Log error in development only
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Instagram API Error:', err)
+        }
       } finally {
         setLoading(false)
       }

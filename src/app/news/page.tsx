@@ -128,7 +128,10 @@ export default function NewsPage() {
         })
         setViews(mergedViews)
       } catch (e) {
-        console.error('Error loading views from localStorage:', e)
+        // Log error in development only
+        if (process.env.NODE_ENV === 'development') {
+          console.error('Error loading views from localStorage:', e)
+        }
         // Initialize with default views (0) if parsing fails
         const initialViews: Record<number, number> = {}
         newsItems.forEach((item) => {
@@ -222,9 +225,6 @@ export default function NewsPage() {
           { label: 'Home', href: '/', icon: <Home className="h-4 w-4" />, showLabel: false },
           { label: 'News' },
         ]}
-        breadcrumbWrapperClassName="bg-primary-600 lg:bg-white lg:border-b lg:border-secondary-200"
-        breadcrumbInnerClassName="py-3 sm:py-4"
-        containerClassName="container-custom"
       />
 
       {/* Main Content */}
