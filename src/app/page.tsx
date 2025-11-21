@@ -47,7 +47,7 @@ export default function HomePage() {
       ctaText: "LEARN MORE",
       ctaLink: "/about",
       slideLabel: "WISE Institute Education",
-      image: "/gallery/wise.webp",
+      image: "/gallery/hero.png",
       desktopImage: "/gallery/hero.webp"
     },
     {
@@ -57,7 +57,7 @@ export default function HomePage() {
       ctaText: "VIEW PROGRAMS",
       ctaLink: "/programs",
       slideLabel: "Live Surgery Study Club",
-      image: "/gallery/wise2.webp"
+      image: "/gallery/hero2.png"
     },
     {
       subtitle: "Comprehensive 8-day program",
