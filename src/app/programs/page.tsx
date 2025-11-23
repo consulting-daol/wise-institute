@@ -2,11 +2,18 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { Calendar, Users, BookOpen, Stethoscope, Award, Clock, MapPin, Home, Activity, Scissors, Heart, Target, CheckCircle2, ArrowRight, Sparkles } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '../../components/CallToActionBanner'
 
 export default function ProgramsPage() {
+  const router = useRouter()
+
+  const handleProgramClick = (programType: 'residency' | 'study-club') => {
+    router.push(`/contact?program=${programType}`)
+  }
+
   return (
     <div className="min-h-screen pt-16">
       <PageHero
@@ -75,7 +82,7 @@ export default function ProgramsPage() {
               </Link>
             </div>
 
-            <div data-aos="fade-left" className="rounded-3xl border border-secondary-100 bg-white p-6 sm:p-10 shadow-lg">
+            <div data-aos="fade-left" className="rounded-3xl border-2 border-secondary-200 bg-white p-6 sm:p-10 shadow-lg">
               <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary mb-4 sm:mb-6">What You'll Learn</h3>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
@@ -128,7 +135,7 @@ export default function ProgramsPage() {
         </div>
         <div className="container-custom relative">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
-            <div data-aos="fade-left" className="rounded-3xl border border-secondary-100 bg-white p-6 sm:p-10 shadow-lg order-2 lg:order-1">
+            <div data-aos="fade-left" className="rounded-3xl border-2 border-secondary-200 bg-white p-6 sm:p-10 shadow-lg order-2 lg:order-1">
               <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary mb-4 sm:mb-6">Program Features</h3>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
@@ -181,7 +188,7 @@ export default function ProgramsPage() {
                 Doctors would bring their own patients to place implants. Surgery time was busy; Doctors would be paired up for the day and take turn performing and assisting the surgery. Occasionally, Stephen and I would step in to demonstrate certain techniques.
               </p>
               
-              <div className="rounded-2xl border border-secondary-100 bg-white p-4 sm:p-6 mb-6 sm:mb-8 shadow-sm">
+              <div className="rounded-2xl border-2 border-secondary-200 bg-white p-4 sm:p-6 mb-6 sm:mb-8 shadow-sm">
                 <blockquote className="text-base sm:text-lg italic text-secondary-600 mb-2">
                   "Our ultimate goal is for you to return to your clinic and confidently apply what you've learned."
                 </blockquote>
@@ -189,14 +196,14 @@ export default function ProgramsPage() {
               </div>
 
               <div className="grid grid-cols-2 gap-4 mb-6 sm:mb-8">
-                <div className="rounded-2xl border border-secondary-100 bg-white p-3.5 sm:p-6 shadow-sm hover:-translate-y-0.5 transition-transform duration-300">
+                <div className="rounded-2xl border-2 border-secondary-200 bg-white p-3.5 sm:p-6 shadow-sm hover:-translate-y-0.5 transition-transform duration-300">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-3 sm:mb-4 ring-1 ring-inset bg-primary-50 ring-primary-600/10">
                     <Calendar className="h-5 w-5 text-primary-700" />
                   </div>
                   <p className="text-xs font-semibold uppercase tracking-wide text-secondary-500">Schedule</p>
                   <p className="text-sm sm:text-base font-medium text-secondary-900 mt-1">3 sessions per year</p>
                 </div>
-                <div className="rounded-2xl border border-secondary-100 bg-white p-3.5 sm:p-6 shadow-sm hover:-translate-y-0.5 transition-transform duration-300">
+                <div className="rounded-2xl border-2 border-secondary-200 bg-white p-3.5 sm:p-6 shadow-sm hover:-translate-y-0.5 transition-transform duration-300">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-3 sm:mb-4 ring-1 ring-inset bg-secondary-50 ring-secondary-500/20">
                     <Users className="h-5 w-5 text-secondary-700" />
                   </div>
@@ -217,19 +224,18 @@ export default function ProgramsPage() {
       {/* Networking & Community */}
       <section className="py-10 sm:py-14 bg-white">
         <div className="container-custom">
-          <div className="max-w-4xl mx-auto">
-            <div data-aos="fade-up" className="text-center mb-10 sm:mb-14">
-              <p className="uppercase tracking-wider text-primary-600 font-bold text-sm sm:text-base lg:text-lg mb-3">
-                Networking & Community
-              </p>
-              <h2 className="text-2xl sm:text-4xl font-bold text-secondary mt-3 mb-2">Building connections beyond the clinic</h2>
-              <p className="text-secondary-600 text-sm sm:text-lg max-w-3xl mx-auto">
-                A big part of our WISE and HiOssen's culture is to allow doctors to network with one another. And what better way is there than to do it over food and some drinks.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
-              <div data-aos="fade-up" data-aos-delay="100" className="rounded-2xl border border-secondary-100 bg-white p-3.5 sm:p-6 shadow-sm hover:-translate-y-0.5 transition-transform duration-300">
+          <div data-aos="fade-up" className="text-center mb-10 sm:mb-14">
+            <p className="uppercase tracking-wider text-primary-600 font-bold text-sm sm:text-base lg:text-lg mb-3">
+              Networking & Community
+            </p>
+            <h2 className="text-2xl sm:text-4xl font-bold text-secondary mt-3 mb-2">Building connections beyond the clinic</h2>
+            <p className="text-secondary-600 text-sm sm:text-lg">
+              A big part of our WISE and HiOssen's culture is to allow doctors to network with one another. And what better way is there than to do it over food and some drinks.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+              <div data-aos="fade-up" data-aos-delay="100" className="rounded-2xl border-2 border-secondary-200 bg-white p-3.5 sm:p-6 shadow-sm hover:-translate-y-0.5 transition-transform duration-300">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-3 sm:mb-4 ring-1 ring-inset bg-primary-50 ring-primary-600/10">
                   <Users className="h-5 w-5 text-primary-700" />
                 </div>
@@ -237,7 +243,7 @@ export default function ProgramsPage() {
                 <p className="text-sm sm:text-base font-medium text-secondary-900 mt-1">Doctors share experiences, challenges, and successes</p>
               </div>
               
-              <div data-aos="fade-up" data-aos-delay="200" className="rounded-2xl border border-secondary-100 bg-white p-3.5 sm:p-6 shadow-sm hover:-translate-y-0.5 transition-transform duration-300">
+              <div data-aos="fade-up" data-aos-delay="200" className="rounded-2xl border-2 border-secondary-200 bg-white p-3.5 sm:p-6 shadow-sm hover:-translate-y-0.5 transition-transform duration-300">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-3 sm:mb-4 ring-1 ring-inset bg-secondary-50 ring-secondary-500/20">
                   <MapPin className="h-5 w-5 text-secondary-700" />
                 </div>
@@ -245,7 +251,7 @@ export default function ProgramsPage() {
                 <p className="text-sm sm:text-base font-medium text-secondary-900 mt-1">Learning happens over food and drinks as much as in the clinic</p>
               </div>
               
-              <div data-aos="fade-up" data-aos-delay="300" className="rounded-2xl border border-secondary-100 bg-white p-3.5 sm:p-6 shadow-sm hover:-translate-y-0.5 transition-transform duration-300 sm:col-span-2 lg:col-span-1">
+              <div data-aos="fade-up" data-aos-delay="300" className="rounded-2xl border-2 border-secondary-200 bg-white p-3.5 sm:p-6 shadow-sm hover:-translate-y-0.5 transition-transform duration-300 sm:col-span-2 lg:col-span-1">
                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-3 sm:mb-4 ring-1 ring-inset bg-accent-50 ring-accent-500/15">
                   <Award className="h-5 w-5 text-accent-600" />
                 </div>
@@ -253,7 +259,6 @@ export default function ProgramsPage() {
                 <p className="text-sm sm:text-base font-medium text-secondary-900 mt-1">Build professional relationships that last beyond the program</p>
               </div>
             </div>
-          </div>
         </div>
       </section>
 
@@ -265,14 +270,18 @@ export default function ProgramsPage() {
               Choose Your Program
             </p>
             <h2 className="text-2xl sm:text-4xl font-bold text-secondary mt-3 mb-2">Programs crafted for real clinical growth</h2>
-            <p className="text-secondary-600 text-sm sm:text-lg max-w-3xl mx-auto">
+            <p className="text-secondary-600 text-sm sm:text-lg">
               Both programs offer comprehensive training with different focuses
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-            <div data-aos="fade-right" className="group relative rounded-3xl border border-white/70 bg-white/90 backdrop-blur-sm p-6 sm:p-10 shadow-lg overflow-hidden">
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary-500/25 via-primary-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div 
+              data-aos="fade-right" 
+              onClick={() => handleProgramClick('residency')}
+              className="group relative rounded-3xl border-2 border-secondary-200 bg-white p-6 sm:p-10 shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-all"
+            >
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary-500/25 via-primary-500/10 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative">
                 <div className="flex flex-wrap items-center gap-3 justify-between mb-5 sm:mb-6">
                   <span className="px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-primary/10 text-primary">
@@ -310,8 +319,12 @@ export default function ProgramsPage() {
               </div>
             </div>
 
-            <div data-aos="fade-left" className="group relative rounded-3xl border border-white/70 bg-white/90 backdrop-blur-sm p-6 sm:p-10 shadow-lg overflow-hidden">
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-secondary-500/25 via-secondary-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div 
+              data-aos="fade-left" 
+              onClick={() => handleProgramClick('study-club')}
+              className="group relative rounded-3xl border-2 border-secondary-200 bg-white p-6 sm:p-10 shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-all"
+            >
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-secondary-500/25 via-secondary-500/10 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative">
                 <div className="flex flex-wrap items-center gap-3 justify-between mb-5 sm:mb-6">
                   <span className="px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-secondary/10 text-secondary">

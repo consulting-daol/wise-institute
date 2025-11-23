@@ -1,17 +1,38 @@
 'use client'
 
-import { useState } from 'react'
-import { Home, Mail, Phone, MapPin, Clock, Send } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { Home, Mail, Phone, MapPin, Clock, Send, HelpCircle, Plus, Minus } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '@/components/CallToActionBanner'
 
 export default function ContactPage() {
+  const searchParams = useSearchParams()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     subject: '',
     message: ''
   })
+
+  const [openFAQ, setOpenFAQ] = useState<number[]>([])
+
+  useEffect(() => {
+    const program = searchParams.get('program')
+    if (program === 'residency') {
+      setFormData(prev => ({
+        ...prev,
+        subject: 'registration',
+        message: 'I am interested in the Implant Residency program (8-day intensive program with 2 live surgery days).'
+      }))
+    } else if (program === 'study-club') {
+      setFormData(prev => ({
+        ...prev,
+        subject: 'registration',
+        message: 'I am interested in the Live Surgery Study Club program.'
+      }))
+    }
+  }, [searchParams])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -44,7 +65,7 @@ export default function ContactPage() {
         eyebrow="WISE Institute"
         title="Contact Us"
         description="Interested in joining WISE? We'd love to hear from you and answer any questions about our programs."
-        backgroundImage="/gallery/wise4.webp"
+        backgroundImage="/gallery/WISE.017.webp"
         heightClassName="h-[40vh] min-h-[350px]"
         contentProps={{ 'data-aos': 'fade-up' }}
         breadcrumbs={[
@@ -236,65 +257,109 @@ export default function ContactPage() {
       </section>
 
       {/* FAQ Section */}
-      <section className="section-padding bg-white">
+      <section className="py-10 sm:py-14 bg-white">
         <div className="container-custom">
-          <div data-aos="fade-up" className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-secondary mb-3 sm:mb-4">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-gray-600">
-              Common questions about our programs and registration process.
-            </p>
-          </div>
+            <div data-aos="fade-up" className="mb-8">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-secondary mb-3 sm:mb-4">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-base sm:text-lg text-secondary-600">
+                Common questions about our programs and registration process.
+              </p>
+            </div>
 
-          <div className="max-w-4xl mx-auto">
-            <div className="space-y-6">
-              <div data-aos="fade-up" data-aos-delay="100" className="bg-background rounded-xl p-6">
-                <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-secondary mb-2 sm:mb-3">
-                  What experience level is required for your programs?
-                </h3>
-                <p className="text-sm sm:text-base text-gray-600">
-                  Our programs are designed for general dentists with varying levels of implant experience. We welcome beginners who have placed 0-5 implants, intermediate practitioners (5-50 implants), and advanced clinicians (50+ implants) looking to refine their skills.
-                </p>
-              </div>
-
-              <div data-aos="fade-up" data-aos-delay="200" className="bg-background rounded-xl p-6">
-                <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-secondary mb-2 sm:mb-3">
-                  Do I need to bring my own patients for the Live Surgery Study Club?
-                </h3>
-                <p className="text-sm sm:text-base text-gray-600">
-                  Yes, for the Live Surgery Study Club, participants are encouraged to bring their own patients. This allows you to work on cases that are relevant to your practice while receiving direct mentorship from our experienced directors.
-                </p>
-              </div>
-
-              <div data-aos="fade-up" data-aos-delay="300" className="bg-background rounded-xl p-6">
-                <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-secondary mb-2 sm:mb-3">
-                  What materials are included in the program fees?
-                </h3>
-                <p className="text-sm sm:text-base text-gray-600">
-                  The Implant Residency program includes comprehensive printed course notes, all hands-on training materials, and access to our online resources. All surgical instruments and materials for hands-on practice are provided.
-                </p>
-              </div>
-
-              <div data-aos="fade-up" data-aos-delay="400" className="bg-background rounded-xl p-6">
-                <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-secondary mb-2 sm:mb-3">
-                  How do I register for upcoming programs?
-                </h3>
-                <p className="text-sm sm:text-base text-gray-600">
-                  You can register your interest using the form on our Schedule page, or contact us directly via email or phone. We'll provide you with detailed program information and registration instructions.
-                </p>
-              </div>
-
-              <div data-aos="fade-up" data-aos-delay="500" className="bg-background rounded-xl p-6">
-                <h3 className="text-base sm:text-lg lg:text-xl font-semibold text-secondary mb-2 sm:mb-3">
-                  What is the cancellation policy?
-                </h3>
-                <p className="text-sm sm:text-base text-gray-600">
-                  We understand that schedules can change. Please contact us as soon as possible if you need to cancel or reschedule. We'll work with you to find the best solution, including transferring to a future program.
-                </p>
+            {/* Contact Info Box */}
+            <div data-aos="fade-up" className="mb-8 rounded-2xl border border-primary/20 bg-primary/5 p-5 sm:p-6">
+              <p className="text-sm sm:text-base text-secondary-700 mb-3">
+                If you have any other questions, please contact us at the numbers below and we will kindly assist you.
+              </p>
+              <div className="space-y-2 text-sm sm:text-base">
+                <div className="flex items-center gap-2">
+                  <Phone className="h-4 w-4 text-primary flex-shrink-0" />
+                  <span className="text-secondary-700">(604) 555-0123</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Mail className="h-4 w-4 text-primary flex-shrink-0" />
+                  <span className="text-secondary-700">info@wiseinstitute.ca</span>
+                </div>
               </div>
             </div>
-          </div>
+
+            {/* FAQ Items */}
+            <div className="space-y-4">
+              {[
+                {
+                  question: 'What experience level is required for your programs?',
+                  answer: 'Our programs are designed for general dentists with varying levels of implant experience. We welcome beginners who have placed 0-5 implants, intermediate practitioners (5-50 implants), and advanced clinicians (50+ implants) looking to refine their skills.'
+                },
+                {
+                  question: 'Do I need to bring my own patients for the Live Surgery Study Club?',
+                  answer: 'Yes, for the Live Surgery Study Club, participants are encouraged to bring their own patients. This allows you to work on cases that are relevant to your practice while receiving direct mentorship from our experienced directors.'
+                },
+                {
+                  question: 'What materials are included in the program fees?',
+                  answer: 'The Implant Residency program includes comprehensive printed course notes, all hands-on training materials, and access to our online resources. All surgical instruments and materials for hands-on practice are provided.'
+                },
+                {
+                  question: 'How do I register for upcoming programs?',
+                  answer: "You can register your interest using the form on our Schedule page, or contact us directly via email or phone. We'll provide you with detailed program information and registration instructions."
+                },
+                {
+                  question: 'What is the cancellation policy?',
+                  answer: "We understand that schedules can change. Please contact us as soon as possible if you need to cancel or reschedule. We'll work with you to find the best solution, including transferring to a future program."
+                }
+              ].map((faq, index) => (
+                <div
+                  key={index}
+                  className={`border border-secondary-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all ${
+                    openFAQ.includes(index) ? 'bg-sky-50/50' : 'bg-white'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      setOpenFAQ(prev => {
+                        if (prev.includes(index)) {
+                          return prev.filter(i => i !== index)
+                        } else {
+                          return [...prev, index]
+                        }
+                      })
+                    }}
+                    className={`w-full flex items-start gap-4 p-5 sm:p-6 text-left transition-colors ${
+                      openFAQ.includes(index) ? 'bg-sky-50/50' : 'hover:bg-primary/5'
+                    }`}
+                  >
+                    <div className="flex-shrink-0 w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <HelpCircle className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-base sm:text-lg font-semibold text-secondary mb-0 pr-8">
+                        {faq.question}
+                      </h3>
+                    </div>
+                    <div className="flex-shrink-0">
+                      {openFAQ.includes(index) ? (
+                        <Minus className="h-5 w-5 text-secondary-400" />
+                      ) : (
+                        <Plus className="h-5 w-5 text-secondary-400" />
+                      )}
+                    </div>
+                  </button>
+                  {openFAQ.includes(index) && (
+                    <div className="px-5 sm:px-6 pb-5 sm:pb-6 pl-16 sm:pl-20 bg-sky-50/50">
+                      <div className="pt-4 border-t border-secondary-100">
+                        <p className="text-sm sm:text-base text-secondary-600 leading-relaxed">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
         </div>
       </section>
 

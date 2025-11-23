@@ -39,7 +39,7 @@ export default function AboutPage() {
       {/* Main Content Section - Introduction Text */}
       <section id="about-overview" className="section-padding bg-white">
         <div className="container-custom">
-          <div className="max-w-4xl mx-auto space-y-8" data-aos="fade-up">
+          <div className="space-y-8" data-aos="fade-up">
             <p className="text-2xl sm:text-3xl lg:text-4xl font-bold text-secondary-900 leading-relaxed">
               WISE Institute offers various educational programs for dentists who are committed to advancing their implant surgical skills through hands-on learning.
             </p>
@@ -53,7 +53,7 @@ export default function AboutPage() {
       {/* Our Story Section */}
       <section className="section-padding bg-background">
         <div className="container-custom">
-          <div className="max-w-6xl mx-auto px-2 sm:px-4">
+          <div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-secondary-900 mb-12" data-aos="fade-up">
               Our Story
             </h2>
@@ -84,7 +84,7 @@ export default function AboutPage() {
       {/* Timeline Section */}
       <section className="section-padding bg-white">
         <div className="container-custom">
-          <div className="max-w-6xl mx-auto px-2 sm:px-4">
+          <div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-secondary-900 mb-12 text-center" data-aos="fade-up">
               Timeline Highlights
             </h2>

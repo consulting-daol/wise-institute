@@ -79,7 +79,7 @@ export default function DirectorsPage() {
 
       {/* Dr. Chris Lee */}
       <section className="py-16">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div data-aos="fade-right" className="order-2 lg:order-1">
               <div className="space-y-6 sm:space-y-8">
@@ -166,7 +166,7 @@ export default function DirectorsPage() {
 
       {/* Dr. Stephen Yoon */}
       <section className="py-16">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div data-aos="fade-right" className="order-1 lg:order-1">
               <div className="flex justify-center lg:justify-start">
@@ -252,17 +252,17 @@ export default function DirectorsPage() {
 
       {/* Teaching Philosophy */}
       <section className="py-16 bg-secondary-50">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="container-custom">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-semibold tracking-tight text-secondary-900 mb-4 sm:mb-6">
               Our Teaching Philosophy
             </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-secondary-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg lg:text-xl text-secondary-600 leading-relaxed">
               Both directors share a commitment to practical, hands-on education that translates directly to clinical success.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {teachingPillars.map((pillar) => (
               <div
                 key={pillar.title}
@@ -283,12 +283,12 @@ export default function DirectorsPage() {
 
       {/* Industry Recognition */}
       <section className="py-16 bg-white">
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="container-custom">
           <div className="text-center mb-12 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-semibold tracking-tight text-secondary-900 mb-4 sm:mb-6">
               Industry Recognition
             </h2>
-            <p className="text-base sm:text-lg lg:text-xl text-secondary-600 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg lg:text-xl text-secondary-600 leading-relaxed">
               Our directors' expertise is recognized by leading dental companies and educational institutions.
             </p>
           </div>

@@ -258,7 +258,7 @@ export default function SchedulePage() {
                 Each WISE cohort is built for efficient, focused learning—fast-paced but never rushed.
               </p>
             </div>
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5 max-w-2xl mx-auto lg:max-w-none" data-aos="fade-left">
+            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5" data-aos="fade-left">
               {snapshotHighlights.map((item) => (
                 <div
                   key={item.title}
@@ -291,7 +291,7 @@ export default function SchedulePage() {
             <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-secondary mt-4 mb-2 sm:mb-3">
               Programs crafted for real clinical growth
             </h2>
-            <p className="text-sm sm:text-lg lg:text-xl text-secondary-600 max-w-3xl mx-auto">
+            <p className="text-sm sm:text-lg lg:text-xl text-secondary-600">
               Each cohort blends live surgeries, immersive mentorship, and daily hands-on work so you return to clinic confident and ready.
             </p>
           </div>
@@ -477,47 +477,190 @@ export default function SchedulePage() {
               Timeline
             </p>
             <h2 className="text-2xl sm:text-4xl font-bold text-secondary mt-3 mb-2">2025 Program Calendar</h2>
-            <p className="text-secondary-600 text-sm sm:text-lg max-w-3xl mx-auto">
+            <p className="text-secondary-600 text-sm sm:text-lg">
               Residency and study club windows laid out so you can plan clinic coverage early.
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto relative">
-            <div className="hidden sm:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-secondary-200 via-secondary-300 to-transparent" />
-            <div className="space-y-6 sm:space-y-8">
+          {/* Desktop Timeline */}
+          <div className="hidden sm:block relative">
+            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-secondary-200 via-secondary-300 to-transparent" />
+            <div className="space-y-8 sm:space-y-10">
               {[
                 { title: 'Residency — Spring Cohort', dates: 'March 15 – 22', status: 'Open', tag: 'Residency' },
                 { title: 'Study Club — Session 1', dates: 'April 5 – 7', status: 'Open', tag: 'Study Club' },
                 { title: 'Residency — Fall Cohort', dates: 'September 12 – 19', status: 'Open', tag: 'Residency' },
                 { title: 'Study Club — Session 2', dates: 'October 18 – 20', status: 'Open', tag: 'Study Club' },
                 { title: 'Study Club — Session 3', dates: 'December 6 – 8', status: 'Waitlist', tag: 'Study Club' },
-              ].map((item, idx) => (
-                <div key={item.title} className="relative pl-0" data-aos="fade-up" data-aos-delay={idx * 80}>
-                  <div className="absolute left-1/2 -translate-x-1/2 top-3 w-3 h-3 rounded-full bg-secondary-500 border-2 border-white shadow" />
-                  <div className="sm:ml-16 bg-white rounded-2xl border border-secondary-100 shadow-sm p-4 sm:p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          item.tag === 'Residency' ? 'bg-primary/10 text-primary' : 'bg-secondary/10 text-secondary'
-                        }`}
-                      >
-                        {item.tag}
-                      </span>
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          item.status === 'Open'
-                            ? 'bg-emerald-100 text-emerald-700'
-                            : 'bg-amber-100 text-amber-700'
-                        }`}
-                      >
-                        {item.status}
-                      </span>
+              ].map((item, idx) => {
+                const isLeft = idx % 2 === 0
+                return (
+                  <div key={item.title} className="relative" data-aos="fade-up" data-aos-delay={idx * 80}>
+                    {/* Timeline dot */}
+                    <div className={`absolute left-1/2 -translate-x-1/2 top-6 w-4 h-4 rounded-full border-2 border-white shadow-lg z-10 ${
+                      item.tag === 'Residency' ? 'bg-primary-500' : 'bg-secondary-500'
+                    }`} />
+                    
+                    {/* Card - Alternating left/right */}
+                    <div className="grid grid-cols-2 gap-8">
+                      {isLeft ? (
+                        <>
+                          <div className="pr-8">
+                            <div className="bg-white rounded-2xl border border-secondary-100 shadow-md p-5 sm:p-6 text-right ml-auto" style={{ maxWidth: '500px' }}>
+                              <div className="flex items-center gap-3 mb-3 justify-end">
+                                <span
+                                  className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                                    item.tag === 'Residency' ? 'bg-primary/10 text-primary' : 'bg-secondary/10 text-secondary'
+                                  }`}
+                                >
+                                  {item.tag}
+                                </span>
+                                <span
+                                  className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                                    item.status === 'Open'
+                                      ? 'bg-emerald-100 text-emerald-700'
+                                      : 'bg-amber-100 text-amber-700'
+                                  }`}
+                                >
+                                  {item.status}
+                                </span>
+                              </div>
+                              <h3 className="text-lg sm:text-xl font-bold text-secondary mb-2">{item.title}</h3>
+                              <div className="flex items-center gap-2 justify-end">
+                                <Calendar className="h-4 w-4 text-secondary-400" />
+                                <p className="text-secondary-600 text-sm font-medium">{item.dates}</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div></div>
+                        </>
+                      ) : (
+                        <>
+                          <div></div>
+                          <div className="pl-8">
+                            <div className="bg-white rounded-2xl border border-secondary-100 shadow-md p-5 sm:p-6 text-left mr-auto" style={{ maxWidth: '500px' }}>
+                              <div className="flex items-center gap-3 mb-3 justify-start">
+                                <span
+                                  className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                                    item.tag === 'Residency' ? 'bg-primary/10 text-primary' : 'bg-secondary/10 text-secondary'
+                                  }`}
+                                >
+                                  {item.tag}
+                                </span>
+                                <span
+                                  className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                                    item.status === 'Open'
+                                      ? 'bg-emerald-100 text-emerald-700'
+                                      : 'bg-amber-100 text-amber-700'
+                                  }`}
+                                >
+                                  {item.status}
+                                </span>
+                              </div>
+                              <h3 className="text-lg sm:text-xl font-bold text-secondary mb-2">{item.title}</h3>
+                              <div className="flex items-center gap-2 justify-start">
+                                <Calendar className="h-4 w-4 text-secondary-400" />
+                                <p className="text-secondary-600 text-sm font-medium">{item.dates}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      )}
                     </div>
-                    <h3 className="text-lg sm:text-xl font-semibold text-secondary mb-1">{item.title}</h3>
-                    <p className="text-secondary-500 text-sm">{item.dates}</p>
                   </div>
-                </div>
-              ))}
+                )
+              })}
+            </div>
+          </div>
+
+          {/* Mobile Timeline - Same as Desktop */}
+          <div className="sm:hidden relative">
+            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-secondary-200 via-secondary-300 to-transparent" />
+            <div className="space-y-6">
+              {[
+                { title: 'Residency — Spring Cohort', dates: 'March 15 – 22', status: 'Open', tag: 'Residency' },
+                { title: 'Study Club — Session 1', dates: 'April 5 – 7', status: 'Open', tag: 'Study Club' },
+                { title: 'Residency — Fall Cohort', dates: 'September 12 – 19', status: 'Open', tag: 'Residency' },
+                { title: 'Study Club — Session 2', dates: 'October 18 – 20', status: 'Open', tag: 'Study Club' },
+                { title: 'Study Club — Session 3', dates: 'December 6 – 8', status: 'Waitlist', tag: 'Study Club' },
+              ].map((item, idx) => {
+                const isLeft = idx % 2 === 0
+                return (
+                  <div key={item.title} className="relative">
+                    {/* Timeline dot */}
+                    <div className={`absolute left-1/2 -translate-x-1/2 top-6 w-3 h-3 rounded-full border-2 border-white shadow-lg z-10 ${
+                      item.tag === 'Residency' ? 'bg-primary-500' : 'bg-secondary-500'
+                    }`} />
+                    
+                    {/* Card - Alternating left/right */}
+                    <div className="grid grid-cols-2 gap-4">
+                      {isLeft ? (
+                        <>
+                          <div className="pr-3">
+                            <div className="bg-white rounded-2xl border border-secondary-100 shadow-md p-4 text-right ml-auto" style={{ maxWidth: '100%' }}>
+                              <div className="flex items-center gap-2 mb-2 justify-end flex-wrap">
+                                <span
+                                  className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                                    item.tag === 'Residency' ? 'bg-primary/10 text-primary' : 'bg-secondary/10 text-secondary'
+                                  }`}
+                                >
+                                  {item.tag}
+                                </span>
+                                <span
+                                  className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                                    item.status === 'Open'
+                                      ? 'bg-emerald-100 text-emerald-700'
+                                      : 'bg-amber-100 text-amber-700'
+                                  }`}
+                                >
+                                  {item.status}
+                                </span>
+                              </div>
+                              <h3 className="text-sm font-bold text-secondary mb-2">{item.title}</h3>
+                              <div className="flex items-center gap-1.5 justify-end">
+                                <Calendar className="h-3.5 w-3.5 text-secondary-400" />
+                                <p className="text-xs text-secondary-600 font-medium">{item.dates}</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div></div>
+                        </>
+                      ) : (
+                        <>
+                          <div></div>
+                          <div className="pl-3">
+                            <div className="bg-white rounded-2xl border border-secondary-100 shadow-md p-4 text-left mr-auto" style={{ maxWidth: '100%' }}>
+                              <div className="flex items-center gap-2 mb-2 justify-start flex-wrap">
+                                <span
+                                  className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                                    item.tag === 'Residency' ? 'bg-primary/10 text-primary' : 'bg-secondary/10 text-secondary'
+                                  }`}
+                                >
+                                  {item.tag}
+                                </span>
+                                <span
+                                  className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                                    item.status === 'Open'
+                                      ? 'bg-emerald-100 text-emerald-700'
+                                      : 'bg-amber-100 text-amber-700'
+                                  }`}
+                                >
+                                  {item.status}
+                                </span>
+                              </div>
+                              <h3 className="text-sm font-bold text-secondary mb-2">{item.title}</h3>
+                              <div className="flex items-center gap-1.5 justify-start">
+                                <Calendar className="h-3.5 w-3.5 text-secondary-400" />
+                                <p className="text-xs text-secondary-600 font-medium">{item.dates}</p>
+                              </div>
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
         </div>
