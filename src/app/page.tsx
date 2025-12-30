@@ -780,7 +780,7 @@ export default function HomePage() {
           title="From live surgeries to real clinic results"
           description="See residency highlights, case galleries and resources that show how WISE training translates into everyday clinical outcomes."
           leftCard={{ 
-            imageSrc: featureLeftImage, 
+            imageSrc: featureLeftImage + (featureLeftImage.startsWith('/gallery/gallery.jpg') ? '?v=2' : ''), 
             imageType: featureLeftImageType,
             title: 'WISE Gallery', 
             href: '/gallery', 
