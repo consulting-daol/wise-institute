@@ -126,7 +126,7 @@ export async function compressVideo(
 
     // 압축된 파일 읽기
     const data = await ffmpeg.readFile(outputFileName);
-    const blob = new Blob([data], { type: 'video/mp4' });
+    const blob = new Blob([data as BlobPart], { type: 'video/mp4' });
     
     // File 객체로 변환
     const compressedFile = new File(

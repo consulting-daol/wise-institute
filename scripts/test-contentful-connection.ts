@@ -20,7 +20,7 @@ async function testConnection() {
   console.log('🔍 Contentful 연결 테스트 시작...');
   console.log(`Space ID: ${CONTENTFUL_SPACE_ID}`);
   console.log(`Environment: ${CONTENTFUL_ENVIRONMENT}`);
-  console.log(`Access Token: ${CONTENTFUL_ACCESS_TOKEN.substring(0, 10)}...`);
+  console.log(`Access Token: ${CONTENTFUL_ACCESS_TOKEN?.substring(0, 10) || 'not set'}...`);
 
   try {
     // 1. News Items 테스트
@@ -62,13 +62,13 @@ async function testConnection() {
     const allNews = await client.getEntries({
       content_type: 'newsItem',
       'sys.publishedAt[exists]': true,
-    });
+    } as any);
     console.log(`  - Published된 news items: ${allNews.items.length}개`);
 
     const allMedia = await client.getEntries({
       content_type: 'wiseInstitute',
       'sys.publishedAt[exists]': true,
-    });
+    } as any);
     console.log(`  - Published된 media items: ${allMedia.items.length}개`);
 
     console.log('\n✅ 연결 테스트 완료!');

@@ -43,7 +43,7 @@ async function createMediaItemContentType() {
     }
     
     // Content type 생성
-    const contentType = await env.createContentType({
+    const contentType = await (env.createContentType as any)({
       sys: {
         id: 'mediaItem',
       },
@@ -55,6 +55,7 @@ async function createMediaItemContentType() {
           name: 'Title',
           type: 'Symbol',
           required: true,
+          localized: false,
           validations: [],
         },
         {
@@ -62,6 +63,7 @@ async function createMediaItemContentType() {
           name: 'Category',
           type: 'Symbol',
           required: false,
+          localized: false,
           validations: [],
         },
         {
@@ -69,6 +71,7 @@ async function createMediaItemContentType() {
           name: 'Description',
           type: 'Text',
           required: false,
+          localized: false,
           validations: [],
         },
         {
@@ -76,6 +79,7 @@ async function createMediaItemContentType() {
           name: 'Thumbnail',
           type: 'Array',
           required: false,
+          localized: false,
           validations: [],
           items: {
             type: 'Link',
@@ -88,6 +92,7 @@ async function createMediaItemContentType() {
           name: 'Images',
           type: 'Array',
           required: false,
+          localized: false,
           validations: [],
           items: {
             type: 'Link',
@@ -100,6 +105,7 @@ async function createMediaItemContentType() {
           name: 'Videos',
           type: 'Array',
           required: false,
+          localized: false,
           validations: [],
           items: {
             type: 'Link',
@@ -112,6 +118,7 @@ async function createMediaItemContentType() {
           name: 'Order',
           type: 'Integer',
           required: false,
+          localized: false,
           validations: [],
         },
       ],

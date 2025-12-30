@@ -43,7 +43,7 @@ export default function NewsDetailPage() {
             // }
           } else {
             // Fallback to default items
-            const defaultItems = [
+            const defaultItems: NewsItem[] = [
               {
                 id: '10',
                 category: 'Institute News',

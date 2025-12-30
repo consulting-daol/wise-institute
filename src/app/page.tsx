@@ -169,7 +169,7 @@ export default function HomePage() {
       ctaText: "LEARN MORE",
       ctaLink: "/about",
       slideLabel: "WISE Institute Education",
-      image: "/gallery/Wise_Institute_Education.png",
+      image: "/gallery/wise.webp",
       desktopImage: "/gallery/Wise_Institute_Education.png"
     },
     {
@@ -179,7 +179,7 @@ export default function HomePage() {
       ctaText: "VIEW PROGRAMS",
       ctaLink: "/programs",
       slideLabel: "Live Surgery Study Club",
-      image: "/gallery/hero2.png"
+      image: "/gallery/Live_Surgery.png"
     },
     {
       subtitle: "Comprehensive 8-day program",
@@ -188,7 +188,7 @@ export default function HomePage() {
       ctaText: "REGISTER NOW",
       ctaLink: "/schedule",
       slideLabel: "HiOssen F.I.D Course",
-      image: "/gallery/wise3.webp"
+      image: "/gallery/HiOssen.jpeg"
     }
   ]
 
@@ -464,7 +464,10 @@ export default function HomePage() {
                       className="object-cover w-full h-full"
                       priority={index === 0}
                       sizes="100vw"
-                      style={{ objectFit: 'cover', objectPosition: 'center top' }}
+                      style={{ 
+                        objectFit: 'cover', 
+                        objectPosition: index === 2 ? 'center 30%' : 'center top' 
+                      }}
                     />
                   </div>
                 ) : (
