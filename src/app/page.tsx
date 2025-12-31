@@ -195,6 +195,7 @@ export default function HomePage() {
   const [slides, setSlides] = useState(defaultSlides)
   const [campaignItems, setCampaignItems] = useState(defaultCampaignItems)
   const [isAdmin, setIsAdmin] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(false)
   
   // Additional image states with fallback
   const [statsImage, setStatsImage] = useState('/gallery/wise3.webp')
@@ -352,17 +353,20 @@ export default function HomePage() {
       return
     }
 
-    // Auto-advance slides every 8 seconds
+    // On mobile, first slide (video) should advance after 14 seconds, otherwise 8 seconds
+    const slideInterval = !isDesktop && currentSlide === 0 ? 14000 : 8000
+
+    // Auto-advance slides
     autoSlideIntervalRef.current = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, 8000)
+    }, slideInterval)
 
     return () => {
       if (autoSlideIntervalRef.current) {
         clearInterval(autoSlideIntervalRef.current)
       }
     }
-  }, [isPaused, slides.length])
+  }, [isPaused, slides.length, isDesktop, currentSlide])
 
   const togglePause = () => {
     setIsPaused((prev) => !prev)
@@ -373,8 +377,6 @@ export default function HomePage() {
     // Reset pause state when manually clicking a slide
     setIsPaused(false)
   }
-
-  const [isDesktop, setIsDesktop] = useState(false)
 
   // Touch handlers for campaign slider (mobile swipe)
   const touchStartXRef = useRef<number | null>(null)
@@ -457,18 +459,39 @@ export default function HomePage() {
                 {/* Background Image Container - covers everything, always has white background */}
                 {slideImageSrc ? (
                   <div className="absolute inset-0 overflow-hidden bg-white group/image">
-                    <Image
-                      src={slideImageSrc}
-                      alt={slide.title}
-                      fill
-                      className="object-cover w-full h-full"
-                      priority={index === 0}
-                      sizes="100vw"
-                      style={{ 
-                        objectFit: 'cover', 
-                        objectPosition: index === 2 ? 'center 30%' : 'center top' 
-                      }}
-                    />
+                    {/* Show video on mobile for first slide, otherwise show image */}
+                    {!isDesktop && index === 0 ? (
+                      <video
+                        src="/gallery/wise_video.mp4"
+                        autoPlay
+                        muted
+                        playsInline
+                        className="object-cover w-full h-full"
+                        style={{ 
+                          objectFit: 'cover', 
+                          objectPosition: 'center top' 
+                        }}
+                        onEnded={() => {
+                          // Video ended, move to next slide after 14 seconds
+                          if (!isPaused) {
+                            nextSlide()
+                          }
+                        }}
+                      />
+                    ) : (
+                      <Image
+                        src={slideImageSrc}
+                        alt={slide.title}
+                        fill
+                        className="object-cover w-full h-full"
+                        priority={index === 0}
+                        sizes="100vw"
+                        style={{ 
+                          objectFit: 'cover', 
+                          objectPosition: index === 2 ? 'center 30%' : 'center top' 
+                        }}
+                      />
+                    )}
                   </div>
                 ) : (
                   <div className="absolute inset-0 bg-white" />
