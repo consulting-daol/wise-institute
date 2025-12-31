@@ -210,7 +210,7 @@ export default function NewsDetailPage() {
       <section className="section-padding bg-white">
         <div className="container-custom">
           {/* Back Button */}
-          <div className="mb-4 sm:mb-6">
+          <div className="mb-3 sm:mb-4 md:mb-6">
             <Link
               href="/news"
               className="inline-flex items-center gap-2 text-sm sm:text-base text-secondary-600 hover:text-primary-600 transition-colors"
@@ -294,9 +294,9 @@ export default function NewsDetailPage() {
             </div>
 
             {/* Content Section */}
-            <div className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+            <div className="px-4 sm:px-5 md:px-6 lg:px-8 py-5 sm:py-6 md:py-8">
               {/* Title */}
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-secondary-900 mb-4 sm:mb-6 leading-tight">
+              <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl font-bold text-secondary-900 mb-3 sm:mb-4 md:mb-6 leading-tight">
                 {newsItem.title}
               </h1>
 

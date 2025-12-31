@@ -231,10 +231,15 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Navigation - Full Screen Overlay */}
-      {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 top-16 bg-white z-[998] overflow-y-auto">
-          {/* Header Section with Instagram and View Schedule */}
-          <div className="border-b border-secondary-200">
+      <div className={`lg:hidden fixed inset-0 top-16 bg-white z-[998] overflow-y-auto transition-all duration-300 ease-out origin-top-right ${
+        mobileMenuOpen 
+          ? 'opacity-100 scale-100 visible' 
+          : 'opacity-0 scale-95 invisible pointer-events-none'
+      }`}>
+        {/* Header Section with Instagram and View Schedule */}
+        <div className={`border-b border-secondary-200 transition-all duration-300 ease-out ${
+          mobileMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
+        }`} style={{ transitionDelay: mobileMenuOpen ? '50ms' : '0ms' }}>
             <div className="flex items-stretch h-14">
               {/* Admin Status Indicator - Mobile */}
               {isAdmin && (
@@ -284,117 +289,106 @@ export default function Navbar() {
           </div>
 
           {/* Main Menu Sections */}
-          <div className="px-4 sm:px-6 py-6 space-y-8">
+          <div className={`px-4 sm:px-6 py-6 space-y-8 transition-all duration-300 ease-out ${
+            mobileMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-4 opacity-0'
+          }`} style={{ transitionDelay: mobileMenuOpen ? '100ms' : '0ms' }}>
             {/* Programs Section */}
-            <div>
+            <div className={`transition-all duration-300 ease-out ${
+              mobileMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-6 opacity-0'
+            }`} style={{ transitionDelay: mobileMenuOpen ? '150ms' : '0ms' }}>
               <h2 className="text-lg font-bold text-secondary-900 mb-3">Programs</h2>
               <div className="grid grid-cols-2 gap-2">
-                <Link
-                  href="/programs"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50 rounded transition-colors"
-                >
-                  Program Overview
-                </Link>
-                <Link
-                  href="/programs"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50 rounded transition-colors"
-                >
-                  Hands-on Learning
-                </Link>
-                <Link
-                  href="/schedule"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50 rounded transition-colors"
-                >
-                  Course Structure
-                </Link>
-                <Link
-                  href="/contact"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50 rounded transition-colors"
-                >
-                  Support & Resources
-                </Link>
+                {[
+                  { href: '/programs', label: 'Program Overview' },
+                  { href: '/programs', label: 'Hands-on Learning' },
+                  { href: '/schedule', label: 'Course Structure' },
+                  { href: '/contact', label: 'Support & Resources' },
+                ].map((item, index) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`block px-3 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50 rounded transition-all duration-300 ease-out ${
+                      mobileMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-6 opacity-0'
+                    }`}
+                    style={{ transitionDelay: mobileMenuOpen ? `${200 + index * 50}ms` : '0ms' }}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
               </div>
             </div>
 
             {/* About Us Section */}
-            <div>
+            <div className={`transition-all duration-300 ease-out ${
+              mobileMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-6 opacity-0'
+            }`} style={{ transitionDelay: mobileMenuOpen ? '400ms' : '0ms' }}>
               <h2 className="text-lg font-bold text-secondary-900 mb-3">About Us</h2>
               <div className="space-y-1">
-                <Link
-                  href="/about"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50 rounded transition-colors"
-                >
-                  About Us
-                </Link>
-                <Link
-                  href="/directors"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50 rounded transition-colors"
-                >
-                  Our Directors
-                </Link>
-                <Link
-                  href="/contact"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50 rounded transition-colors"
-                >
-                  Contact Us
-                </Link>
+                {[
+                  { href: '/about', label: 'About Us' },
+                  { href: '/directors', label: 'Our Directors' },
+                  { href: '/contact', label: 'Contact Us' },
+                ].map((item, index) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`block px-3 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50 rounded transition-all duration-300 ease-out ${
+                      mobileMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-6 opacity-0'
+                    }`}
+                    style={{ transitionDelay: mobileMenuOpen ? `${450 + index * 50}ms` : '0ms' }}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
               </div>
             </div>
 
             {/* Resources Section */}
-            <div>
+            <div className={`transition-all duration-300 ease-out ${
+              mobileMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-6 opacity-0'
+            }`} style={{ transitionDelay: mobileMenuOpen ? '600ms' : '0ms' }}>
               <h2 className="text-lg font-bold text-secondary-900 mb-3">Resources</h2>
               <div className="grid grid-cols-2 gap-2">
-                <Link
-                  href="/programs"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50 rounded transition-colors"
-                >
-                  Residency Highlights
-                </Link>
-                <Link
-                  href="/gallery"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50 rounded transition-colors"
-                >
-                  Gallery
-                </Link>
-                <Link
-                  href="/news"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50 rounded transition-colors"
-                >
-                  News
-                </Link>
-                <Link
-                  href={isAdmin ? '/admin' : '/login'}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`block px-3 py-2 text-sm rounded transition-colors ${
-                    isAdmin
-                      ? 'text-primary-600 hover:text-primary-700 hover:bg-primary-50 font-semibold'
-                      : 'text-secondary-700 hover:text-primary-600 hover:bg-primary-50'
-                  }`}
-                >
-                  {isAdmin ? 'Admin Panel' : 'Admin'}
-                </Link>
+                {[
+                  { href: '/programs', label: 'Residency Highlights' },
+                  { href: '/gallery', label: 'Gallery' },
+                  { href: '/news', label: 'News' },
+                  { href: isAdmin ? '/admin' : '/login', label: isAdmin ? 'Admin Panel' : 'Admin', isAdmin },
+                ].map((item, index) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`block px-3 py-2 text-sm rounded transition-all duration-300 ease-out ${
+                      item.isAdmin
+                        ? 'text-primary-600 hover:text-primary-700 hover:bg-primary-50 font-semibold'
+                        : 'text-secondary-700 hover:text-primary-600 hover:bg-primary-50'
+                    } ${
+                      mobileMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-6 opacity-0'
+                    }`}
+                    style={{ transitionDelay: mobileMenuOpen ? `${650 + index * 50}ms` : '0ms' }}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
               </div>
             </div>
 
             {/* Registration Section */}
-            <div>
+            <div className={`transition-all duration-300 ease-out ${
+              mobileMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-6 opacity-0'
+            }`} style={{ transitionDelay: mobileMenuOpen ? '850ms' : '0ms' }}>
               <h2 className="text-lg font-bold text-secondary-900 mb-3">Registration</h2>
               <div className="space-y-1">
                 <Link
                   href="/schedule"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50 rounded transition-colors"
+                  className={`block px-3 py-2 text-sm text-secondary-700 hover:text-primary-600 hover:bg-primary-50 rounded transition-all duration-300 ease-out ${
+                    mobileMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-6 opacity-0'
+                  }`}
+                  style={{ transitionDelay: mobileMenuOpen ? '900ms' : '0ms' }}
                 >
                   Upcoming Courses
                 </Link>

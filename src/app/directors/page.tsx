@@ -78,19 +78,19 @@ export default function DirectorsPage() {
       />
 
       {/* Dr. Chris Lee */}
-      <section className="py-16">
+      <section className="py-10 sm:py-12 md:py-14 lg:py-16">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center">
             <div data-aos="fade-right" className="order-2 lg:order-1">
-              <div className="space-y-6 sm:space-y-8">
-                <div className="flex items-start justify-between">
+              <div className="space-y-5 sm:space-y-6 md:space-y-8">
+                <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-secondary-900 mb-2">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-secondary-900 mb-2">
                       Dr. Chris Lee
                     </h2>
-                    <p className="text-primary-700 font-medium text-lg sm:text-xl">DMD, B.Sc. (Pharm)</p>
+                    <p className="text-base sm:text-lg md:text-xl text-primary-700 font-medium">DMD, B.Sc. (Pharm)</p>
                   </div>
-                  <span className="inline-flex items-center gap-2 rounded-full border border-secondary-200 bg-white px-3 py-1 text-xs text-secondary-600 shadow-sm">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-secondary-200 bg-white px-2.5 sm:px-3 py-1 text-xs text-secondary-600 shadow-sm flex-shrink-0">
                     <span className="h-1.5 w-1.5 rounded-full bg-primary-600" />
                     Director
                   </span>
@@ -165,9 +165,9 @@ export default function DirectorsPage() {
       <div className="h-px w-full bg-gradient-to-r from-transparent via-secondary-200 to-transparent" />
 
       {/* Dr. Stephen Yoon */}
-      <section className="py-16">
+      <section className="py-10 sm:py-12 md:py-14 lg:py-16">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center">
             <div data-aos="fade-right" className="order-1 lg:order-1">
               <div className="flex justify-center lg:justify-start">
                 <div className="group relative w-full max-w-[520px]">
@@ -181,15 +181,15 @@ export default function DirectorsPage() {
             </div>
 
             <div data-aos="fade-left" className="order-2 lg:order-2">
-              <div className="space-y-6 sm:space-y-8">
-                <div className="flex items-start justify-between">
+              <div className="space-y-5 sm:space-y-6 md:space-y-8">
+                <div className="flex items-start justify-between gap-4">
                   <div>
-                    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-secondary-900 mb-2">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-secondary-900 mb-2">
                       Dr. Stephen Yoon
                     </h2>
-                    <p className="text-primary-700 font-medium text-lg sm:text-xl">DMD, B.Sc.</p>
+                    <p className="text-base sm:text-lg md:text-xl text-primary-700 font-medium">DMD, B.Sc.</p>
                   </div>
-                  <span className="inline-flex items-center gap-2 rounded-full border border-secondary-200 bg-white px-3 py-1 text-xs text-secondary-600 shadow-sm">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-secondary-200 bg-white px-2.5 sm:px-3 py-1 text-xs text-secondary-600 shadow-sm flex-shrink-0">
                   <span className="h-1.5 w-1.5 rounded-full bg-primary-600" />
                     Director
                   </span>{/* <span className="h-1.5 w-1.5 rounded-full bg-secondary-500" />
@@ -251,9 +251,9 @@ export default function DirectorsPage() {
       </section>
 
       {/* Teaching Philosophy */}
-      <section className="py-16 bg-secondary-50">
+      <section className="py-10 sm:py-12 md:py-14 lg:py-16 bg-secondary-50">
         <div className="container-custom">
-          <div className="text-center mb-12 sm:mb-16">
+          <div className="text-center mb-8 sm:mb-12 md:mb-14 lg:mb-16">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-semibold tracking-tight text-secondary-900 mb-4 sm:mb-6">
               Our Teaching Philosophy
             </h2>
@@ -262,16 +262,16 @@ export default function DirectorsPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {teachingPillars.map((pillar) => (
               <div
                 key={pillar.title}
-                className="rounded-xl border border-secondary-200 bg-white p-8 shadow-sm ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:ring-secondary-300"
+                className="rounded-xl border border-secondary-200 bg-white p-6 sm:p-8 shadow-sm ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:ring-secondary-300"
               >
-                <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-6 ring-1 ring-inset ${pillar.iconBg}`}>
+                <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center mb-4 sm:mb-6 ring-1 ring-inset ${pillar.iconBg}`}>
                   {pillar.icon}
                 </div>
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold tracking-tight text-secondary-900 mb-3 sm:mb-4">
+                <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold tracking-tight text-secondary-900 mb-2 sm:mb-3 md:mb-4">
                   {pillar.title}
                 </h3>
                 <p className="text-sm sm:text-base text-secondary-600">{pillar.description}</p>
@@ -282,9 +282,9 @@ export default function DirectorsPage() {
       </section>
 
       {/* Industry Recognition */}
-      <section className="py-16 bg-white">
+      <section className="py-10 sm:py-12 md:py-14 lg:py-16 bg-white">
         <div className="container-custom">
-          <div className="text-center mb-12 sm:mb-16">
+          <div className="text-center mb-8 sm:mb-12 md:mb-14 lg:mb-16">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-semibold tracking-tight text-secondary-900 mb-4 sm:mb-6">
               Industry Recognition
             </h2>
@@ -293,16 +293,16 @@ export default function DirectorsPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
             {recognitionItems.map((item) => (
               <div
                 key={item.title}
-                className="text-center rounded-xl border border-secondary-200 bg-white p-8 shadow-sm ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:ring-secondary-300"
+                className="text-center rounded-xl border border-secondary-200 bg-white p-6 sm:p-8 shadow-sm ring-1 ring-black/5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md hover:ring-secondary-300"
               >
-                <div className={`w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6 ring-1 ring-inset ${item.iconBg}`}>
+                <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-3xl flex items-center justify-center mx-auto mb-4 sm:mb-6 ring-1 ring-inset ${item.iconBg}`}>
                   {item.icon}
                 </div>
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-semibold tracking-tight text-secondary-900 mb-3 sm:mb-4">
+                <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-semibold tracking-tight text-secondary-900 mb-2 sm:mb-3 md:mb-4">
                   {item.title}
                 </h3>
                 <p className="text-sm sm:text-base text-secondary-600">{item.description}</p>

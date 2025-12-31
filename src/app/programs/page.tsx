@@ -31,9 +31,9 @@ export default function ProgramsPage() {
       />
 
       {/* Implant Residency */}
-      <section className="py-10 sm:py-14 bg-white">
+      <section className="py-8 sm:py-10 md:py-12 lg:py-14 bg-white">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-stretch">
             <div data-aos="fade-right" className="flex flex-col">
               <p className="uppercase tracking-wider text-primary-600 font-bold text-sm sm:text-base lg:text-lg mb-3">
                 Implant Residency
@@ -128,13 +128,13 @@ export default function ProgramsPage() {
       </section>
 
       {/* Live Surgery Study Club */}
-      <section className="py-10 sm:py-14 bg-gradient-to-br from-white via-primary/5 to-white relative overflow-hidden">
+      <section className="py-8 sm:py-10 md:py-12 lg:py-14 bg-gradient-to-br from-white via-primary/5 to-white relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div className="h-24 sm:h-32 w-24 sm:w-32 rounded-full bg-primary-200/30 blur-3xl absolute top-6 left-3" />
           <div className="h-24 sm:h-32 w-24 sm:w-32 rounded-full bg-secondary-200/30 blur-3xl absolute bottom-10 right-6" />
         </div>
         <div className="container-custom relative">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-stretch">
             <div data-aos="fade-left" className="rounded-3xl border-2 border-secondary-200 bg-white p-6 sm:p-10 shadow-lg order-2 lg:order-1">
               <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary mb-4 sm:mb-6">Program Features</h3>
               <div className="space-y-4">
@@ -222,9 +222,9 @@ export default function ProgramsPage() {
       </section>
 
       {/* Networking & Community */}
-      <section className="py-10 sm:py-14 bg-white">
+      <section className="py-8 sm:py-10 md:py-12 lg:py-14 bg-white">
         <div className="container-custom">
-          <div data-aos="fade-up" className="text-center mb-10 sm:mb-14">
+          <div data-aos="fade-up" className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-14">
             <p className="uppercase tracking-wider text-primary-600 font-bold text-sm sm:text-base lg:text-lg mb-3">
               Networking & Community
             </p>
@@ -263,9 +263,9 @@ export default function ProgramsPage() {
       </section>
 
       {/* Program Comparison */}
-      <section className="py-10 sm:py-14 bg-secondary-50">
+      <section className="py-8 sm:py-10 md:py-12 lg:py-14 bg-secondary-50">
         <div className="container-custom">
-          <div data-aos="fade-up" className="text-center mb-10 sm:mb-14">
+          <div data-aos="fade-up" className="text-center mb-8 sm:mb-10 md:mb-12 lg:mb-14">
             <p className="uppercase tracking-wider text-primary-600 font-bold text-sm sm:text-base lg:text-lg mb-3">
               Choose Your Program
             </p>
@@ -275,11 +275,11 @@ export default function ProgramsPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
             <div 
               data-aos="fade-right" 
               onClick={() => handleProgramClick('residency')}
-              className="group relative rounded-3xl border-2 border-secondary-200 bg-white p-6 sm:p-10 shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-all"
+              className="group relative rounded-2xl sm:rounded-3xl border-2 border-secondary-200 bg-white p-5 sm:p-6 md:p-8 lg:p-10 shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-all"
             >
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary-500/25 via-primary-500/10 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative">
@@ -322,7 +322,7 @@ export default function ProgramsPage() {
             <div 
               data-aos="fade-left" 
               onClick={() => handleProgramClick('study-club')}
-              className="group relative rounded-3xl border-2 border-secondary-200 bg-white p-6 sm:p-10 shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-all"
+              className="group relative rounded-2xl sm:rounded-3xl border-2 border-secondary-200 bg-white p-5 sm:p-6 md:p-8 lg:p-10 shadow-lg overflow-hidden cursor-pointer hover:shadow-xl transition-all"
             >
               <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-secondary-500/25 via-secondary-500/10 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500" />
               <div className="relative">

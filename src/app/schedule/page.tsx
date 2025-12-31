@@ -306,21 +306,21 @@ export default function SchedulePage() {
       </section>
 
       {/* Registration Form */}
-      <section id="registration-form" className="py-10 sm:py-14 bg-white">
+      <section id="registration-form" className="py-8 sm:py-10 md:py-12 lg:py-14 bg-white">
         <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
             <div className="lg:col-span-2">
-              <div data-aos="fade-up" className="rounded-3xl border border-secondary-100 bg-gradient-to-br from-white via-background to-white p-6 sm:p-10 shadow-lg">
-                <div className="text-left mb-6 sm:mb-8">
-                  <p className="uppercase tracking-wider text-primary-600 font-bold text-sm sm:text-base lg:text-lg mb-3">
+              <div data-aos="fade-up" className="rounded-2xl sm:rounded-3xl border border-secondary-100 bg-gradient-to-br from-white via-background to-white p-5 sm:p-6 md:p-8 lg:p-10 shadow-lg">
+                <div className="text-left mb-5 sm:mb-6 md:mb-8">
+                  <p className="uppercase tracking-wider text-primary-600 font-bold text-xs sm:text-sm md:text-base lg:text-lg mb-2 sm:mb-3">
                     Registration Form
                   </p>
-                  <h2 className="text-3xl font-bold text-secondary mb-2">Tell us when to save your seat</h2>
-                  <p className="text-secondary-600 text-sm sm:text-base">
-                    We’ll follow up with cohort availability, tuition, and what to prep before live surgery days.
+                  <h2 className="text-2xl sm:text-3xl font-bold text-secondary mb-2">Tell us when to save your seat</h2>
+                  <p className="text-sm sm:text-base text-secondary-600">
+                    We'll follow up with cohort availability, tuition, and what to prep before live surgery days.
                   </p>
                 </div>
-                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
+                <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 md:space-y-5">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                       Full Name *
@@ -431,9 +431,9 @@ export default function SchedulePage() {
             </div>
 
             {/* Program Benefits */}
-            <div data-aos="fade-left" className="space-y-5 sm:space-y-6">
-              <div className="rounded-3xl border border-secondary-100 bg-white p-5 sm:p-6 space-y-5">
-                <h3 className="text-lg sm:text-xl font-semibold text-secondary">What you’ll get</h3>
+            <div data-aos="fade-left" className="space-y-4 sm:space-y-5 md:space-y-6">
+              <div className="rounded-2xl sm:rounded-3xl border border-secondary-100 bg-white p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5">
+                <h3 className="text-base sm:text-lg md:text-xl font-semibold text-secondary">What you'll get</h3>
                 {[
                   'Guided live surgeries & pig jaw labs',
                   'Direct mentorship from both directors',
