@@ -5,6 +5,9 @@ import { useState, useEffect, useRef } from 'react'
 type VideoFirstFrameThumbnailProps = {
   src: string
   fallbackPoster?: string
+  mediaItemId?: string
+  isAdmin?: boolean
+  onThumbnailSaved?: () => void
   className?: string
   onMouseEnter?: (e: React.MouseEvent<HTMLVideoElement>) => void
   onMouseLeave?: (e: React.MouseEvent<HTMLVideoElement>) => void
@@ -13,6 +16,9 @@ type VideoFirstFrameThumbnailProps = {
 export default function VideoFirstFrameThumbnail({
   src,
   fallbackPoster,
+  mediaItemId,
+  isAdmin,
+  onThumbnailSaved,
   className,
   onMouseEnter,
   onMouseLeave,
@@ -20,6 +26,7 @@ export default function VideoFirstFrameThumbnail({
   const [posterUrl, setPosterUrl] = useState<string | null>(null)
   const [isInView, setIsInView] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+  const saveAttemptedRef = useRef(false)
 
   // Pre-load: start observing immediately with large rootMargin so above-fold items load right away
   useEffect(() => {
@@ -60,6 +67,30 @@ export default function VideoFirstFrameThumbnail({
           ctx.drawImage(video, 0, 0)
           const dataUrl = canvas.toDataURL('image/jpeg', 0.8)
           setPosterUrl(dataUrl)
+
+          // Save to Contentful when: admin, no existing thumbnail, not yet saved
+          if (
+            isAdmin &&
+            mediaItemId &&
+            !fallbackPoster &&
+            !saveAttemptedRef.current
+          ) {
+            saveAttemptedRef.current = true
+            fetch(`/api/admin/media/${mediaItemId}/save-thumbnail`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ imageBase64: dataUrl }),
+              credentials: 'include',
+            })
+              .then((res) => {
+                if (res.ok) {
+                  onThumbnailSaved?.()
+                }
+              })
+              .catch(() => {
+                saveAttemptedRef.current = false
+              })
+          }
         }
       } catch {
         // CORS or canvas tainted - keep fallbackPoster if any
@@ -75,7 +106,7 @@ export default function VideoFirstFrameThumbnail({
       video.removeEventListener('seeked', handleSeeked)
       video.src = ''
     }
-  }, [isInView, src])
+  }, [isInView, src, isAdmin, mediaItemId, fallbackPoster, onThumbnailSaved])
 
   const effectivePoster = posterUrl || fallbackPoster || undefined
 

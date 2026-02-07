@@ -311,6 +311,8 @@ export default function GalleryClient({ initialMediaItems }: GalleryClientProps)
                           <VideoFirstFrameThumbnail
                             src={firstMedia.url}
                             fallbackPoster={item.thumbnail?.[0] || item.images?.[0]}
+                            mediaItemId={item.id}
+                            isAdmin={isAdmin}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                             onMouseEnter={(e) => {
                               e.currentTarget.play().catch(() => {})
