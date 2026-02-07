@@ -46,6 +46,38 @@ async function fileToWebpBuffer(file: File): Promise<{ buffer: Buffer; fileName:
   }
 }
 
+/** Upload image from base64 (e.g. canvas.toDataURL) - for auto-captured thumbnails */
+export async function uploadImageFromBase64(env: any, base64Data: string, fileName: string) {
+  try {
+    const base64 = base64Data.replace(/^data:image\/\w+;base64,/, '');
+    const input = Buffer.from(base64, 'base64');
+    const webpBuffer = await sharp(input)
+      .resize(800, null, { withoutEnlargement: true, fit: 'inside' })
+      .webp({ quality: 80 })
+      .toBuffer();
+    const webpFileName = fileName.replace(/\.[^.]+$/, '') + '.webp';
+
+    const asset = await env.createAssetFromFiles({
+      fields: {
+        title: { 'en-US': webpFileName },
+        file: {
+          'en-US': {
+            contentType: 'image/webp',
+            fileName: webpFileName,
+            file: webpBuffer,
+          },
+        },
+      },
+    });
+    const processed = await asset.processForAllLocales();
+    const published = await processed.publish();
+    return published;
+  } catch (error: any) {
+    console.error('Error uploading from base64:', error);
+    throw new Error(`Failed to upload thumbnail: ${error.message || 'Unknown error'}`);
+  }
+}
+
 export async function uploadImage(env: any, file: File) {
   try {
     console.log(`  📸 Processing image: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`);
