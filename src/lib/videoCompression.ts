@@ -1,28 +1,26 @@
 import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { fetchFile, toBlobURL } from '@ffmpeg/util';
 
-// FFmpeg 인스턴스 캐싱
+const CORE_VERSION = '0.11.5';
 let ffmpegInstance: FFmpeg | null = null;
-let isFFmpegLoaded = false;
+let loadedCoreVersion: string | null = null;
 
-// FFmpeg 초기화
 async function getFFmpeg(): Promise<FFmpeg> {
-  if (ffmpegInstance && isFFmpegLoaded) {
+  if (ffmpegInstance && loadedCoreVersion === CORE_VERSION) {
     return ffmpegInstance;
   }
+  ffmpegInstance = null;
+  loadedCoreVersion = null;
 
   const ffmpeg = new FFmpeg();
-  
-  // FFmpeg 로드
-  const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';
+  const baseURL = `https://unpkg.com/@ffmpeg/core@${CORE_VERSION}/dist/umd`;
   await ffmpeg.load({
     coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
     wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
   });
 
   ffmpegInstance = ffmpeg;
-  isFFmpegLoaded = true;
-  
+  loadedCoreVersion = CORE_VERSION;
   return ffmpeg;
 }
 
@@ -36,13 +34,138 @@ export type VideoCompressionOptions = {
   rotate?: number; // 회전 각도 (90, 180, 270)
 };
 
+/** 이 값 이하로 요청되면 비트레이트 기반 1회 압축 (4.5MB 이하) */
+const STRICT_SIZE_THRESHOLD_MB = 5;
+const AUDIO_BITRATE_KBPS = 96;
+const SIZE_SAFETY_MARGIN = 0.9;
+
+function getVideoDuration(file: File): Promise<number> {
+  return new Promise((resolve, reject) => {
+    const video = document.createElement('video');
+    video.preload = 'metadata';
+    video.onloadedmetadata = () => {
+      URL.revokeObjectURL(video.src);
+      const d = video.duration;
+      if (typeof d === 'number' && isFinite(d) && d > 0 && d < 36000) {
+        resolve(d);
+      } else {
+        reject(new Error('Invalid duration'));
+      }
+    };
+    video.onerror = () => {
+      URL.revokeObjectURL(video.src);
+      reject(new Error('Could not load video metadata'));
+    };
+    video.src = URL.createObjectURL(file);
+  });
+}
+
+function calcTargetVideoBitrateKbps(maxSizeMB: number, durationSec: number): number {
+  const totalBits = maxSizeMB * 8 * 1024 * 1024 * SIZE_SAFETY_MARGIN;
+  const audioBits = AUDIO_BITRATE_KBPS * 1000 * durationSec;
+  const videoBits = Math.max(0, totalBits - audioBits);
+  const kbps = Math.floor(videoBits / durationSec / 1000);
+  return Math.max(400, Math.min(kbps, 8000));
+}
+
+async function compressVideoWithBitrate(
+  file: File,
+  maxSizeMB: number,
+  rotate?: number
+): Promise<File> {
+  let durationSec = 60;
+  try {
+    durationSec = await getVideoDuration(file);
+  } catch {
+    durationSec = 60;
+  }
+  durationSec = Math.max(1, Math.min(durationSec, 36000));
+
+  const videoBitrateKbps = calcTargetVideoBitrateKbps(maxSizeMB, durationSec);
+  const bitrate = `${videoBitrateKbps}k`;
+
+  const ffmpeg = await getFFmpeg();
+  const fileExtension = file.name.split('.').pop() || 'mp4';
+  const inputFileName = `input.${fileExtension}`;
+  await ffmpeg.writeFile(inputFileName, await fetchFile(file));
+
+  let videoFilter = `scale='min(1280,iw)':'min(720,ih)':force_original_aspect_ratio=decrease`;
+  if (rotate === 90) {
+    videoFilter = `transpose=1,${videoFilter}`;
+  } else if (rotate === 180) {
+    videoFilter = `transpose=1,transpose=1,${videoFilter}`;
+  } else if (rotate === 270) {
+    videoFilter = `transpose=2,${videoFilter}`;
+  }
+
+  const outputFileName = 'output.mp4';
+  const videoArgs = ['-threads', '2', '-i', inputFileName, '-vf', videoFilter, '-c:v', 'libx264', '-preset', 'veryfast', '-b:v', bitrate, '-movflags', '+faststart'];
+
+  try {
+    await ffmpeg.exec([...videoArgs, '-c:a', 'copy', '-y', outputFileName]);
+  } catch {
+    await ffmpeg.exec([...videoArgs, '-an', '-y', outputFileName]);
+  }
+
+  const data = await ffmpeg.readFile(outputFileName);
+  await ffmpeg.deleteFile(inputFileName);
+  await ffmpeg.deleteFile(outputFileName);
+
+  const blob = new Blob([data as BlobPart], { type: 'video/mp4' });
+  const result = new File(
+    [blob],
+    file.name.replace(/\.[^.]+$/, '.mp4'),
+    { type: 'video/mp4' }
+  );
+
+  if (result.size < 1000) {
+    throw new Error('FFmpeg produced empty or invalid output');
+  }
+  return result;
+}
+
+async function compressVideoWithCRF(file: File, rotate?: number): Promise<File> {
+  const ffmpeg = await getFFmpeg();
+  const fileExtension = file.name.split('.').pop() || 'mp4';
+  const inputFileName = `input.${fileExtension}`;
+  await ffmpeg.writeFile(inputFileName, await fetchFile(file));
+
+  let videoFilter = `scale='min(1280,iw)':'min(720,ih)':force_original_aspect_ratio=decrease`;
+  if (rotate === 90) {
+    videoFilter = `transpose=1,${videoFilter}`;
+  } else if (rotate === 180) {
+    videoFilter = `transpose=1,transpose=1,${videoFilter}`;
+  } else if (rotate === 270) {
+    videoFilter = `transpose=2,${videoFilter}`;
+  }
+
+  const outputFileName = 'output.mp4';
+  const videoArgs = ['-threads', '2', '-i', inputFileName, '-vf', videoFilter, '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '28', '-movflags', '+faststart'];
+
+  try {
+    await ffmpeg.exec([...videoArgs, '-c:a', 'copy', '-y', outputFileName]);
+  } catch {
+    await ffmpeg.exec([...videoArgs, '-an', '-y', outputFileName]);
+  }
+
+  const data = await ffmpeg.readFile(outputFileName);
+  await ffmpeg.deleteFile(inputFileName);
+  await ffmpeg.deleteFile(outputFileName);
+
+  return new File(
+    [new Blob([data as BlobPart], { type: 'video/mp4' })],
+    file.name.replace(/\.[^.]+$/, '.mp4'),
+    { type: 'video/mp4' }
+  );
+}
+
 // 비디오 파일 압축
 export async function compressVideo(
   file: File,
   options: VideoCompressionOptions = {}
 ): Promise<File> {
   const {
-    maxSizeMB = 50, // 기본 최대 크기 50MB
+    maxSizeMB = 50,
     maxWidth = 1920,
     maxHeight = 1080,
     quality = 23,
@@ -50,30 +173,37 @@ export async function compressVideo(
     rotate,
   } = options;
 
-  // 회전만 하는 경우 (rotate 옵션이 있고 크기 제한이 매우 큰 경우)
   const isRotationOnly = rotate !== undefined && maxSizeMB >= 1000;
-  
-  // 파일이 이미 작고 회전이 필요없으면 압축하지 않음
   const fileSizeMB = file.size / (1024 * 1024);
+  const maxBytes = maxSizeMB * 1024 * 1024;
+
   if (fileSizeMB <= maxSizeMB && !rotate) {
     return file;
   }
 
+  const enforceMaxSize = maxSizeMB <= STRICT_SIZE_THRESHOLD_MB;
+
   try {
+    if (enforceMaxSize) {
+      let compressed: File;
+      try {
+        compressed = await compressVideoWithBitrate(file, maxSizeMB, rotate);
+      } catch (bitrateError) {
+        console.warn('비트레이트 압축 실패, CRF 방식으로 재시도:', bitrateError);
+        compressed = await compressVideoWithCRF(file, rotate);
+      }
+      const compressedSizeMB = (compressed.size / (1024 * 1024)).toFixed(2);
+      console.log(`비디오 압축 완료: ${fileSizeMB.toFixed(2)}MB → ${compressedSizeMB}MB`);
+      return compressed;
+    }
+
     const ffmpeg = await getFFmpeg();
-    
-    // 입력 파일을 FFmpeg에 쓰기
     const fileExtension = file.name.split('.').pop() || 'mp4';
     const inputFileName = `input.${fileExtension}`;
     await ffmpeg.writeFile(inputFileName, await fetchFile(file));
-    
-    // 출력 파일명
+
     const outputFileName = 'output.mp4';
-    
-    // 비디오 필터 구성
     let videoFilter: string;
-    
-    // 회전이 필요한 경우
     if (rotate) {
       if (rotate === 90) {
         videoFilter = 'transpose=1';
@@ -84,11 +214,8 @@ export async function compressVideo(
       } else {
         videoFilter = `scale='min(${maxWidth},iw)':'min(${maxHeight},ih)':force_original_aspect_ratio=decrease`;
       }
-      
-      // 회전만 하는 경우가 아니면 scale 추가
       if (!isRotationOnly) {
         if (rotate === 90 || rotate === 270) {
-          // 90도/270도 회전 시 가로/세로가 바뀌므로 scale도 조정
           videoFilter = `${videoFilter},scale='min(${maxHeight},iw)':'min(${maxWidth},ih)':force_original_aspect_ratio=decrease`;
         } else {
           videoFilter = `${videoFilter},scale='min(${maxWidth},iw)':'min(${maxHeight},ih)':force_original_aspect_ratio=decrease`;
@@ -97,56 +224,46 @@ export async function compressVideo(
     } else {
       videoFilter = `scale='min(${maxWidth},iw)':'min(${maxHeight},ih)':force_original_aspect_ratio=decrease`;
     }
-    
-    // 압축 명령어 구성
-    const args: string[] = [
+
+    const videoArgs = [
+      '-threads', '2',
       '-i', inputFileName,
       '-vf', videoFilter,
       '-c:v', 'libx264',
       '-preset', 'medium',
       '-crf', quality.toString(),
-      '-c:a', 'aac',
-      '-b:a', '128k',
       '-movflags', '+faststart',
-      '-y', // 덮어쓰기 허용
-      outputFileName,
     ];
-
-    // 비트레이트가 지정된 경우 사용
     if (bitrate) {
-      // CRF 제거하고 비트레이트 추가
-      const crfIndex = args.indexOf('-crf');
+      const crfIndex = videoArgs.indexOf('-crf');
       if (crfIndex !== -1) {
-        args.splice(crfIndex, 2, '-b:v', bitrate);
+        videoArgs.splice(crfIndex, 2, '-b:v', bitrate);
       }
     }
 
-    // 압축 실행
-    await ffmpeg.exec(args);
-
-    // 압축된 파일 읽기
+    try {
+      await ffmpeg.exec([...videoArgs, '-c:a', 'copy', '-y', outputFileName]);
+    } catch {
+      await ffmpeg.exec([...videoArgs, '-an', '-y', outputFileName]);
+    }
     const data = await ffmpeg.readFile(outputFileName);
     const blob = new Blob([data as BlobPart], { type: 'video/mp4' });
-    
-    // File 객체로 변환
+
     const compressedFile = new File(
       [blob],
       file.name.replace(/\.[^.]+$/, '.mp4'),
       { type: 'video/mp4' }
     );
 
-    // 임시 파일 정리
     await ffmpeg.deleteFile(inputFileName);
     await ffmpeg.deleteFile(outputFileName);
 
-    // 압축된 파일 크기 확인
     const compressedSizeMB = compressedFile.size / (1024 * 1024);
     console.log(`비디오 압축 완료: ${fileSizeMB.toFixed(2)}MB → ${compressedSizeMB.toFixed(2)}MB`);
 
     return compressedFile;
   } catch (error) {
     console.error('비디오 압축 실패:', error);
-    // 압축 실패 시 원본 파일 반환
     return file;
   }
 }

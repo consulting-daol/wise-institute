@@ -558,10 +558,10 @@ export default function AdminClient() {
         setProgressMessage("비디오 압축 중...");
         try {
           compressedVideoFiles = await compressVideos(finalVideoFiles, {
-            maxSizeMB: 100, // 최대 100MB
+            maxSizeMB: 4.5, // Vercel 4.5MB 한도 이하로 압축
             maxWidth: 1920,
             maxHeight: 1080,
-            quality: 23, // CRF 값 (낮을수록 고품질)
+            quality: 23,
           });
         } catch (error) {
           console.error('비디오 압축 실패:', error);
