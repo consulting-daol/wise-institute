@@ -51,7 +51,7 @@ export default function SchedulePage() {
       capacity: "Open to all",
       location: "VCC West – Exhibit Hall Live Stage",
       status: "Open",
-      description: "Join us at the Pacific Dental Conference (PDC) 2026 for an exclusive LIVE SURGERY on the Live Stage with Dr. Stephen Yoon & Dr. Chris Lee. Watch real-time implant surgery decision-making for challenging posterior maxilla cases, including limited vertical bone height and proximity to the maxillary sinus. A rare dental education opportunity—see clinical dentistry in action with practical, minimally invasive techniques performed live. 9:30–11:00 AM.",
+      description: "Clinical Excellence: Innovative implant solutions for replacing posterior maxillary teeth. This live, hands-on session covers short implant placement to minimize sinus involvement, simplified sinus lifting and bone augmentation, and 3D guided planning and surgery. Co-Sponsored by Hiossen. 9:30–11:00 AM.",
       price: "Free",
     },
     {
@@ -208,7 +208,7 @@ export default function SchedulePage() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm text-secondary-500">
             <div className="flex flex-col gap-0.5">
               <span className="font-semibold text-secondary-600">Co-led by Dr. Chris Lee & Dr. Stephen Yoon</span>
-              {program.type === 'Residency' && <span>Powered by HiOssen AIC Education</span>}
+              {(program.type === 'Residency' || program.type === 'Event') && <span>Powered by HiOssen AIC Education</span>}
             </div>
             <a
               href="#registration-form"

@@ -186,22 +186,23 @@ export default function ContactPage() {
 
               <div className="flex-1 flex flex-col">
                 <h3 className="text-base sm:text-lg font-bold text-secondary-900 mb-2.5 sm:mb-3">
-                  Session Focus:
+                  Session Focus
                 </h3>
-                <ul className="space-y-2 text-sm text-secondary-700 mb-4 list-disc list-inside">
-                  <li>Limited vertical bone height</li>
-                  <li>Proximity to the maxillary sinus</li>
-                </ul>
-                <p className="text-sm text-secondary-600 mb-4">
-                  Watch real-time implant surgery decision-making. A rare dental education opportunity—see clinical dentistry in action with practical, minimally invasive techniques performed live.
+                <p className="text-sm text-secondary-600 mb-3">
+                  Innovative implant solutions for replacing posterior maxillary teeth—practical approaches for cases with limited vertical bone height and proximity to the maxillary sinus.
                 </p>
+                <ul className="space-y-2 text-sm text-secondary-700 mb-4 list-disc list-inside">
+                  <li>Short implant placement techniques to minimize or avoid sinus involvement</li>
+                  <li>Simplified sinus lifting and bone augmentation methods</li>
+                  <li>3D guided planning and surgery for safe navigation around vital anatomy</li>
+                </ul>
 
                 <div className="mt-auto pt-4 border-t border-secondary-100">
                   <p className="text-xs sm:text-sm text-secondary-600 mb-1">
                     Co-led by: <span className="font-medium">Dr. Chris Lee (DMD, B.SC. PHARM)</span> ▪ <span className="font-medium">Dr. Stephen Yoon (DMD, B.SC)</span>
                   </p>
                   <p className="text-xs text-secondary-400 text-center mt-3">
-                    Don&apos;t miss this must-see session.
+                    Co-Sponsored by Hiossen
                   </p>
                 </div>
               </div>
