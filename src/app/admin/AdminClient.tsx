@@ -742,18 +742,14 @@ export default function AdminClient() {
       setProgressMessage("Processing...");
 
       if (!res.ok) {
+        const text = await res.text();
         let errorMessage = "Failed to create media item";
-        let errorDetails: any = {};
-        
         try {
-          const data = await res.json();
+          const data = JSON.parse(text);
           errorMessage = data?.error || errorMessage;
-          errorDetails = data;
-        } catch (parseError) {
-          const text = await res.text();
+        } catch {
           errorMessage = `Server error (${res.status}): ${res.statusText}`;
         }
-        
         throw new Error(errorMessage);
       }
 
