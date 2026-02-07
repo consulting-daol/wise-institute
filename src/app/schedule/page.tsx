@@ -43,17 +43,16 @@ export default function SchedulePage() {
   const upcomingPrograms = [
     {
       id: 1,
-      title: "PDC Live Surgery",
+      title: "LIVE SURGERY at PDC 2026",
       type: "Event",
-      startDate: "Friday, March 7, 2025",
-      endDate: "Friday, March 7, 2025",
-      duration: "2 hours",
+      startDate: "Thursday, March 5, 2026",
+      endDate: "Thursday, March 5, 2026",
+      duration: "1.5 hours",
       capacity: "Open to all",
-      location: "PDC Live Stage",
+      location: "VCC West – Exhibit Hall Live Stage",
       status: "Open",
-      description: "Simple Extraction and Implant Placement with Bone Grafting. Join us at PDC at the live stage on Friday from 1:30PM - 3:30PM. Topics include: understanding key factors in surgical success, atraumatic tooth extraction, implant placement, bone grafting materials, and suturing techniques.",
+      description: "Join us at the Pacific Dental Conference (PDC) 2026 for an exclusive LIVE SURGERY on the Live Stage with Dr. Stephen Yoon & Dr. Chris Lee. Watch real-time implant surgery decision-making for challenging posterior maxilla cases, including limited vertical bone height and proximity to the maxillary sinus. A rare dental education opportunity—see clinical dentistry in action with practical, minimally invasive techniques performed live. 9:30–11:00 AM.",
       price: "Free",
-      ceCredits: "CE Credit Available"
     },
     {
       id: 2,
@@ -209,7 +208,7 @@ export default function SchedulePage() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm text-secondary-500">
             <div className="flex flex-col gap-0.5">
               <span className="font-semibold text-secondary-600">Co-led by Dr. Chris Lee & Dr. Stephen Yoon</span>
-              <span>Powered by HiOssen AIC Education</span>
+              {program.type === 'Residency' && <span>Powered by HiOssen AIC Education</span>}
             </div>
             <a
               href="#registration-form"
@@ -398,6 +397,7 @@ export default function SchedulePage() {
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                     >
                       <option value="">Select program of interest</option>
+                      <option value="pdc-2026">PDC 2026 Live Surgery</option>
                       <option value="residency">Implant Residency (8-day)</option>
                       <option value="study-club">Live Surgery Study Club</option>
                       <option value="both">Both Programs</option>
@@ -472,7 +472,7 @@ export default function SchedulePage() {
             <p className="uppercase tracking-wider text-primary-600 font-bold text-sm sm:text-base lg:text-lg mb-3">
               Timeline
             </p>
-            <h2 className="text-2xl sm:text-4xl font-bold text-secondary mt-3 mb-2">2025 Program Calendar</h2>
+            <h2 className="text-2xl sm:text-4xl font-bold text-secondary mt-3 mb-2">2025–2026 Program Calendar</h2>
             <p className="text-secondary-600 text-sm sm:text-lg">
               Residency and study club windows laid out so you can plan clinic coverage early.
             </p>
@@ -483,8 +483,8 @@ export default function SchedulePage() {
             <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-secondary-200 via-secondary-300 to-transparent" />
             <div className="space-y-8 sm:space-y-10">
               {[
-                { title: 'PDC Live Surgery', dates: 'March 7', status: 'Open', tag: 'Event' },
-                { title: 'Foundations of Implant Dentistry', dates: 'March 22 – 29', status: 'Open', tag: 'Residency' },
+                { title: 'LIVE SURGERY at PDC 2026', dates: 'March 5, 2026', status: 'Open', tag: 'Event' },
+                { title: 'Foundations of Implant Dentistry', dates: 'March 22 – 29, 2025', status: 'Open', tag: 'Residency' },
               ].map((item, idx) => {
                 const isLeft = idx % 2 === 0
                 return (
@@ -583,8 +583,8 @@ export default function SchedulePage() {
             <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-secondary-200 via-secondary-300 to-transparent" />
             <div className="space-y-6">
               {[
-                { title: 'PDC Live Surgery', dates: 'March 7', status: 'Open', tag: 'Event' },
-                { title: 'Foundations of Implant Dentistry', dates: 'March 22 – 29', status: 'Open', tag: 'Residency' },
+                { title: 'LIVE SURGERY at PDC 2026', dates: 'March 5, 2026', status: 'Open', tag: 'Event' },
+                { title: 'Foundations of Implant Dentistry', dates: 'March 22 – 29, 2025', status: 'Open', tag: 'Residency' },
               ].map((item, idx) => {
                 const isLeft = idx % 2 === 0
                 return (

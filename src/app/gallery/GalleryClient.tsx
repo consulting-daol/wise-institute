@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Home, ChevronUp, X, ChevronLeft, ChevronRight, Search, Plus } from 'lucide-react'
 import PageHero from '@/components/PageHero'
+import VideoFirstFrameThumbnail from '@/components/VideoFirstFrameThumbnail'
 import { MediaItem } from '@/lib/contentful'
 import { checkAdminSession } from '@/lib/admin'
 
@@ -294,9 +295,6 @@ export default function GalleryClient({ initialMediaItems }: GalleryClientProps)
 
                   const firstMedia = allMedia[0]
                   const originalIndex = mediaItems.findIndex(mi => mi.id === item.id)
-                  const videoThumbnail = firstMedia.type === 'video' 
-                    ? (item.thumbnail && item.thumbnail.length > 0 ? item.thumbnail[0] : null)
-                    : null
                   
                   return (
                     <div
@@ -310,14 +308,9 @@ export default function GalleryClient({ initialMediaItems }: GalleryClientProps)
                     >
                       <div className="relative aspect-[4/3] overflow-hidden bg-secondary-100">
                         {firstMedia.type === 'video' ? (
-                          <video
+                          <VideoFirstFrameThumbnail
                             src={firstMedia.url}
-                            poster={videoThumbnail || undefined}
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                            preload="metadata"
-                            muted
-                            playsInline
-                            loop
                             onMouseEnter={(e) => {
                               e.currentTarget.play().catch(() => {})
                             }}
@@ -422,11 +415,14 @@ export default function GalleryClient({ initialMediaItems }: GalleryClientProps)
           onClick={closeModal}
         >
           <button
-            onClick={closeModal}
-            className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-colors"
+            onClick={(e) => {
+              e.stopPropagation()
+              closeModal()
+            }}
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 z-[100010] min-w-[48px] min-h-[48px] w-12 h-12 sm:w-14 sm:h-14 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-colors touch-manipulation"
             aria-label="Close"
           >
-            <X className="w-5 h-5 sm:w-6 sm:h-6" />
+            <X className="w-6 h-6 sm:w-7 sm:h-7" />
           </button>
 
           {selectedMediaIndex > 0 && (
@@ -435,10 +431,10 @@ export default function GalleryClient({ initialMediaItems }: GalleryClientProps)
                 e.stopPropagation()
                 goToPrevious()
               }}
-              className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-50 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-colors"
+              className="absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-[100010] min-w-[48px] min-h-[48px] w-12 h-12 sm:w-14 sm:h-14 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-colors touch-manipulation"
               aria-label="Previous"
             >
-              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+              <ChevronLeft className="w-6 h-6 sm:w-7 sm:h-7" />
             </button>
           )}
 
@@ -448,17 +444,17 @@ export default function GalleryClient({ initialMediaItems }: GalleryClientProps)
                 e.stopPropagation()
                 goToNext()
               }}
-              className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-50 w-10 h-10 sm:w-12 sm:h-12 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-colors"
+              className="absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-[100010] min-w-[48px] min-h-[48px] w-12 h-12 sm:w-14 sm:h-14 bg-black/50 hover:bg-black/70 backdrop-blur-sm rounded-full flex items-center justify-center text-white transition-colors touch-manipulation"
               aria-label="Next"
             >
-              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+              <ChevronRight className="w-6 h-6 sm:w-7 sm:h-7" />
             </button>
           )}
 
           <div
             className="relative max-w-7xl w-full h-full flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
-            style={{ zIndex: 100000 }}
+            style={{ zIndex: 1 }}
           >
             {allGalleryMedia[selectedMediaIndex].type === 'video' ? (
               <video
@@ -469,7 +465,6 @@ export default function GalleryClient({ initialMediaItems }: GalleryClientProps)
                 autoPlay
                 loop
                 playsInline
-                style={{ position: 'relative', zIndex: 100001 }}
               />
             ) : (
               <div className="relative max-w-7xl w-full h-full flex items-center justify-center">
@@ -484,7 +479,7 @@ export default function GalleryClient({ initialMediaItems }: GalleryClientProps)
               </div>
             )}
 
-            <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 bg-black/60 backdrop-blur-sm rounded-lg p-4 sm:p-6 text-white" style={{ zIndex: 100002 }}>
+            <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 bg-black/60 backdrop-blur-sm rounded-lg p-4 sm:p-6 text-white">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
                   <h3 className="text-lg sm:text-xl font-bold mb-1">
