@@ -39,10 +39,10 @@ export default function ProgramsPage() {
                 Implant Residency
               </p>
               <h2 className="text-2xl sm:text-4xl font-bold text-secondary leading-tight mb-3 sm:mb-4">
-                8-day intensive program with live surgery mentorship
+                Foundations of Implant Dentistry – Spring 2026 Vancouver
               </h2>
               <p className="text-secondary-600 text-sm sm:text-lg mb-6 sm:mb-8">
-                <span className="font-semibold text-primary">8 day implant residency</span> with HiOssen AIC partnership, featuring 2 days of live surgery. We understand that time away from practice means time away from family & friends, so we deliver as much information in the least number of days possible.
+                <span className="font-semibold text-primary">56 CE Credits | Up to 4 modules | 8 days</span>. AIC Implant Master Program with HiOssen AIC Education: Surgical (Modules 1–2), Prosthetic (Module 3), and Live Surgery (Module 4). We deliver comprehensive training in the least number of days possible.
               </p>
               
               {/* Key Features */}
@@ -53,7 +53,7 @@ export default function ProgramsPage() {
                   </div>
                   <div>
                     <p className="text-xs uppercase tracking-wide text-secondary-500">Duration</p>
-                    <p className="text-sm font-medium text-secondary-900">8 intensive days with 2 live surgery sessions</p>
+                    <p className="text-sm font-medium text-secondary-900">8 days | Starts April 11, 2026 | Registration 8:30 am, Course 9:00 am – 5:00 pm</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -289,32 +289,32 @@ export default function ProgramsPage() {
                   </span>
                 </div>
                 <h3 className="text-xl sm:text-3xl font-extrabold text-secondary mb-2 sm:mb-3">Implant Residency</h3>
-                <p className="text-secondary-600 mb-5 sm:mb-6 text-sm sm:text-base">8-day intensive program with 2 live surgery days, hands-on training with pig jaws, and comprehensive course materials.</p>
+                <p className="text-secondary-600 mb-5 sm:mb-6 text-sm sm:text-base">Foundations of Implant Dentistry: A Comprehensive Residency Program – Spring 2026 Vancouver. 56 CE Credits, up to 4 modules, 8 days. AIC Training Centre, Burnaby, BC. $7,500 – $9,500 + Tax.</p>
                 <div className="space-y-3 mb-6 sm:mb-8">
                   <div className="flex items-center space-x-3">
                     <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span className="text-sm sm:text-base text-secondary-600">8-day intensive program</span>
+                    <span className="text-sm sm:text-base text-secondary-600">56 CE Credits | Up to 4 modules | 8 days</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span className="text-sm sm:text-base text-secondary-600">2 days of live surgery</span>
+                    <span className="text-sm sm:text-base text-secondary-600">Modules 1–2: Surgical, Module 3: Prosthetic, Module 4: Live Surgery</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span className="text-sm sm:text-base text-secondary-600">Daily hands-on practice</span>
+                    <span className="text-sm sm:text-base text-secondary-600">Hands-on & theory, pig jaw surgeries, mentored live surgeries</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span className="text-sm sm:text-base text-secondary-600">Printed course materials</span>
+                    <span className="text-sm sm:text-base text-secondary-600">Co-led by Dr. Chris Lee & Dr. Stephen Yoon</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span className="text-sm sm:text-base text-secondary-600">HiOssen AIC partnership</span>
+                    <span className="text-sm sm:text-base text-secondary-600">Powered by HiOssen AIC Education</span>
                   </div>
                 </div>
                 <div className="pt-6 border-t border-secondary-200">
                   <p className="text-xs sm:text-sm text-secondary-500 mb-2">Perfect for:</p>
-                  <p className="text-sm sm:text-base text-secondary-600">Busy clinicians who want comprehensive training in a structured format</p>
+                  <p className="text-sm sm:text-base text-secondary-600">Busy clinicians who want comprehensive implant training in a structured format. Starts April 11, 2026.</p>
                 </div>
               </div>
             </div>

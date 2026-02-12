@@ -1013,27 +1013,28 @@ export default function HomePage() {
       {/* Simple image-only popup with "close today" option */}
       {isWelcomePopupOpen && (
         <div
-          className="fixed inset-0 z-[80] flex items-center justify-center bg-black/60 backdrop-blur-sm px-4 sm:px-6"
+          className="fixed inset-0 z-[80] flex min-h-screen min-h-[100dvh] h-screen h-[100dvh] items-center justify-center overflow-hidden bg-black/60 backdrop-blur-sm py-[5vh] px-[5vw] box-border"
           onClick={() => setIsWelcomePopupOpen(false)}
           onMouseMove={handlePopupDragMove}
           onMouseUp={handlePopupDragEnd}
           onMouseLeave={handlePopupDragEnd}
         >
           {isDesktop ? (
-            // Desktop: draggable centered dialog
+            // Desktop: image area 4:5 so fit with no side whitespace; modal width limited so total fits in 78vh
             <div
-              className="relative w-full max-w-sm md:max-w-md lg:max-w-lg"
+              className="relative w-full max-w-[min(90vw,min(28rem,calc((78vh-6rem)*4/5)))] shrink-0 max-h-[78vh] max-h-[calc(100vh-10vh)] flex flex-col"
               onClick={(e) => e.stopPropagation()}
               style={{ transform: `translate(${popupOffset.x}px, ${popupOffset.y}px)` }}
             >
-              <div className="relative w-full max-h-[78vh] lg:max-h-[78vh] bg-white/20 backdrop-blur-xl rounded-3xl overflow-hidden shadow-[0_24px_60px_rgba(15,23,42,0.75)] border border-white/40 flex flex-col">
+              <div className="relative w-full flex flex-col bg-white/20 backdrop-blur-xl rounded-3xl overflow-hidden shadow-[0_24px_60px_rgba(15,23,42,0.75)] border border-white/40">
                 {/* Drag handle area */}
                 <div
-                  className="absolute inset-x-0 top-0 h-6 cursor-move z-20"
+                  className="flex-shrink-0 absolute inset-x-0 top-0 h-6 cursor-move z-20"
                   onMouseDown={handlePopupDragStart}
                 />
-                <div className="relative w-full aspect-[4/5] sm:aspect-[3/4] p-3 sm:p-4">
-                  <div className="relative w-full h-full rounded-2xl overflow-hidden bg-white">
+                {/* Image area: 4:5 aspect so image fits with no white on sides */}
+                <div className="relative w-full shrink-0 pt-6 px-2 sm:px-3 pb-2" style={{ aspectRatio: '4/5' }}>
+                  <div className="relative w-full h-full rounded-2xl overflow-hidden bg-white/95">
                     <Image
                       src="/gallery/pdc-2026-live-surgery.png"
                       alt="WISE Institute LIVE SURGERY at PDC 2026"
@@ -1044,7 +1045,7 @@ export default function HomePage() {
                     />
                   </div>
                 </div>
-                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 px-4 sm:px-6 pb-4 sm:pb-5 pt-3 bg-white/75 border-t border-slate-200/70">
+                <div className="flex-shrink-0 flex flex-col sm:flex-row gap-2 sm:gap-3 px-4 sm:px-6 pb-4 sm:pb-5 pt-3 bg-white/75 border-t border-slate-200/70">
                   <button
                     type="button"
                     className="w-full sm:w-auto flex-1 rounded-full border border-slate-300 bg-white/80 text-xs sm:text-sm font-medium text-slate-700 px-4 py-2 hover:bg-white transition-colors"

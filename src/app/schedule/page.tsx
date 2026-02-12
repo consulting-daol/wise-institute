@@ -58,14 +58,14 @@ export default function SchedulePage() {
       id: 2,
       title: "FOUNDATIONS OF IMPLANT DENTISTRY",
       type: "Residency",
-      startDate: "March 22, 2025",
-      endDate: "March 29, 2025",
+      startDate: "April 11, 2026",
+      endDate: "April 18, 2026",
       duration: "8 days",
       capacity: "Limited seats",
-      location: "Vancouver, BC",
+      location: "AIC Training Centre, 122-8337 Eastlake Dr, Burnaby, BC",
       status: "Open",
-      description: "Spring 2025 residency program. Topics include consultation, suture techniques, implant placement, sinus lift basics, and even live surgery. Comprehensive training with hands-on experience and direct mentorship.",
-      price: "From $7,500 + Tax",
+      description: "Foundations of Implant Dentistry: A Comprehensive Residency Program – Spring 2026 Vancouver. Learn through experience with three modules: Surgical (hands-on & theory), Prosthetic (hands-on & theory), and Live Surgery. 56 CE Credits, up to 4 modules. Co-led by Dr. Chris Lee & Dr. Stephen Yoon. Powered by HiOssen AIC Education.",
+      price: "$7,500 – $9,500 + Tax",
       ceCredits: "56 CE Credits"
     }
   ]
@@ -484,7 +484,7 @@ export default function SchedulePage() {
             <div className="space-y-8 sm:space-y-10">
               {[
                 { title: 'LIVE SURGERY at PDC 2026', dates: 'March 5, 2026', status: 'Open', tag: 'Event' },
-                { title: 'Foundations of Implant Dentistry', dates: 'March 22 – 29, 2025', status: 'Open', tag: 'Residency' },
+                { title: 'Foundations of Implant Dentistry', dates: 'April 11 – 18, 2026', status: 'Open', tag: 'Residency' },
               ].map((item, idx) => {
                 const isLeft = idx % 2 === 0
                 return (
@@ -584,7 +584,7 @@ export default function SchedulePage() {
             <div className="space-y-6">
               {[
                 { title: 'LIVE SURGERY at PDC 2026', dates: 'March 5, 2026', status: 'Open', tag: 'Event' },
-                { title: 'Foundations of Implant Dentistry', dates: 'March 22 – 29, 2025', status: 'Open', tag: 'Residency' },
+                { title: 'Foundations of Implant Dentistry', dates: 'April 11 – 18, 2026', status: 'Open', tag: 'Residency' },
               ].map((item, idx) => {
                 const isLeft = idx % 2 === 0
                 return (

@@ -229,15 +229,15 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Foundations of Implant Dentistry */}
+            {/* Foundations of Implant Dentistry – Spring 2026 Vancouver */}
             <div data-aos="fade-left" className="rounded-2xl border border-secondary-100 bg-white p-5 sm:p-6 md:p-8 shadow-md h-full flex flex-col">
               <div className="text-center mb-5 sm:mb-6">
-                <p className="text-xs uppercase tracking-wider text-secondary-400 mb-1.5 sm:mb-2">Spring 2025</p>
+                <p className="text-xs uppercase tracking-wider text-secondary-400 mb-1.5 sm:mb-2">Spring 2026 – Vancouver</p>
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary-900 mb-1.5 sm:mb-2 leading-tight">
                   FOUNDATIONS OF IMPLANT DENTISTRY
                 </h2>
                 <p className="text-sm text-secondary-600">
-                  Vancouver, BC | Starts March 22, 2025
+                  AIC Training Centre, 122-8337 Eastlake Dr, Burnaby, BC | Starts April 11, 2026
                 </p>
               </div>
 
@@ -248,25 +248,32 @@ export default function ContactPage() {
                 </div>
                 <div className="px-4 py-3 rounded-xl bg-white border border-secondary-100 min-w-[120px] text-center">
                   <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-500 font-semibold mb-0.5">Price</p>
-                  <p className="text-sm sm:text-base font-bold text-secondary-900">From $7,500 + Tax</p>
+                  <p className="text-sm sm:text-base font-bold text-secondary-900">$7,500 – $9,500 + Tax</p>
                 </div>
               </div>
 
               <div className="flex-1 flex flex-col">
                 <h3 className="text-base sm:text-lg font-bold text-secondary-900 mb-2.5 sm:mb-3">
-                  Course Topics Include:
+                  Registration details
                 </h3>
-                <ul className="space-y-2 text-sm text-secondary-700 mb-4 list-disc list-inside">
-                  <li>Consultation</li>
-                  <li>Suture techniques</li>
-                  <li>Implant placement</li>
-                  <li>Sinus lift basics</li>
-                  <li>Live surgery</li>
+                <p className="text-sm text-secondary-700 mb-2">56 CE Credits | Up to 4 Modules | 8 Days</p>
+                <ul className="space-y-1.5 text-sm text-secondary-700 mb-3 list-disc list-inside">
+                  <li>All 4 modules (Including Live Surgery): $9,500 + Tax</li>
+                  <li>Lecture & Hands-on (No Surgery): $7,500 + Tax</li>
+                  <li>Registration: 8:30 am | Course: 9:00 am – 5:00 pm</li>
+                </ul>
+                <h3 className="text-base sm:text-lg font-bold text-secondary-900 mb-2 mt-2">
+                  Modules
+                </h3>
+                <ul className="space-y-1.5 text-sm text-secondary-700 mb-4 list-disc list-inside">
+                  <li>Modules 1–2: Surgical (hands-on & theory)</li>
+                  <li>Module 3: Prosthetic (hands-on & theory)</li>
+                  <li>Module 4: Live Surgery</li>
                 </ul>
 
                 <div className="mt-auto pt-4 border-t border-secondary-100">
                   <p className="text-xs sm:text-sm text-secondary-600 mb-1">
-                    Co-led by: <span className="font-medium">Dr. Chris Lee (DMD, B.SC. PHARM)</span> ▪ <span className="font-medium">Dr. Stephen Yoon (DMD, B.SC)</span>
+                    Co-led by: <span className="font-medium">Dr. Chris Lee (B.SC. PHARM, DMD)</span> ▪ <span className="font-medium">Dr. Stephen Yoon (B.SC., DMD)</span>
                   </p>
                   <p className="text-xs text-secondary-400 text-center mt-3">
                     Powered by HiOssen AIC Education
