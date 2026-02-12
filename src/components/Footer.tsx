@@ -24,7 +24,7 @@ export default function Footer() {
             <div className="space-y-1 md:space-y-3 flex flex-col items-center md:items-start">
               <div className="flex items-start space-x-2 md:space-x-3">
                 <Mail className="h-3.5 w-3.5 md:h-4 md:w-4 text-secondary-400 mt-0.5 flex-shrink-0" />
-                <span className="text-xs md:text-sm text-secondary-600">info@wiseinstitute.ca</span>
+                <span className="text-xs md:text-sm text-secondary-600">info@wiseinstitute.com</span>
               </div>
               <div className="flex items-start space-x-2 md:space-x-3">
                 <Phone className="h-3.5 w-3.5 md:h-4 md:w-4 text-secondary-400 mt-0.5 flex-shrink-0" />

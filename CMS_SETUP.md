@@ -216,7 +216,7 @@ CONTENTFUL_ACCESS_TOKEN=your_access_token_here
 CONTENTFUL_ENVIRONMENT=master
 
 # 관리자 인증
-ADMIN_USERNAME=admin@wiseinstitute.ca
+ADMIN_USERNAME=info@wiseinstitute.com
 ADMIN_PASSWORD=your_secure_password_here
 ```
 

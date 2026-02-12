@@ -167,7 +167,7 @@ This project is licensed under the MIT License.
 ## Support
 
 For questions or support, please contact:
-- Email: info@wiseinstitute.ca
+- Email: info@wiseinstitute.com
 - Phone: (604) 555-0123
 
 ---

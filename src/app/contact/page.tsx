@@ -14,6 +14,8 @@ function ContactFormWithParams() {
     subject: '',
     message: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   useEffect(() => {
     const program = searchParams.get('program')
@@ -41,19 +43,26 @@ function ContactFormWithParams() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setSubmitStatus('idle')
+    setIsSubmitting(true)
     try {
-      // TODO: Implement form submission API endpoint
-      // const response = await fetch('/api/contact', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formData),
-      // })
-      // if (response.ok) {
-      //   // Show success message
-      //   setFormData({ name: '', email: '', subject: '', message: '' })
-      // }
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to send message')
+      }
+
+      setSubmitStatus('success')
+      setFormData({ name: '', email: '', subject: '', message: '' })
     } catch (error) {
-      // Handle error
+      console.error(error)
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -74,6 +83,17 @@ function ContactFormWithParams() {
           placeholder="Dr. John Smith"
         />
       </div>
+
+      {submitStatus === 'success' && (
+        <p className="text-sm text-emerald-600">
+          Thank you — your message has been sent. We’ll get back to you at the email you provided.
+        </p>
+      )}
+      {submitStatus === 'error' && (
+        <p className="text-sm text-red-600">
+          Sorry, something went wrong while sending your message. Please try again in a moment or email us directly at info@wiseinstitute.com.
+        </p>
+      )}
 
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
@@ -130,10 +150,11 @@ function ContactFormWithParams() {
 
       <button
         type="submit"
-        className="btn-primary-lg w-full flex items-center justify-center space-x-2"
+        disabled={isSubmitting}
+        className="btn-primary-lg w-full flex items-center justify-center space-x-2 disabled:opacity-60 disabled:cursor-not-allowed"
       >
         <Send className="h-4 w-4" />
-        <span>Send Message</span>
+        <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
       </button>
     </form>
   )
@@ -280,7 +301,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="text-base font-semibold text-secondary">Email</h3>
-                    <p className="text-sm text-secondary-700">info@wiseinstitute.ca</p>
+                    <p className="text-sm text-secondary-700">info@wiseinstitute.com</p>
                     <p className="text-xs text-secondary-500">We’ll respond within 24 hours</p>
                   </div>
                 </div>
@@ -388,7 +409,7 @@ export default function ContactPage() {
                 </div>
                 <div className="flex items-center gap-2">
                   <Mail className="h-4 w-4 text-primary flex-shrink-0" />
-                  <span className="text-secondary-700">info@wiseinstitute.ca</span>
+                  <span className="text-secondary-700">info@wiseinstitute.com</span>
                 </div>
               </div>
             </div>
@@ -477,7 +498,7 @@ export default function ContactPage() {
         description="Our team is here to help. Reach out to us directly for personalized assistance."
         primaryAction={{
           label: 'Email Us',
-          href: 'mailto:info@wiseinstitute.ca',
+          href: 'mailto:info@wiseinstitute.com',
           icon: <Mail className="h-5 w-5 text-primary-600" />,
         }}
         secondaryAction={{
