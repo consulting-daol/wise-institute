@@ -14,6 +14,8 @@ export default function SchedulePage() {
     program: '',
     message: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -24,19 +26,24 @@ export default function SchedulePage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setSubmitStatus('idle')
+    setIsSubmitting(true)
     try {
-      // TODO: Implement form submission API endpoint
-      // const response = await fetch('/api/registration', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formData),
-      // })
-      // if (response.ok) {
-      //   // Show success message
-      //   setFormData({ name: '', email: '', clinic: '', experience: '', program: '', message: '' })
-      // }
-    } catch (error) {
-      // Handle error
+      const response = await fetch('/api/registration', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      if (response.ok) {
+        setSubmitStatus('success')
+        setFormData({ name: '', email: '', clinic: '', experience: '', program: '', message: '' })
+      } else {
+        setSubmitStatus('error')
+      }
+    } catch {
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -59,14 +66,20 @@ export default function SchedulePage() {
       title: "FOUNDATIONS OF IMPLANT DENTISTRY",
       type: "Residency",
       startDate: "April 11, 2026",
-      endDate: "April 18, 2026",
-      duration: "8 days",
+      endDate: "July 12, 2026",
+      duration: "8 days (4 modules)",
       capacity: "Limited seats",
       location: "AIC Training Centre, 122-8337 Eastlake Dr, Burnaby, BC",
       status: "Open",
-      description: "Foundations of Implant Dentistry: A Comprehensive Residency Program – Spring 2026 Vancouver. Learn through experience with three modules: Surgical (hands-on & theory), Prosthetic (hands-on & theory), and Live Surgery. 56 CE Credits, up to 4 modules. Co-led by Dr. Chris Lee & Dr. Stephen Yoon. Powered by HiOssen AIC Education.",
+      description: "Foundations of Implant Dentistry: A Comprehensive Residency Program – Spring 2026 Vancouver. Module 1: April 11-12 (Surgical Foundations & Guided Surgery), Module 2: May 2-3 (Sinus Lift & Basic GBR), Module 3: June 6-7 (Prosthetic & Treatment Planning), Module 4: July 11-12 (Live Surgery Days). 56 CE Credits. 6 Workshop Days + 2 Live Surgery Days. Co-led by Dr. Chris Lee & Dr. Stephen Yoon. Powered by HiOssen AIC Education.",
       price: "$7,500 – $9,500 + Tax",
-      ceCredits: "56 CE Credits"
+      ceCredits: "56 CE Credits",
+      moduleDates: [
+        "Module 1: April 11-12, 2026",
+        "Module 2: May 2-3, 2026",
+        "Module 3: June 6-7, 2026",
+        "Module 4: July 11-12, 2026 (Live Surgery)"
+      ]
     }
   ]
 
@@ -154,9 +167,17 @@ export default function SchedulePage() {
               </div>
               <div>
                 <p className="text-xs uppercase tracking-wide text-secondary-500">Dates</p>
-                <p className="text-sm font-medium text-secondary-900">
-                  {program.startDate === program.endDate ? program.startDate : `${program.startDate} – ${program.endDate}`}
-                </p>
+                {program.moduleDates ? (
+                  <div className="text-sm font-medium text-secondary-900 space-y-1">
+                    {program.moduleDates.map((date, idx) => (
+                      <p key={idx} className={date.includes('Live Surgery') ? 'font-semibold text-primary' : ''}>{date}</p>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm font-medium text-secondary-900">
+                    {program.startDate === program.endDate ? program.startDate : `${program.startDate} – ${program.endDate}`}
+                  </p>
+                )}
               </div>
             </div>
             <div className="flex items-start gap-3">
@@ -189,17 +210,28 @@ export default function SchedulePage() {
           </div>
 
           {(program.price || program.ceCredits) && (
-            <div className="mb-6 sm:mb-8 flex flex-wrap gap-4">
-              {program.price && (
-                <div className="px-4 py-2 rounded-xl bg-primary/10 border border-primary/20">
-                  <p className="text-xs uppercase tracking-wide text-primary-600 font-semibold">Price</p>
-                  <p className="text-base font-bold text-primary">{program.price}</p>
-                </div>
-              )}
-              {program.ceCredits && (
-                <div className="px-4 py-2 rounded-xl bg-secondary/10 border border-secondary/20">
-                  <p className="text-xs uppercase tracking-wide text-secondary-600 font-semibold">CE Credits</p>
-                  <p className="text-base font-bold text-secondary">{program.ceCredits}</p>
+            <div className="mb-6 sm:mb-8">
+              <div className="flex flex-wrap gap-4 mb-4">
+                {program.price && (
+                  <div className="px-4 py-2 rounded-xl bg-primary/10 border border-primary/20">
+                    <p className="text-xs uppercase tracking-wide text-primary-600 font-semibold">Price</p>
+                    <p className="text-base font-bold text-primary">{program.price}</p>
+                  </div>
+                )}
+                {program.ceCredits && (
+                  <div className="px-4 py-2 rounded-xl bg-secondary/10 border border-secondary/20">
+                    <p className="text-xs uppercase tracking-wide text-secondary-600 font-semibold">CE Credits</p>
+                    <p className="text-base font-bold text-secondary">{program.ceCredits}</p>
+                  </div>
+                )}
+              </div>
+              {program.type === 'Residency' && (
+                <div className="bg-secondary-50 rounded-xl p-4 border border-secondary-200">
+                  <p className="text-xs uppercase tracking-wide text-secondary-600 font-semibold mb-2">Pricing Options</p>
+                  <div className="text-sm text-secondary-700 space-y-1">
+                    <p><span className="font-semibold">$9,500 CAD</span> + Tax (Modules 1-4 / Includes Live Surgery)</p>
+                    <p><span className="font-semibold">$7,500 CAD</span> + Tax (Modules 1-3 / No Surgery)</p>
+                  </div>
                 </div>
               )}
             </div>
@@ -320,6 +352,16 @@ export default function SchedulePage() {
                   </p>
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 md:space-y-5">
+                  {submitStatus === 'success' && (
+                    <p className="text-sm text-emerald-600">
+                      Thank you — we received your registration. We&apos;ll follow up at the email you provided and send a confirmation there as well.
+                    </p>
+                  )}
+                  {submitStatus === 'error' && (
+                    <p className="text-sm text-red-600">
+                      Something went wrong. Please try again or email us at info@wiseinstitute.com.
+                    </p>
+                  )}
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                       Full Name *
@@ -421,9 +463,10 @@ export default function SchedulePage() {
 
                   <button
                     type="submit"
-                    className="btn-primary w-full flex items-center justify-center gap-2"
+                    disabled={isSubmitting}
+                    className="btn-primary w-full flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    <span>Submit registration</span>
+                    <span>{isSubmitting ? 'Sending...' : 'Submit registration'}</span>
                     <ArrowRight className="h-4 w-4" />
                   </button>
                 </form>

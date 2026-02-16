@@ -49,11 +49,27 @@ export default function ProgramsPage() {
               <div className="space-y-4 mb-6 sm:mb-8">
                 <div className="flex items-start gap-3">
                   <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
+                    <Calendar className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-secondary-500">Module Dates</p>
+                    <div className="text-sm font-medium text-secondary-900 space-y-1">
+                      <p>Module 1: April 11-12, 2026</p>
+                      <p>Module 2: May 2-3, 2026</p>
+                      <p>Module 3: June 6-7, 2026</p>
+                      <p className="font-semibold text-primary">Module 4: July 11-12, 2026 (Live Surgery Days)</p>
+                    </div>
+                    <p className="text-xs text-secondary-500 mt-2">Registration: 8:30 am | Course: 9:00 am – 5:00 pm</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
                     <Clock className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <p className="text-xs uppercase tracking-wide text-secondary-500">Duration</p>
-                    <p className="text-sm font-medium text-secondary-900">8 days | Starts April 11, 2026 | Registration 8:30 am, Course 9:00 am – 5:00 pm</p>
+                    <p className="text-xs uppercase tracking-wide text-secondary-500">Course Structure</p>
+                    <p className="text-sm font-medium text-secondary-900">6 Workshop Days + 2 Live Surgery Days</p>
+                    <p className="text-xs text-secondary-600 mt-1">Includes case presentations, case work-up, and case review & recap</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -74,6 +90,18 @@ export default function ProgramsPage() {
                     <p className="text-sm font-medium text-secondary-900">Printed course notes included for review</p>
                   </div>
                 </div>
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center">
+                    <Stethoscope className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-secondary-500">Pricing</p>
+                    <div className="text-sm font-medium text-secondary-900 space-y-1">
+                      <p><span className="font-semibold">$9,500 CAD</span> + Tax (Modules 1-4 / Includes Live Surgery)</p>
+                      <p><span className="font-semibold">$7,500 CAD</span> + Tax (Modules 1-3 / No Surgery)</p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <Link href="/schedule" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-secondary-900 text-white px-6 py-3 text-sm font-semibold shadow-lg shadow-secondary-900/20 hover:shadow-secondary-900/30 transition-all mt-auto">
@@ -84,7 +112,7 @@ export default function ProgramsPage() {
 
             <div data-aos="fade-left" className="rounded-3xl border-2 border-secondary-200 bg-white p-6 sm:p-10 shadow-lg">
               <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary mb-4 sm:mb-6">What You'll Learn</h3>
-              <div className="space-y-4">
+              <div className="space-y-4 mb-6">
                 <div className="flex items-start gap-3">
                   <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
                     <Scissors className="h-5 w-5 text-primary" />
@@ -121,6 +149,97 @@ export default function ProgramsPage() {
                     <p className="text-xs sm:text-sm text-secondary-600">Ready to apply skills in your practice</p>
                   </div>
                 </div>
+              </div>
+              
+              <div className="pt-6 border-t border-secondary-200">
+                <h4 className="text-sm sm:text-base font-semibold text-secondary mb-3">Learning Objectives</h4>
+                <ul className="space-y-2 text-xs sm:text-sm text-secondary-600 list-disc list-inside">
+                  <li>Perform comprehensive pre-surgical patient evaluation and case selection</li>
+                  <li>Develop predictable implant treatment plans using clinical and CBCT data</li>
+                  <li>Understand surgical principles for implant placement and guided surgery</li>
+                  <li>Perform basic sinus lift and GBR techniques</li>
+                  <li>Understand implant prosthetic components and workflows</li>
+                  <li>Apply implant treatment planning concepts through real clinical cases</li>
+                  <li>Observe and learn live implant surgeries under expert mentorship</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Module Breakdown */}
+      <section className="py-8 sm:py-10 md:py-12 lg:py-14 bg-secondary-50">
+        <div className="container-custom">
+          <div data-aos="fade-up" className="text-center mb-8 sm:mb-10 md:mb-12">
+            <p className="uppercase tracking-wider text-primary-600 font-bold text-sm sm:text-base lg:text-lg mb-3">
+              Module Overview
+            </p>
+            <h2 className="text-2xl sm:text-4xl font-bold text-secondary mt-3 mb-2">Four Progressive Modules</h2>
+            <p className="text-secondary-600 text-sm sm:text-lg">
+              Structured learning path from foundational concepts to live surgical observation
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            <div data-aos="fade-up" data-aos-delay="100" className="rounded-2xl border-2 border-secondary-200 bg-white p-6 sm:p-8 shadow-lg">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <span className="text-xl font-bold text-primary">1</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-secondary">Surgical Foundations & Guided Surgery</h3>
+              </div>
+              <p className="text-sm sm:text-base text-secondary-600 mb-4">
+                Introduction to implantology, patient assessment, treatment planning, CBCT-based planning, and hands-on guided and freehand implant placement.
+              </p>
+              <div className="text-xs sm:text-sm text-secondary-500">
+                <p className="font-semibold mb-2">Dates: April 11-12, 2026</p>
+              </div>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="200" className="rounded-2xl border-2 border-secondary-200 bg-white p-6 sm:p-8 shadow-lg">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <span className="text-xl font-bold text-primary">2</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-secondary">Surgical: Sinus Lift & Basic GBR</h3>
+              </div>
+              <p className="text-sm sm:text-base text-secondary-600 mb-4">
+                Principles of sinus augmentation and basic bone grafting techniques with hands-on practice in sinus lift and GBR procedures.
+              </p>
+              <div className="text-xs sm:text-sm text-secondary-500">
+                <p className="font-semibold mb-2">Dates: May 2-3, 2026</p>
+              </div>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="300" className="rounded-2xl border-2 border-secondary-200 bg-white p-6 sm:p-8 shadow-lg">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-12 w-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                  <span className="text-xl font-bold text-primary">3</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-secondary">Prosthetic & Treatment Planning</h3>
+              </div>
+              <p className="text-sm sm:text-base text-secondary-600 mb-4">
+                Implant prosthetic concepts, impression and digital workflows, PRF applications, and restorative-driven implant treatment planning.
+              </p>
+              <div className="text-xs sm:text-sm text-secondary-500">
+                <p className="font-semibold mb-2">Dates: June 6-7, 2026</p>
+              </div>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="400" className="rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-white p-6 sm:p-8 shadow-lg">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="h-12 w-12 rounded-xl bg-primary flex items-center justify-center">
+                  <span className="text-xl font-bold text-white">4</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold text-secondary">Live Surgery</h3>
+              </div>
+              <p className="text-sm sm:text-base text-secondary-600 mb-4">
+                Two days of live implant surgery observation with expert mentorship, focusing on real-time clinical decision-making and case discussion.
+              </p>
+              <div className="text-xs sm:text-sm text-primary-600">
+                <p className="font-semibold mb-2">Dates: July 11-12, 2026 (Live Surgery Days)</p>
+                <p className="text-secondary-500">Optional: Available with full program ($9,500) or separately</p>
               </div>
             </div>
           </div>
