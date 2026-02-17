@@ -77,7 +77,7 @@ export default function DirectorsPage() {
         ]}
       />
 
-      {/* Dr. Chris Lee */}
+      {/* Dr. Lee */}
       <section className="py-10 sm:py-12 md:py-14 lg:py-16">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center">
@@ -152,7 +152,7 @@ export default function DirectorsPage() {
                 <div className="group relative w-full max-w-[520px]">
                   <div className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-primary-500/20 via-secondary-500/10 to-transparent blur-xl opacity-60 group-hover:opacity-80 transition-opacity" />
                   <div className="relative aspect-[520/572] overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-secondary-200 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:rotate-[0.3deg]">
-                    <Image src="/directors/chris_lee.png" alt="Dr. Chris Lee" fill className="object-cover" priority sizes="520px" />
+                    <Image src="/directors/chris_lee.png" alt="Dr. Lee" fill className="object-cover" priority sizes="520px" />
                     <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-black/5" />
                   </div>
                 </div>
@@ -164,7 +164,7 @@ export default function DirectorsPage() {
 
       <div className="h-px w-full bg-gradient-to-r from-transparent via-secondary-200 to-transparent" />
 
-      {/* Dr. Stephen Yoon */}
+      {/* Dr. Yoon */}
       <section className="py-10 sm:py-12 md:py-14 lg:py-16">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-16 items-center">
@@ -173,7 +173,7 @@ export default function DirectorsPage() {
                 <div className="group relative w-full max-w-[520px]">
                   <div className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-secondary-500/20 via-primary-500/10 to-transparent blur-xl opacity-60 group-hover:opacity-80 transition-opacity" />
                   <div className="relative aspect-[520/572] overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-secondary-200 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:-rotate-[0.3deg]">
-                    <Image src="/directors/stephen_yoon.png" alt="Dr. Stephen Yoon" fill className="object-cover" priority sizes="520px" />
+                    <Image src="/directors/stephen_yoon.png" alt="Dr. Yoon" fill className="object-cover" priority sizes="520px" />
                     <div className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-black/5" />
                   </div>
                 </div>

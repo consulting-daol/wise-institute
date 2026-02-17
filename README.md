@@ -24,7 +24,7 @@ A modern, responsive website for WISE Institute - Western Implant and Surgical E
 1. **Home** - Hero section with program overview and statistics
 2. **About WISE** - Company story, timeline, and values
 3. **Programs** - Detailed information about Implant Residency and Live Surgery Study Club
-4. **Our Directors** - Profiles of Dr. Chris Lee and Dr. Stephen Yoon
+4. **Our Directors** - Profiles of Dr. Lee and Dr. Yoon
 5. **Gallery** - Photo showcase of programs and community moments
 6. **Schedule** - Upcoming program dates and registration forms
 7. **Contact** - Contact information, forms, and FAQ

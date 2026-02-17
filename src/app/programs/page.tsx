@@ -428,7 +428,7 @@ export default function ProgramsPage() {
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span className="text-sm sm:text-base text-secondary-600">Co-led by Dr. Chris Lee & Dr. Stephen Yoon</span>
+                    <span className="text-sm sm:text-base text-secondary-600">Co-led by Dr. Lee & Dr. Yoon</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />

@@ -71,7 +71,7 @@ export default function SchedulePage() {
       capacity: "Limited seats",
       location: "AIC Training Centre, 122-8337 Eastlake Dr, Burnaby, BC",
       status: "Open",
-      description: "Foundations of Implant Dentistry: A Comprehensive Residency Program – Spring 2026 Vancouver. Module 1: April 11-12 (Surgical Foundations & Guided Surgery), Module 2: May 2-3 (Sinus Lift & Basic GBR), Module 3: June 6-7 (Prosthetic & Treatment Planning), Module 4: July 11-12 (Live Surgery Days). 56 CE Credits. 6 Workshop Days + 2 Live Surgery Days. Co-led by Dr. Chris Lee & Dr. Stephen Yoon. Powered by HiOssen AIC Education.",
+      description: "Foundations of Implant Dentistry: A Comprehensive Residency Program – Spring 2026 Vancouver. Module 1: April 11-12 (Surgical Foundations & Guided Surgery), Module 2: May 2-3 (Sinus Lift & Basic GBR), Module 3: June 6-7 (Prosthetic & Treatment Planning), Module 4: July 11-12 (Live Surgery Days). 56 CE Credits. 6 Workshop Days + 2 Live Surgery Days. Co-led by Dr. Lee & Dr. Yoon. Powered by HiOssen AIC Education.",
       price: "$7,500 – $9,500 + Tax",
       ceCredits: "56 CE Credits",
       moduleDates: [
@@ -242,7 +242,7 @@ export default function SchedulePage() {
 
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm text-secondary-500">
             <div className="flex flex-col gap-0.5">
-              <span className="font-semibold text-secondary-600">Co-led by Dr. Chris Lee & Dr. Stephen Yoon</span>
+              <span className="font-semibold text-secondary-600">Co-led by Dr. Lee & Dr. Yoon</span>
               {(program.type === 'Residency' || program.type === 'Event') && <span>Powered by HiOssen AIC Education</span>}
             </div>
             <a

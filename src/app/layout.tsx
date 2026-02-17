@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     default: 'WISE Institute - Western Implant and Surgical Excellence',
     template: '%s | WISE Institute',
   },
-  description: 'Comprehensive hands-on implant dentistry training for general dentists. 8-day residency programs with live surgery, mentorship from Dr. Chris Lee and Dr. Stephen Yoon.',
+  description: 'Comprehensive hands-on implant dentistry training for general dentists. 8-day residency programs with live surgery, mentorship from Dr. Lee and Dr. Yoon.',
   keywords: [
     'implant dentistry',
     'dental education',

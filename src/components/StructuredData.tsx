@@ -8,7 +8,7 @@ export default function StructuredData() {
     alternateName: 'Western Implant and Surgical Excellence',
     url: baseUrl,
     logo: `${baseUrl}/favicon.png`,
-    description: 'Comprehensive hands-on implant dentistry training for general dentists. 8-day residency programs with live surgery, mentorship from Dr. Chris Lee and Dr. Stephen Yoon.',
+    description: 'Comprehensive hands-on implant dentistry training for general dentists. 8-day residency programs with live surgery, mentorship from Dr. Lee and Dr. Yoon.',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Vancouver',

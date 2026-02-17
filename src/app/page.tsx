@@ -71,7 +71,7 @@ function NewsSectionWithCMS({ isAdmin, onEditNews }: { isAdmin: boolean; onEditN
       category: 'Press Release',
       categoryColor: 'teal' as const,
       title: 'WISE Institute Live Surgery Featured at PDC 2025',
-      description: 'Dr. Chris Lee and Dr. Stephen Yoon presented live surgery demonstrations at the Pacific Dental Conference, showcasing our hands-on training approach.',
+      description: 'Dr. Lee and Dr. Yoon presented live surgery demonstrations at the Pacific Dental Conference, showcasing our hands-on training approach.',
       date: '2025-10-05',
       href: '/news'
     }

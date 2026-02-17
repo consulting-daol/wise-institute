@@ -220,7 +220,7 @@ export default function ContactPage() {
 
                 <div className="mt-auto pt-4 border-t border-secondary-100">
                   <p className="text-xs sm:text-sm text-secondary-600 mb-1">
-                    Co-led by: <span className="font-medium">Dr. Chris Lee (DMD, B.SC. PHARM)</span> ▪ <span className="font-medium">Dr. Stephen Yoon (DMD, B.SC)</span>
+                    Co-led by: <span className="font-medium">Dr. Lee (DMD, B.SC. PHARM)</span> ▪ <span className="font-medium">Dr. Yoon (DMD, B.SC)</span>
                   </p>
                   <p className="text-xs text-secondary-400 text-center mt-3">
                     Co-Sponsored by Hiossen
@@ -273,7 +273,7 @@ export default function ContactPage() {
 
                 <div className="mt-auto pt-4 border-t border-secondary-100">
                   <p className="text-xs sm:text-sm text-secondary-600 mb-1">
-                    Co-led by: <span className="font-medium">Dr. Chris Lee (B.SC. PHARM, DMD)</span> ▪ <span className="font-medium">Dr. Stephen Yoon (B.SC., DMD)</span>
+                    Co-led by: <span className="font-medium">Dr. Lee (B.SC. PHARM, DMD)</span> ▪ <span className="font-medium">Dr. Yoon (B.SC., DMD)</span>
                   </p>
                   <p className="text-xs text-secondary-400 text-center mt-3">
                     Powered by HiOssen AIC Education

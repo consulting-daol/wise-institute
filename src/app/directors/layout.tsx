@@ -4,16 +4,16 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://wiseinstitute.com';
 
 export const metadata: Metadata = {
   title: 'Our Directors',
-  description: 'Meet Dr. Chris Lee and Dr. Stephen Yoon, directors of WISE Institute. Learn about their expertise in implant dentistry and commitment to hands-on education.',
+  description: 'Meet Dr. Lee and Dr. Yoon, directors of WISE Institute. Learn about their expertise in implant dentistry and commitment to hands-on education.',
   keywords: [
-    'Dr. Chris Lee',
-    'Dr. Stephen Yoon',
+    'Dr. Lee',
+    'Dr. Yoon',
     'implant dentistry experts',
     'dental education directors',
     'WISE Institute directors',
   ],
   openGraph: {
-    title: 'WISE Institute Directors - Dr. Chris Lee & Dr. Stephen Yoon',
+    title: 'WISE Institute Directors - Dr. Lee & Dr. Yoon',
     description: 'Meet the directors of WISE Institute and learn about their expertise in implant dentistry education.',
     url: `${baseUrl}/directors`,
   },
