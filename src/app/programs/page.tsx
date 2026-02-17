@@ -193,7 +193,7 @@ export default function ProgramsPage() {
                 Introduction to implantology, patient assessment, treatment planning, CBCT-based planning, and hands-on guided and freehand implant placement.
               </p>
               <div className="text-xs sm:text-sm text-secondary-500">
-                <p className="font-semibold mb-2">Dates: April 11-12, 2026</p>
+                <p className="font-semibold mb-2" style={{ color: '#219281' }}>Dates: April 11-12, 2026</p>
                 <p className="text-secondary-600">9:00 am – 5:00 pm</p>
               </div>
             </div>
@@ -209,7 +209,7 @@ export default function ProgramsPage() {
                 Principles of sinus augmentation and basic bone grafting techniques with hands-on practice in sinus lift and GBR procedures.
               </p>
               <div className="text-xs sm:text-sm text-secondary-500">
-                <p className="font-semibold mb-2">Dates: May 2-3, 2026</p>
+                <p className="font-semibold mb-2" style={{ color: '#219281' }}>Dates: May 2-3, 2026</p>
                 <p className="text-secondary-600">9:00 am – 5:00 pm</p>
               </div>
             </div>
@@ -225,7 +225,7 @@ export default function ProgramsPage() {
                 Implant prosthetic concepts, impression and digital workflows, PRF applications, and restorative-driven implant treatment planning.
               </p>
               <div className="text-xs sm:text-sm text-secondary-500">
-                <p className="font-semibold mb-2">Dates: June 6-7, 2026</p>
+                <p className="font-semibold mb-2" style={{ color: '#219281' }}>Dates: June 6-7, 2026</p>
                 <p className="text-secondary-600">9:00 am – 5:00 pm</p>
               </div>
             </div>
@@ -241,7 +241,7 @@ export default function ProgramsPage() {
                 Two days of live implant surgery observation with expert mentorship, focusing on real-time clinical decision-making and case discussion.
               </p>
               <div className="text-xs sm:text-sm text-primary-600">
-                <p className="font-semibold mb-2">Dates: July 11-12, 2026 (Live Surgery Days)</p>
+                <p className="font-semibold mb-2" style={{ color: '#219281' }}>Dates: July 11-12, 2026 (Live Surgery Days)</p>
                 <p className="text-secondary-600">9:00 am – 5:00 pm</p>
                 <p className="text-secondary-500 mt-1">Optional: Available with full program ($9,500) or separately</p>
               </div>
