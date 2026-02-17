@@ -308,7 +308,7 @@ export default function ProgramsPage() {
                 Real patient cases with direct mentorship
               </h2>
               <p className="text-secondary-600 text-sm sm:text-lg mb-6 sm:mb-8">
-                Doctors would bring their own patients to place implants. Surgery time was busy; Doctors would be paired up for the day and take turn performing and assisting the surgery. Occasionally, Stephen and I would step in to demonstrate certain techniques.
+                Doctors would bring their own patients to place implants. Surgery time was busy; Doctors would be paired up for the day and take turn performing and assisting the surgery. Occasionally, Dr. Yoon and I (Dr. Lee) would step in to demonstrate certain techniques.
               </p>
               
               <div className="rounded-2xl border-2 border-secondary-200 bg-white p-4 sm:p-6 mb-6 sm:mb-8 shadow-sm">
