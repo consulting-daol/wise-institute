@@ -4,6 +4,7 @@ import Footer from '@/components/Footer'
 import AOSProvider from '@/components/AOSProvider'
 import StructuredData from '@/components/StructuredData'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
+import GoogleTagManager from '@/components/GoogleTagManager'
 import type { Metadata } from 'next'
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://wiseinstitute.com'
@@ -91,6 +92,7 @@ export default function RootLayout({
         <StructuredData />
       </head>
       <body className="font-pretendard w-full overflow-x-hidden">
+        <GoogleTagManager />
         <GoogleAnalytics />
         <AOSProvider>
           <Navbar />
