@@ -194,6 +194,7 @@ export default function ProgramsPage() {
               </p>
               <div className="text-xs sm:text-sm text-secondary-500">
                 <p className="font-semibold mb-2">Dates: April 11-12, 2026</p>
+                <p className="text-secondary-600">9:00 am – 5:00 pm</p>
               </div>
             </div>
 
@@ -209,6 +210,7 @@ export default function ProgramsPage() {
               </p>
               <div className="text-xs sm:text-sm text-secondary-500">
                 <p className="font-semibold mb-2">Dates: May 2-3, 2026</p>
+                <p className="text-secondary-600">9:00 am – 5:00 pm</p>
               </div>
             </div>
 
@@ -224,13 +226,14 @@ export default function ProgramsPage() {
               </p>
               <div className="text-xs sm:text-sm text-secondary-500">
                 <p className="font-semibold mb-2">Dates: June 6-7, 2026</p>
+                <p className="text-secondary-600">9:00 am – 5:00 pm</p>
               </div>
             </div>
 
             <div data-aos="fade-up" data-aos-delay="400" className="rounded-2xl border-2 border-primary/20 bg-gradient-to-br from-primary/5 to-white p-6 sm:p-8 shadow-lg">
               <div className="flex items-center gap-3 mb-4">
                 <div className="h-12 w-12 rounded-xl bg-primary flex items-center justify-center">
-                  <span className="text-xl font-bold text-white">4</span>
+                  <span className="text-xl font-bold text-secondary-900">4</span>
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-secondary">Live Surgery</h3>
               </div>
@@ -239,7 +242,8 @@ export default function ProgramsPage() {
               </p>
               <div className="text-xs sm:text-sm text-primary-600">
                 <p className="font-semibold mb-2">Dates: July 11-12, 2026 (Live Surgery Days)</p>
-                <p className="text-secondary-500">Optional: Available with full program ($9,500) or separately</p>
+                <p className="text-secondary-600">9:00 am – 5:00 pm</p>
+                <p className="text-secondary-500 mt-1">Optional: Available with full program ($9,500) or separately</p>
               </div>
             </div>
           </div>

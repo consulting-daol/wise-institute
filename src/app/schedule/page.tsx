@@ -172,6 +172,9 @@ export default function SchedulePage() {
                     {program.moduleDates.map((date, idx) => (
                       <p key={idx} className={date.includes('Live Surgery') ? 'font-semibold text-primary' : ''}>{date}</p>
                     ))}
+                    {program.type === 'Residency' && (
+                      <p className="text-secondary-600 text-xs mt-1">9:00 am – 5:00 pm</p>
+                    )}
                   </div>
                 ) : (
                   <p className="text-sm font-medium text-secondary-900">
