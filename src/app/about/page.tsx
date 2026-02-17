@@ -59,7 +59,7 @@ export default function AboutPage() {
             </h2>
             <div className="space-y-5 sm:space-y-6 text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed" data-aos="fade-up" data-aos-delay="100">
               <p>
-                Back in 2021, Dr. Yoon and I had a vision. We wanted to create an implant academy where we can share our knowledge and passion with our fellow dentists.
+                Back in 2021, Dr. Stephen Yoon and I (Dr. Chris Lee) had a vision. We wanted to create an implant academy where we can share our knowledge and passion with our fellow dentists.
               </p>
               <p>
                 We felt that our strength was on live surgery, so on Nov 2021, we formed our very first live surgery study club with 12 doctors. Basically 6 of my friends and 6 of his friends who had nothing better to do.
@@ -68,10 +68,10 @@ export default function AboutPage() {
                 Doctors would bring their own patients to place implants. We go over the cases in our waiting areas or staff rooms which got converted into classrooms.
               </p>
               <p>
-                Surgery time was busy. Doctors would be paired up for the day and take turns performing and assisting the surgery. Occasionally, Stephen and I would step in to demonstrate certain techniques.
+                Surgery time was busy. Doctors would be paired up for the day and take turns performing and assisting the surgery. Occasionally, Dr. Yoon and I would step in to demonstrate certain techniques.
               </p>
               <p>
-                Over the years, Stephen and I helped doctors placing their first implants, first PRFs, or even first lateral sinus lifts.
+                Over the years, Dr. Yoon and I helped doctors placing their first implants, first PRFs, or even first lateral sinus lifts.
               </p>
               <p>
                 But as time went on, doctors were asking for us to run various lectures so they can learn more details and expand their scope within implant dentistry.
