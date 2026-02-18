@@ -499,8 +499,8 @@ export default function SchedulePage() {
                   Full syllabus, tuition, and kit list in one PDF you can share with your team.
                 </p>
                 <a
-                  href="/brochure/WISE.pdf"
-                  download
+                  href="/brochure/Vancouver-BC-Foundation-Course-Spring-2026-FLYER-V6-1.pdf"
+                  download="Vancouver-BC-Foundation-Course-Spring-2026-FLYER.pdf"
                   className="btn-secondary w-full inline-flex items-center justify-center"
                 >
                   Download PDF
