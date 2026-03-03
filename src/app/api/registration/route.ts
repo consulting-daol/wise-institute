@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { verifyRecaptchaToken } from '@/lib/recaptcha';
 
 const PRIMARY_600 = '#0d9488';
 const PRIMARY_700 = '#0f766e';
@@ -158,7 +159,24 @@ WISE Institute – Training that transforms
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, email, clinic = '', experience = '', program = '', message = '' } = body;
+    const { name, email, clinic = '', experience = '', program = '', message = '', recaptchaToken } = body;
+
+    if (process.env.RECAPTCHA_SECRET_KEY && !recaptchaToken) {
+      return NextResponse.json(
+        { error: 'reCAPTCHA verification required' },
+        { status: 400 }
+      );
+    }
+
+    if (recaptchaToken) {
+      const recaptchaResult = await verifyRecaptchaToken(recaptchaToken);
+      if (!recaptchaResult.success) {
+        return NextResponse.json(
+          { error: 'reCAPTCHA verification failed. Please try again.' },
+          { status: 400 }
+        );
+      }
+    }
 
     if (!name || !email) {
       return NextResponse.json(

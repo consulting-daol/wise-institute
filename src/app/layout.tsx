@@ -2,6 +2,7 @@ import '@/styles/globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import AOSProvider from '@/components/AOSProvider'
+import ReCaptchaProvider from '@/components/ReCaptchaProvider'
 import StructuredData from '@/components/StructuredData'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import GoogleTagManager from '@/components/GoogleTagManager'
@@ -94,13 +95,15 @@ export default function RootLayout({
       <body className="font-pretendard w-full overflow-x-hidden">
         <GoogleTagManager />
         <GoogleAnalytics />
-        <AOSProvider>
-          <Navbar />
-          <main className="w-full overflow-visible">
-            {children}
-          </main>
-          <Footer />
-        </AOSProvider>
+        <ReCaptchaProvider>
+          <AOSProvider>
+            <Navbar />
+            <main className="w-full overflow-visible">
+              {children}
+            </main>
+            <Footer />
+          </AOSProvider>
+        </ReCaptchaProvider>
       </body>
     </html>
   )

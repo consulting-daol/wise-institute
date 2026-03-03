@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { verifyRecaptchaToken } from '@/lib/recaptcha';
 
 // WISE website palette (tailwind.config.js)
 const PRIMARY_600 = '#0d9488';
@@ -198,7 +199,25 @@ function escapeHtml(text: string): string {
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, subject, message } = await req.json();
+    const body = await req.json();
+    const { name, email, subject, message, recaptchaToken } = body;
+
+    if (process.env.RECAPTCHA_SECRET_KEY && !recaptchaToken) {
+      return NextResponse.json(
+        { error: 'reCAPTCHA verification required' },
+        { status: 400 }
+      );
+    }
+
+    if (recaptchaToken) {
+      const recaptchaResult = await verifyRecaptchaToken(recaptchaToken);
+      if (!recaptchaResult.success) {
+        return NextResponse.json(
+          { error: 'reCAPTCHA verification failed. Please try again.' },
+          { status: 400 }
+        );
+      }
+    }
 
     if (!name || !email || !subject || !message) {
       return NextResponse.json(

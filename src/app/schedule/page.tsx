@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Calendar, Clock, Users, MapPin, CheckCircle, ArrowRight, Home, Mail } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '@/components/CallToActionBanner'
+import { useReCaptchaToken } from '@/hooks/useReCaptchaToken'
 
 export default function SchedulePage() {
   const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ export default function SchedulePage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const { getToken } = useReCaptchaToken('registration')
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -29,10 +31,11 @@ export default function SchedulePage() {
     setSubmitStatus('idle')
     setIsSubmitting(true)
     try {
+      const recaptchaToken = await getToken()
       const response = await fetch('/api/registration', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, recaptchaToken }),
       })
       if (response.ok) {
         setSubmitStatus('success')

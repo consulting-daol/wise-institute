@@ -5,9 +5,11 @@ import { useSearchParams } from 'next/navigation'
 import { Home, Mail, Phone, MapPin, Clock, Send, HelpCircle, Plus, Minus } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '@/components/CallToActionBanner'
+import { useReCaptchaToken } from '@/hooks/useReCaptchaToken'
 
 function ContactFormWithParams() {
   const searchParams = useSearchParams()
+  const { getToken } = useReCaptchaToken('contact')
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -46,10 +48,11 @@ function ContactFormWithParams() {
     setSubmitStatus('idle')
     setIsSubmitting(true)
     try {
+      const recaptchaToken = await getToken()
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, recaptchaToken }),
       })
 
       if (!response.ok) {
