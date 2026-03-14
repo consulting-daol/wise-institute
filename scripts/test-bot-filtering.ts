@@ -83,6 +83,22 @@ async function run() {
   });
   console.log('   → 400 (reCAPTCHA verification failed)\n');
 
+  // 4. 이메일·이름 검증 (RECAPTCHA_SKIP_DEV=true일 때만 검증 단계까지 도달)
+  console.log('4. 이메일·이름 검증 (RECAPTCHA_SKIP_DEV=true 시)');
+  await test('Contact (의심 이름 rH0XCxMmz...)', `${BASE}/api/contact`, {
+    ...validPayload,
+    name: 'rH0XCxMmzHRdgoCvDLtkSLN',
+  });
+  await test('Registration (일회용 mailinator.com)', `${BASE}/api/registration`, {
+    name: 'Test',
+    email: 'test@mailinator.com',
+    clinic: '',
+    experience: 'beginner',
+    program: 'residency',
+    message: '',
+  });
+  console.log('   → RECAPTCHA_SKIP_DEV 없으면 400(reCAPTCHA) | 있으면 400(Invalid name/email)\n');
+
   console.log('=== 테스트 완료 ===\n');
 }
 

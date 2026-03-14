@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { verifyRecaptchaToken } from '@/lib/recaptcha';
+import { checkRateLimit, getClientIdentifier } from '@/lib/ratelimit';
+import { validateEmailForForm } from '@/lib/emailValidation';
 
 const PRIMARY_600 = '#0d9488';
 const PRIMARY_700 = '#0f766e';
@@ -158,6 +160,12 @@ WISE Institute – Training that transforms
 
 export async function POST(req: NextRequest) {
   try {
+    const identifier = getClientIdentifier(req);
+    const rateResult = await checkRateLimit(identifier);
+    if (!rateResult.success) {
+      return NextResponse.json({ error: 'Too many requests. Please try again later.' }, { status: 429 });
+    }
+
     const body = await req.json();
     const { name, email, clinic = '', experience = '', program = '', message = '', recaptchaToken, website } = body;
 
@@ -197,6 +205,14 @@ export async function POST(req: NextRequest) {
     if (!emailRegex.test(String(email).trim())) {
       return NextResponse.json(
         { error: 'Invalid email format' },
+        { status: 400 }
+      );
+    }
+
+    const emailValidation = validateEmailForForm(String(email).trim(), name?.trim());
+    if (!emailValidation.ok) {
+      return NextResponse.json(
+        { error: emailValidation.reason ?? 'Invalid email or name' },
         { status: 400 }
       );
     }
