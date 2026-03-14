@@ -19,6 +19,7 @@ function ContactFormWithParams() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   useEffect(() => {
     const program = searchParams.get('program')
@@ -38,15 +39,16 @@ function ContactFormWithParams() {
   }, [searchParams])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitStatus('idle')
+    setErrorMessage(null)
     setIsSubmitting(true)
     try {
       const recaptchaToken = await getToken()
@@ -61,13 +63,17 @@ function ContactFormWithParams() {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to send message')
+        const errData = await response.json().catch(() => ({}))
+        setErrorMessage(errData?.error ?? 'Failed to send message')
+        setSubmitStatus('error')
+        return
       }
 
       setSubmitStatus('success')
       setFormData({ name: '', email: '', subject: '', message: '' })
     } catch (error) {
       console.error(error)
+      setErrorMessage('Failed to send message. Please try again.')
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
@@ -98,8 +104,10 @@ function ContactFormWithParams() {
         </p>
       )}
       {submitStatus === 'error' && (
-        <p className="text-sm text-red-600">
-          Sorry, something went wrong while sending your message. Please try again in a moment or email us directly at info@wiseinstitute.com.
+        <p className="text-sm text-red-600" role="alert">
+          {errorMessage === 'Too many requests. Please try again later.'
+            ? 'Too many requests. Please wait a moment before trying again.'
+            : 'Sorry, something went wrong while sending your message. Please try again in a moment or email us directly at info@wiseinstitute.com.'}
         </p>
       )}
 

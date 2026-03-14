@@ -17,19 +17,21 @@ export default function SchedulePage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const { getToken } = useReCaptchaToken('registration')
   const websiteRef = useRef<HTMLInputElement>(null)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    })
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }))
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitStatus('idle')
+    setErrorMessage(null)
     setIsSubmitting(true)
     try {
       const recaptchaToken = await getToken()
@@ -46,9 +48,12 @@ export default function SchedulePage() {
         setSubmitStatus('success')
         setFormData({ name: '', email: '', clinic: '', experience: '', program: '', message: '' })
       } else {
+        const errData = await response.json().catch(() => ({}))
+        setErrorMessage(errData?.error ?? 'Something went wrong')
         setSubmitStatus('error')
       }
     } catch {
+      setErrorMessage('Failed to submit. Please try again.')
       setSubmitStatus('error')
     } finally {
       setIsSubmitting(false)
@@ -369,8 +374,10 @@ export default function SchedulePage() {
                     </p>
                   )}
                   {submitStatus === 'error' && (
-                    <p className="text-sm text-red-600">
-                      Something went wrong. Please try again or email us at info@wiseinstitute.com.
+                    <p className="text-sm text-red-600" role="alert">
+                      {errorMessage === 'Too many requests. Please try again later.'
+                        ? 'Too many requests. Please wait a moment before trying again.'
+                        : 'Something went wrong. Please try again or email us at info@wiseinstitute.com.'}
                     </p>
                   )}
                   <div>
