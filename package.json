@@ -12,7 +12,8 @@
     "create-media-content-type": "tsx scripts/create-media-item-content-type.ts",
     "update-media-name": "tsx scripts/update-media-item-name.ts",
     "update-wise-name": "tsx scripts/update-wiseinstitute-name.ts",
-    "list-content-types": "tsx scripts/list-content-types.ts"
+    "list-content-types": "tsx scripts/list-content-types.ts",
+    "test:bot-filter": "tsx scripts/test-bot-filtering.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.1.0",

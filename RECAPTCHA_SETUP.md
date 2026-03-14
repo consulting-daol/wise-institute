@@ -2,6 +2,8 @@
 
 Contact 폼과 Schedule 등록 폼에 reCAPTCHA v3가 적용되어 있습니다.
 
+> **스팸 방지를 위해 프로덕션에서는 반드시 두 키를 설정해야 합니다.** Vercel 등 배포 환경의 Environment Variables에도 추가하세요.
+
 ## 1. reCAPTCHA 사이트 생성
 
 1. [Google reCAPTCHA Admin Console](https://www.google.com/recaptcha/admin) 접속
@@ -28,12 +30,14 @@ RECAPTCHA_SECRET_KEY=your_secret_key_here
 
 - **사이트 키 (Site Key)**: Admin Console에서 복사 → `NEXT_PUBLIC_RECAPTCHA_SITE_KEY`
 - **비밀 키 (Secret Key)**: Admin Console에서 복사 → `RECAPTCHA_SECRET_KEY`
+- **점수 임계값 (선택)**: `RECAPTCHA_MIN_SCORE=0.5` (기본값, 0~1, 낮을수록 엄격)
 
 ## 3. 동작 방식
 
-- **키 미설정 시**: reCAPTCHA 검증이 건너뛰어지고 폼이 정상 동작합니다 (개발 시 편의).
-- **비밀 키만 설정된 경우**: 토큰이 없으면 서버에서 400 에러를 반환합니다.
-- **둘 다 설정된 경우**: 클라이언트에서 토큰을 받아 서버에서 Google API로 검증 후 처리합니다.
+- **개발(localhost)**: `RECAPTCHA_SECRET_KEY`가 없어도 폼이 동작합니다.
+- **프로덕션**: 두 키가 **반드시** 설정되어야 합니다. 하나라도 없으면 제출이 거부됩니다.
+- **점수 임계값**: 0.6 미만 점수(봇 의심)는 자동 차단됩니다. `RECAPTCHA_MIN_SCORE=0.5` 등으로 완화 가능합니다.
+- **허니팟**: 숨겨진 필드에 값을 넣으면 봇으로 판단해 이메일을 보내지 않고 성공 응답만 반환합니다.
 
 ## 4. 적용된 페이지
 

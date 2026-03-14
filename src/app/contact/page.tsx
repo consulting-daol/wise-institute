@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, Suspense } from 'react'
+import { useState, useEffect, useRef, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Home, Mail, Phone, MapPin, Clock, Send, HelpCircle, Plus, Minus } from 'lucide-react'
 import PageHero from '../../components/PageHero'
@@ -10,6 +10,7 @@ import { useReCaptchaToken } from '@/hooks/useReCaptchaToken'
 function ContactFormWithParams() {
   const searchParams = useSearchParams()
   const { getToken } = useReCaptchaToken('contact')
+  const websiteRef = useRef<HTMLInputElement>(null)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -52,7 +53,11 @@ function ContactFormWithParams() {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, recaptchaToken }),
+        body: JSON.stringify({
+          ...formData,
+          recaptchaToken,
+          website: websiteRef.current?.value ?? '',
+        }),
       })
 
       if (!response.ok) {
@@ -148,6 +153,20 @@ function ContactFormWithParams() {
           onChange={handleInputChange}
           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
           placeholder="Tell us about your goals and any questions you have..."
+        />
+      </div>
+
+      {/* Honeypot: hidden from users, bots typically fill it */}
+      <div
+        className="absolute -left-[9999px] w-px h-px overflow-hidden opacity-0 pointer-events-none"
+        aria-hidden
+      >
+        <input
+          ref={websiteRef}
+          type="text"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
         />
       </div>
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Calendar, Clock, Users, MapPin, CheckCircle, ArrowRight, Home, Mail } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '@/components/CallToActionBanner'
@@ -18,6 +18,7 @@ export default function SchedulePage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const { getToken } = useReCaptchaToken('registration')
+  const websiteRef = useRef<HTMLInputElement>(null)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -35,7 +36,11 @@ export default function SchedulePage() {
       const response = await fetch('/api/registration', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, recaptchaToken }),
+        body: JSON.stringify({
+          ...formData,
+          recaptchaToken,
+          website: websiteRef.current?.value ?? '',
+        }),
       })
       if (response.ok) {
         setSubmitStatus('success')
@@ -464,6 +469,20 @@ export default function SchedulePage() {
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                       placeholder="Tell us about your goals and any questions you have..."
+                    />
+                  </div>
+
+                  {/* Honeypot: hidden from users, bots typically fill it */}
+                  <div
+                    className="absolute -left-[9999px] w-px h-px overflow-hidden opacity-0 pointer-events-none"
+                    aria-hidden
+                  >
+                    <input
+                      ref={websiteRef}
+                      type="text"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
                     />
                   </div>
 

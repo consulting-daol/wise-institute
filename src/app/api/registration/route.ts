@@ -159,9 +159,17 @@ WISE Institute – Training that transforms
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, email, clinic = '', experience = '', program = '', message = '', recaptchaToken } = body;
+    const { name, email, clinic = '', experience = '', program = '', message = '', recaptchaToken, website } = body;
 
-    if (process.env.RECAPTCHA_SECRET_KEY && !recaptchaToken) {
+    if (website?.trim()) {
+      return NextResponse.json({ success: true });
+    }
+
+    const isProduction = process.env.NODE_ENV === 'production';
+    const skipDevRecaptcha = process.env.RECAPTCHA_SKIP_DEV === 'true';
+    const needsToken = isProduction || (process.env.RECAPTCHA_SECRET_KEY && !skipDevRecaptcha);
+
+    if (needsToken && !recaptchaToken) {
       return NextResponse.json(
         { error: 'reCAPTCHA verification required' },
         { status: 400 }
@@ -193,20 +201,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const smtpUser =
-      process.env.SMTP_USER ||
-      process.env.ADMIN_USERNAME ||
-      process.env.MAVIS_EMAIL;
-    const rawPass =
-      process.env.APP_PASSWORD ||
-      process.env.SMTP_PASS ||
-      process.env.MAVIS_PASS;
-    const smtpPass = rawPass ? String(rawPass).replace(/\s+/g, '') : '';
-    const smtpTo =
-      process.env.SMTP_TO || smtpUser || 'info@wiseinstitute.com';
+    const smtpUser = process.env.EMAIL_USER;
+    const smtpPass = process.env.APP_PASSWORD?.replace(/\s+/g, '') ?? '';
+    const smtpTo = process.env.SMTP_TO || smtpUser || 'info@wiseinstitute.com';
 
     if (!smtpUser || !smtpPass) {
-      console.error('SMTP credentials not configured');
+      console.error('EMAIL_USER and APP_PASSWORD are required for email');
       return NextResponse.json(
         { error: 'Email service not configured' },
         { status: 500 }
