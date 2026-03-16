@@ -108,7 +108,7 @@ export default function HomePage() {
   const [isMuted, setIsMuted] = useState(true)
   const videoRef = useRef<HTMLVideoElement | null>(null)
   const autoSlideIntervalRef = useRef<NodeJS.Timeout | null>(null)
-  const [isWelcomePopupOpen, setIsWelcomePopupOpen] = useState(false)
+  const [isWelcomePopupOpen, setIsWelcomePopupOpen] = useState(true)
   const [popupOffset, setPopupOffset] = useState({ x: 0, y: 0 })
   const [isDraggingPopup, setIsDraggingPopup] = useState(false)
   const popupDragStartRef = useRef<{ x: number; y: number } | null>(null)
