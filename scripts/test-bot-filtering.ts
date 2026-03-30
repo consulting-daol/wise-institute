@@ -8,7 +8,7 @@
 
 const BASE = 'http://localhost:3000';
 
-async function test(
+async function sendRequestAndCheck(
   name: string,
   url: string,
   body: Record<string, unknown>,
@@ -59,7 +59,7 @@ async function run() {
   const rateLimitPayload = { ...validPayload, website: 'x' };
   let rateLimited = false;
   for (let i = 0; i < 6; i++) {
-    const status = await test(`  요청 ${i + 1}/6`, `${BASE}/api/contact`, rateLimitPayload);
+    const status = await sendRequestAndCheck(`  요청 ${i + 1}/6`, `${BASE}/api/contact`, rateLimitPayload);
     if (status === 429) {
       rateLimited = true;
       console.log('   → 429 도달, rate limit 정상 동작 ✅\n');
@@ -77,11 +77,11 @@ async function run() {
 
   // 1. 허니팟: website 필드에 값이 있으면 차단 (이메일不发送)
   console.log('1. 허니팟 테스트');
-  await test('Contact + 허니팟 채움', `${BASE}/api/contact`, {
+  await sendRequestAndCheck('Contact + 허니팟 채움', `${BASE}/api/contact`, {
     ...validPayload,
     website: 'https://spam-bot.com',
   });
-  await test('Registration + 허니팟 채움', `${BASE}/api/registration`, {
+  await sendRequestAndCheck('Registration + 허니팟 채움', `${BASE}/api/registration`, {
     name: 'Bot',
     email: 'bot@spam.com',
     clinic: '',
@@ -94,19 +94,19 @@ async function run() {
 
   // 2. reCAPTCHA 토큰 없음
   console.log('2. reCAPTCHA 토큰 없음');
-  await test('Contact (토큰 없음)', `${BASE}/api/contact`, validPayload, 400);
-  await test('Registration (토큰 없음)', `${BASE}/api/registration`, regPayload, 400);
+  await sendRequestAndCheck('Contact (토큰 없음)', `${BASE}/api/contact`, validPayload, 400);
+  await sendRequestAndCheck('Registration (토큰 없음)', `${BASE}/api/registration`, regPayload, 400);
   console.log(
     '   → 로컬(개발): 통과 가능 | 프로덕션: 400 (reCAPTCHA verification required)\n'
   );
 
   // 3. 잘못된 reCAPTCHA 토큰
   console.log('3. 잘못된 reCAPTCHA 토큰');
-  await test('Contact (가짜 토큰)', `${BASE}/api/contact`, {
+  await sendRequestAndCheck('Contact (가짜 토큰)', `${BASE}/api/contact`, {
     ...validPayload,
     recaptchaToken: 'invalid-fake-token-12345',
   }, 400);
-  await test('Registration (가짜 토큰)', `${BASE}/api/registration`, {
+  await sendRequestAndCheck('Registration (가짜 토큰)', `${BASE}/api/registration`, {
     ...regPayload,
     recaptchaToken: 'invalid-fake-token-12345',
   }, 400);
@@ -114,19 +114,19 @@ async function run() {
 
   // 4. 이메일·이름 검증 (RECAPTCHA_SKIP_DEV=true일 때 검증 도달)
   console.log('4. 이메일·이름 검증');
-  await test('Contact (봇 이름 rH0XCxMmz...)', `${BASE}/api/contact`, {
+  await sendRequestAndCheck('Contact (봇 이름 rH0XCxMmz...)', `${BASE}/api/contact`, {
     ...validPayload,
     name: 'rH0XCxMmzHRdgoCvDLtkSLN',
   });
-  await test('Registration (일회용 mailinator.com)', `${BASE}/api/registration`, {
+  await sendRequestAndCheck('Registration (일회용 mailinator.com)', `${BASE}/api/registration`, {
     ...regPayload,
     email: 'test@mailinator.com',
   });
-  await test('Contact (점 과다 c.sall.e.s.0.1@gmail.com)', `${BASE}/api/contact`, {
+  await sendRequestAndCheck('Contact (점 과다 c.sall.e.s.0.1@gmail.com)', `${BASE}/api/contact`, {
     ...validPayload,
     email: 'c.sall.e.s.0.1@gmail.com',
   });
-  await test('Registration (ezweb.ne.jp 스팸 도메인)', `${BASE}/api/registration`, {
+  await sendRequestAndCheck('Registration (ezweb.ne.jp 스팸 도메인)', `${BASE}/api/registration`, {
     ...regPayload,
     email: 'spam@ezweb.ne.jp',
   });

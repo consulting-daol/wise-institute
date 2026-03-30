@@ -73,9 +73,16 @@ export default function SchedulePage() {
 
   const upcomingPrograms = programs
 
-  const timelineItems = upcomingPrograms
+  type TimelineItem = {
+    title: string
+    dates: string
+    status: Program['status']
+    tag: 'Residency' | 'Study Club' | 'Event'
+  }
+
+  const timelineItems: TimelineItem[] = upcomingPrograms
     .filter((p) => p.isVisible !== false)
-    .flatMap((program) => {
+    .flatMap((program): TimelineItem[] => {
       if (program.type === "Residency") {
         const dates =
           program.timelineDates ??
@@ -87,7 +94,7 @@ export default function SchedulePage() {
             title: program.title,
             dates,
             status: program.status,
-            tag: "Residency" as const,
+            tag: 'Residency',
           },
         ]
       }
@@ -101,7 +108,7 @@ export default function SchedulePage() {
               title: program.title,
               dates: program.startDate,
               status: program.status,
-              tag: "Study Club" as const,
+              tag: 'Study Club',
             },
           ]
         }
@@ -113,7 +120,7 @@ export default function SchedulePage() {
             title: program.title,
             dates: label,
             status: isCompleted ? "Completed" : program.status,
-            tag: "Study Club" as const,
+            tag: 'Study Club',
           }
         })
       }
@@ -129,7 +136,7 @@ export default function SchedulePage() {
           title: program.title,
           dates,
           status: program.status,
-          tag: "Event" as const,
+          tag: 'Event',
         },
       ]
     })
