@@ -560,10 +560,13 @@ export default function SchedulePage() {
               {[
                 { title: 'LIVE SURGERY at PDC 2026', dates: 'March 5, 2026', status: 'Open', tag: 'Event' },
                 { title: 'Foundations of Implant Dentistry', dates: 'April 11 – 18, 2026', status: 'Open', tag: 'Residency' },
+                { title: 'Live Surgery Study Club', dates: 'June 14, 2026', status: 'Open', tag: 'Study Club' },
+                { title: 'Live Surgery Study Club', dates: 'September 13, 2026', status: 'Open', tag: 'Study Club' },
+                { title: 'Live Surgery Study Club', dates: 'November 8, 2026', status: 'Open', tag: 'Study Club' },
               ].map((item, idx) => {
                 const isLeft = idx % 2 === 0
                 return (
-                  <div key={item.title} className="relative" data-aos="fade-up" data-aos-delay={idx * 80}>
+                  <div key={`${item.title}-${item.dates}`} className="relative" data-aos="fade-up" data-aos-delay={idx * 80}>
                     {/* Timeline dot */}
                     <div className={`absolute left-1/2 -translate-x-1/2 top-6 w-4 h-4 rounded-full border-2 border-white shadow-lg z-10 ${
                       item.tag === 'Residency' ? 'bg-primary-500' : item.tag === 'Event' ? 'bg-accent-500' : 'bg-secondary-500'
@@ -660,13 +663,16 @@ export default function SchedulePage() {
               {[
                 { title: 'LIVE SURGERY at PDC 2026', dates: 'March 5, 2026', status: 'Open', tag: 'Event' },
                 { title: 'Foundations of Implant Dentistry', dates: 'April 11 – 18, 2026', status: 'Open', tag: 'Residency' },
+                { title: 'Live Surgery Study Club', dates: 'June 14, 2026', status: 'Open', tag: 'Study Club' },
+                { title: 'Live Surgery Study Club', dates: 'September 13, 2026', status: 'Open', tag: 'Study Club' },
+                { title: 'Live Surgery Study Club', dates: 'November 8, 2026', status: 'Open', tag: 'Study Club' },
               ].map((item, idx) => {
                 const isLeft = idx % 2 === 0
                 return (
-                  <div key={item.title} className="relative">
+                  <div key={`${item.title}-${item.dates}`} className="relative">
                     {/* Timeline dot */}
                     <div className={`absolute left-1/2 -translate-x-1/2 top-6 w-3 h-3 rounded-full border-2 border-white shadow-lg z-10 ${
-                      item.tag === 'Residency' ? 'bg-primary-500' : 'bg-secondary-500'
+                      item.tag === 'Residency' ? 'bg-primary-500' : item.tag === 'Event' ? 'bg-accent-500' : 'bg-secondary-500'
                     }`} />
                     
                     {/* Card - Alternating left/right */}

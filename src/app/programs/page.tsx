@@ -267,25 +267,7 @@ export default function ProgramsPage() {
                   </div>
                   <div>
                     <h4 className="text-sm sm:text-base font-semibold text-secondary">Real Patient Cases</h4>
-                    <p className="text-xs sm:text-sm text-secondary-600">Dentists bring their own patients for surgery</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center">
-                    <Users className="h-5 w-5 text-secondary" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm sm:text-base font-semibold text-secondary">Paired Learning</h4>
-                    <p className="text-xs sm:text-sm text-secondary-600">Perform & assist under direct supervision</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center">
-                    <Award className="h-5 w-5 text-secondary" />
-                  </div>
-                  <div>
-                    <h4 className="text-sm sm:text-base font-semibold text-secondary">Direct Mentorship</h4>
-                    <p className="text-xs sm:text-sm text-secondary-600">Learn from Dr. Lee and Dr. Yoon personally</p>
+                    <p className="text-xs sm:text-sm text-secondary-600">Bring your own clinical cases and perform surgery</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -293,22 +275,67 @@ export default function ProgramsPage() {
                     <Target className="h-5 w-5 text-secondary" />
                   </div>
                   <div>
-                    <h4 className="text-sm sm:text-base font-semibold text-secondary">Confidence Building</h4>
-                    <p className="text-xs sm:text-sm text-secondary-600">Return to clinic ready to apply skills</p>
+                    <h4 className="text-sm sm:text-base font-semibold text-secondary">Case Planning & Review</h4>
+                    <p className="text-xs sm:text-sm text-secondary-600">Case presentations, workup, execution & recap</p>
                   </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center">
+                    <Award className="h-5 w-5 text-secondary" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm sm:text-base font-semibold text-secondary">Expert Guidance</h4>
+                    <p className="text-xs sm:text-sm text-secondary-600">Real-time feedback from Dr. Stephen Yoon</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center">
+                    <Users className="h-5 w-5 text-secondary" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm sm:text-base font-semibold text-secondary">Small-Group Setting</h4>
+                    <p className="text-xs sm:text-sm text-secondary-600">Individualized attention in an intimate format</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Upcoming Sessions */}
+              <div className="mt-6 pt-6 border-t border-secondary-100">
+                <h4 className="text-sm font-semibold text-secondary mb-3 uppercase tracking-wide">Upcoming Sessions — 2026</h4>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-3">
+                    <span className="w-2 h-2 rounded-full bg-gray-300 flex-shrink-0" />
+                    <span className="text-sm text-secondary-400 line-through">March 22, 2026 — Completed</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
+                    <span className="text-sm text-secondary-700 font-medium">June 14, 2026</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
+                    <span className="text-sm text-secondary-700 font-medium">September 13, 2026</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
+                    <span className="text-sm text-secondary-700 font-medium">November 8, 2026</span>
+                  </div>
+                  <p className="text-xs text-secondary-500 mt-2">8:00 AM – 5:00 PM · Coquitlam City Dentist</p>
                 </div>
               </div>
             </div>
 
             <div data-aos="fade-right" className="flex flex-col order-1 lg:order-2">
-              <p className="uppercase tracking-wider text-primary-600 font-bold text-sm sm:text-base lg:text-lg mb-3">
-                Live Surgery Study Club
-              </p>
+              <div className="flex items-center gap-3 mb-3">
+                <p className="uppercase tracking-wider text-primary-600 font-bold text-sm sm:text-base lg:text-lg">
+                  Live Surgery Study Club
+                </p>
+                <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">Ongoing Series</span>
+              </div>
               <h2 className="text-2xl sm:text-4xl font-bold text-secondary leading-tight mb-3 sm:mb-4">
                 Real patient cases with direct mentorship
               </h2>
               <p className="text-secondary-600 text-sm sm:text-lg mb-6 sm:mb-8">
-                Doctors would bring their own patients to place implants. Surgery time was busy; Doctors would be paired up for the day and take turn performing and assisting the surgery. Occasionally, Dr. Yoon and I (Dr. Lee) would step in to demonstrate certain techniques.
+                Our Live Surgery Study Club is off to a great start — the first session was successfully completed! Registration is now open for the remaining sessions in 2026, led by Dr. Stephen Yoon. Bring your own clinical cases and perform implant surgeries in a small-group setting with expert guidance.
               </p>
               
               <div className="rounded-2xl border-2 border-secondary-200 bg-white p-4 sm:p-6 mb-6 sm:mb-8 shadow-sm">
@@ -323,8 +350,8 @@ export default function ProgramsPage() {
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-3 sm:mb-4 ring-1 ring-inset bg-primary-50 ring-primary-600/10">
                     <Calendar className="h-5 w-5 text-primary-700" />
                   </div>
-                  <p className="text-xs font-semibold uppercase tracking-wide text-secondary-500">Schedule</p>
-                  <p className="text-sm sm:text-base font-medium text-secondary-900 mt-1">3 sessions per year</p>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-secondary-500">CE Credits</p>
+                  <p className="text-sm sm:text-base font-medium text-secondary-900 mt-1">36 CE Credits</p>
                 </div>
                 <div className="rounded-2xl border-2 border-secondary-200 bg-white p-3.5 sm:p-6 shadow-sm hover:-translate-y-0.5 transition-transform duration-300">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-3 sm:mb-4 ring-1 ring-inset bg-secondary-50 ring-secondary-500/20">
@@ -335,8 +362,8 @@ export default function ProgramsPage() {
                 </div>
               </div>
 
-              <Link href="/schedule" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-secondary-900 text-white px-6 py-3 text-sm font-semibold shadow-lg shadow-secondary-900/20 hover:shadow-secondary-900/30 transition-all mt-auto">
-                View Schedule
+              <Link href="/contact?program=study-club" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-secondary-900 text-white px-6 py-3 text-sm font-semibold shadow-lg shadow-secondary-900/20 hover:shadow-secondary-900/30 transition-all mt-auto">
+                Register Now
                 <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
@@ -455,32 +482,32 @@ export default function ProgramsPage() {
                   </span>
                 </div>
                 <h3 className="text-xl sm:text-3xl font-extrabold text-secondary mb-2 sm:mb-3">Live Surgery Study Club</h3>
-                <p className="text-secondary-600 mb-5 sm:mb-6 text-sm sm:text-base">Real patient cases with direct mentorship from Dr. Lee and Dr. Yoon. Bring your own patients for surgery.</p>
+                <p className="text-secondary-600 mb-5 sm:mb-6 text-sm sm:text-base">Ongoing series led by Dr. Stephen Yoon. Bring your own clinical cases and perform implant surgeries with expert guidance. June, September & November 2026 — Coquitlam City Dentist.</p>
                 <div className="space-y-3 mb-6 sm:mb-8">
                   <div className="flex items-center space-x-3">
                     <CheckCircle2 className="h-5 w-5 text-secondary flex-shrink-0" />
-                    <span className="text-sm sm:text-base text-secondary-600">Real patient cases</span>
+                    <span className="text-sm sm:text-base text-secondary-600">36 CE Credits | 4 live-surgery days | $4,999 CAD</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle2 className="h-5 w-5 text-secondary flex-shrink-0" />
-                    <span className="text-sm sm:text-base text-secondary-600">Direct mentorship</span>
+                    <span className="text-sm sm:text-base text-secondary-600">Work on your own real clinical cases</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle2 className="h-5 w-5 text-secondary flex-shrink-0" />
-                    <span className="text-sm sm:text-base text-secondary-600">Paired learning approach</span>
+                    <span className="text-sm sm:text-base text-secondary-600">Case planning, execution & review</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle2 className="h-5 w-5 text-secondary flex-shrink-0" />
-                    <span className="text-sm sm:text-base text-secondary-600">Flexible scheduling</span>
+                    <span className="text-sm sm:text-base text-secondary-600">Real-time feedback from Dr. Yoon</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle2 className="h-5 w-5 text-secondary flex-shrink-0" />
-                    <span className="text-sm sm:text-base text-secondary-600">Small group size</span>
+                    <span className="text-sm sm:text-base text-secondary-600">Small group — spots are limited</span>
                   </div>
                 </div>
                 <div className="pt-6 border-t border-secondary-200">
                   <p className="text-xs sm:text-sm text-secondary-500 mb-2">Perfect for:</p>
-                  <p className="text-sm sm:text-base text-secondary-600">Dentists ready to advance with real patient experience</p>
+                  <p className="text-sm sm:text-base text-secondary-600">Dentists ready to elevate confidence in implant dentistry with real surgical experience</p>
                 </div>
               </div>
             </div>
