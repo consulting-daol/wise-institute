@@ -286,7 +286,7 @@ export default function NewsManagementTab() {
       formData.set('href', href);
 
       setProgress(10);
-      setProgressMessage("이미지 압축 중...");
+      setProgressMessage("Compressing images...");
       
       const imageFile = (form.elements.namedItem('image') as HTMLInputElement)?.files?.[0];
       if (imageFile) {
@@ -304,7 +304,7 @@ export default function NewsManagementTab() {
       }
 
       setProgress(20);
-      setProgressMessage("서버로 전송 중...");
+      setProgressMessage("Uploading to server...");
 
       const endpoint = editingId ? `/api/admin/news/${editingId}` : "/api/admin/news";
       const method = editingId ? "PUT" : "POST";

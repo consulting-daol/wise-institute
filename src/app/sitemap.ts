@@ -1,8 +1,22 @@
 import { MetadataRoute } from 'next';
 import { getNewsItems } from '@/lib/news';
+import { getPrograms } from '@/lib/programs';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://wiseinstitute.com';
+
+  let programsLastModified: Date = new Date();
+  try {
+    const programs = await getPrograms();
+    // Use the latest program startDate as the best-effort lastModified for schedule-related pages.
+    const latest = programs
+      .map((p) => new Date(p.startDate))
+      .filter((d) => !Number.isNaN(d.getTime()))
+      .sort((a, b) => b.getTime() - a.getTime())[0];
+    if (latest) programsLastModified = latest;
+  } catch (error) {
+    console.error('Error fetching programs for sitemap:', error);
+  }
 
   // Static routes
   const staticRoutes = [
@@ -20,19 +34,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/programs`,
-      lastModified: new Date(),
+      lastModified: programsLastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.9,
     },
     {
       url: `${baseUrl}/schedule`,
-      lastModified: new Date(),
+      lastModified: programsLastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.9,
     },
     {
       url: `${baseUrl}/contact`,
-      lastModified: new Date(),
+      lastModified: programsLastModified,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     },

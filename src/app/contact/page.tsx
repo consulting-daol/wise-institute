@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { Home, Mail, Phone, MapPin, Clock, Send, HelpCircle, Plus, Minus } from 'lucide-react'
+import { Home, Mail, MapPin, Clock, Send, HelpCircle, Plus, Minus } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '@/components/CallToActionBanner'
 import { useReCaptchaToken } from '@/hooks/useReCaptchaToken'
@@ -35,6 +35,29 @@ function ContactFormWithParams() {
         subject: 'registration',
         message: 'I am interested in the Live Surgery Study Club program.'
       }))
+    } else if (program) {
+      // Support arbitrary programs added via Programs Management (program IDs stored in Contentful)
+      fetch('/api/programs')
+        .then((r) => r.json())
+        .then((data) => {
+          const programs = Array.isArray(data) ? data : Array.isArray(data?.programs) ? data.programs : []
+          const match = programs.find((p: any) => p.id === program)
+
+          setFormData((prev) => ({
+            ...prev,
+            subject: 'registration',
+            message: match
+              ? `I am interested in the ${match.title} program.`
+              : `I am interested in the ${program} program.`
+          }))
+        })
+        .catch(() => {
+          setFormData((prev) => ({
+            ...prev,
+            subject: 'registration',
+            message: `I am interested in the ${program} program.`
+          }))
+        })
     }
   }, [searchParams])
 
@@ -212,48 +235,50 @@ export default function ContactPage() {
       <section className="py-6 sm:py-8 md:py-10 lg:py-12 bg-sky-50/50">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-8 lg:gap-10 items-stretch">
-            {/* PDC 2026 Live Surgery Event */}
+            {/* Live Surgery Study Club */}
             <div data-aos="fade-right" className="rounded-2xl border border-secondary-100 bg-white p-5 sm:p-6 md:p-8 shadow-md h-full flex flex-col">
               <div className="text-center mb-5 sm:mb-6">
                 <p className="text-xs uppercase tracking-wider text-secondary-400 mb-1.5 sm:mb-2">Upcoming Event</p>
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary-900 mb-1.5 sm:mb-2 leading-tight">
-                  LIVE SURGERY at PDC 2026
+                  LIVE SURGERY STUDY CLUB
                 </h2>
                 <p className="text-sm text-secondary-600">
-                  VCC West – Exhibit Hall Live Stage | March 5, 2026 | 9:30–11:00 AM
+                  Coquitlam City Dentist · June 14, 2026 · September 13, 2026 · November 8, 2026 · 8:00 AM – 5:00 PM
                 </p>
               </div>
 
               <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-5 sm:mb-6">
-                <div className="px-4 py-3 rounded-xl bg-sky-50 border border-sky-100 min-w-[120px] text-center">
-                  <p className="text-[10px] sm:text-xs uppercase tracking-wide text-sky-600 font-semibold mb-0.5">Admission</p>
-                  <p className="text-sm sm:text-base font-bold text-secondary-900">Free</p>
+                <div className="px-4 py-3 rounded-xl bg-secondary-50 border border-secondary-100 min-w-[120px] text-center">
+                  <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-500 font-semibold mb-0.5">Price</p>
+                  <p className="text-sm sm:text-base font-bold text-secondary-900">$4,999 CAD</p>
                 </div>
                 <div className="px-4 py-3 rounded-xl bg-white border border-secondary-100 min-w-[120px] text-center">
                   <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-500 font-semibold mb-0.5">Duration</p>
-                  <p className="text-sm sm:text-base font-bold text-secondary-900">1.5 hours</p>
+                  <p className="text-sm sm:text-base font-bold text-secondary-900">8:00 AM – 5:00 PM</p>
+                </div>
+                <div className="px-4 py-3 rounded-xl bg-white border border-secondary-100 min-w-[120px] text-center">
+                  <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-500 font-semibold mb-0.5">CE Credits</p>
+                  <p className="text-sm sm:text-base font-bold text-secondary-900">36 CE</p>
                 </div>
               </div>
 
               <div className="flex-1 flex flex-col">
                 <h3 className="text-base sm:text-lg font-bold text-secondary-900 mb-2.5 sm:mb-3">
-                  Session Focus
+                  What you&apos;ll do
                 </h3>
                 <p className="text-sm text-secondary-600 mb-3">
-                  Innovative implant solutions for replacing posterior maxillary teeth—practical approaches for cases with limited vertical bone height and proximity to the maxillary sinus.
+                  Work on your own clinical cases and perform implant surgeries with real-time guidance in a small-group setting.
                 </p>
                 <ul className="space-y-2 text-sm text-secondary-700 mb-4 list-disc list-inside">
-                  <li>Short implant placement techniques to minimize or avoid sinus involvement</li>
-                  <li>Simplified sinus lifting and bone augmentation methods</li>
-                  <li>3D guided planning and surgery for safe navigation around vital anatomy</li>
+                  <li>Case planning, workup, execution & recap</li>
+                  <li>Live surgical execution with expert feedback</li>
+                  <li>Real-time mentorship from Dr. Stephen Yoon</li>
+                  <li>Small group — spots are limited</li>
                 </ul>
 
                 <div className="mt-auto pt-4 border-t border-secondary-100">
                   <p className="text-xs sm:text-sm text-secondary-600 mb-1">
-                    Co-led by: <span className="font-medium">Dr. Lee (DMD, B.SC. PHARM)</span> ▪ <span className="font-medium">Dr. Yoon (DMD, B.SC)</span>
-                  </p>
-                  <p className="text-xs text-secondary-400 text-center mt-3">
-                    Co-Sponsored by Hiossen
+                    Led by: <span className="font-medium">Dr. Stephen Yoon</span>
                   </p>
                 </div>
               </div>
@@ -343,16 +368,7 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 ring-1 ring-primary/15">
-                    <Phone className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="text-base font-semibold text-secondary">Phone</h3>
-                    <p className="text-sm text-secondary-700">(604) 555-0123</p>
-                    <p className="text-xs text-secondary-500">Monday – Friday, 9 AM – 5 PM PST</p>
-                  </div>
-                </div>
+                {/* Phone is temporarily disabled (no phone available) */}
 
                 <div className="flex items-start gap-4">
                   <div className="bg-primary/10 w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 ring-1 ring-primary/15">
@@ -440,10 +456,6 @@ export default function ContactPage() {
                 If you have any other questions, please contact us at the numbers below and we will kindly assist you.
               </p>
               <div className="space-y-2 text-sm sm:text-base">
-                <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-primary flex-shrink-0" />
-                  <span className="text-secondary-700">(604) 555-0123</span>
-                </div>
                 <div className="flex items-center gap-2">
                   <Mail className="h-4 w-4 text-primary flex-shrink-0" />
                   <span className="text-secondary-700">info@wiseinstitute.com</span>
@@ -537,11 +549,6 @@ export default function ContactPage() {
           label: 'Email Us',
           href: 'mailto:info@wiseinstitute.com',
           icon: <Mail className="h-5 w-5 text-primary-600" />,
-        }}
-        secondaryAction={{
-          label: 'Call Us',
-          href: 'tel:+16045550123',
-          icon: <Phone className="h-5 w-5 text-white" />,
         }}
       />
     </div>

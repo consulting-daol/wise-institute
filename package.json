@@ -13,6 +13,7 @@
     "update-media-name": "tsx scripts/update-media-item-name.ts",
     "update-wise-name": "tsx scripts/update-wiseinstitute-name.ts",
     "list-content-types": "tsx scripts/list-content-types.ts",
+    "create-programs-content-type": "tsx scripts/create-programs-content-type.ts",
     "test:bot-filter": "tsx scripts/test-bot-filtering.ts"
   },
   "dependencies": {

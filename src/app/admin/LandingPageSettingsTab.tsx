@@ -195,7 +195,7 @@ function SortableCampaignItem({ item, items, index, onUpdate, onRemove }: {
     transition,
   };
 
-  // null 체크 추가
+  // null check
   if (!item) {
     return null;
   }

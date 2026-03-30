@@ -1,10 +1,11 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Calendar, Clock, Users, MapPin, CheckCircle, ArrowRight, Home, Mail } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '@/components/CallToActionBanner'
 import { useReCaptchaToken } from '@/hooks/useReCaptchaToken'
+import { Program, DEFAULT_PROGRAMS } from '@/lib/programs'
 
 export default function SchedulePage() {
   const [formData, setFormData] = useState({
@@ -18,8 +19,18 @@ export default function SchedulePage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [programs, setPrograms] = useState<Program[]>(DEFAULT_PROGRAMS)
   const { getToken } = useReCaptchaToken('registration')
   const websiteRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    fetch('/api/programs')
+      .then((r) => r.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) setPrograms(data)
+      })
+      .catch(() => {})
+  }, [])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData((prev) => ({
@@ -60,41 +71,68 @@ export default function SchedulePage() {
     }
   }
 
-  const upcomingPrograms = [
-    {
-      id: 1,
-      title: "LIVE SURGERY at PDC 2026",
-      type: "Event",
-      startDate: "Thursday, March 5, 2026",
-      endDate: "Thursday, March 5, 2026",
-      duration: "1.5 hours",
-      capacity: "Open to all",
-      location: "VCC West – Exhibit Hall Live Stage",
-      status: "Open",
-      description: "Clinical Excellence: Innovative implant solutions for replacing posterior maxillary teeth. This live, hands-on session covers short implant placement to minimize sinus involvement, simplified sinus lifting and bone augmentation, and 3D guided planning and surgery. Co-Sponsored by Hiossen. 9:30–11:00 AM.",
-      price: "Free",
-    },
-    {
-      id: 2,
-      title: "FOUNDATIONS OF IMPLANT DENTISTRY",
-      type: "Residency",
-      startDate: "April 11, 2026",
-      endDate: "July 12, 2026",
-      duration: "8 days (4 modules)",
-      capacity: "Limited seats",
-      location: "AIC Training Centre, 122-8337 Eastlake Dr, Burnaby, BC",
-      status: "Open",
-      description: "Foundations of Implant Dentistry: A Comprehensive Residency Program – Spring 2026 Vancouver. Module 1: April 11-12 (Surgical Foundations & Guided Surgery), Module 2: May 2-3 (Sinus Lift & Basic GBR), Module 3: June 6-7 (Prosthetic & Treatment Planning), Module 4: July 11-12 (Live Surgery Days). 56 CE Credits. 6 Workshop Days + 2 Live Surgery Days. Co-led by Dr. Lee & Dr. Yoon. Powered by HiOssen AIC Education.",
-      price: "$7,500 – $9,500 + Tax",
-      ceCredits: "56 CE Credits",
-      moduleDates: [
-        "Module 1: April 11-12, 2026",
-        "Module 2: May 2-3, 2026",
-        "Module 3: June 6-7, 2026",
-        "Module 4: July 11-12, 2026 (Live Surgery)"
+  const upcomingPrograms = programs
+
+  const timelineItems = upcomingPrograms
+    .filter((p) => p.isVisible !== false)
+    .flatMap((program) => {
+      if (program.type === "Residency") {
+        const dates =
+          program.timelineDates ??
+          (program.startDate === program.endDate
+            ? program.startDate
+            : `${program.startDate} – ${program.endDate}`)
+        return [
+          {
+            title: program.title,
+            dates,
+            status: program.status,
+            tag: "Residency" as const,
+          },
+        ]
+      }
+
+      if (program.type === "Study Club") {
+        const moduleDates = program.moduleDates ?? []
+        if (moduleDates.length === 0) {
+          // If the admin didn't provide per-session dates, at least show the main startDate.
+          return [
+            {
+              title: program.title,
+              dates: program.startDate,
+              status: program.status,
+              tag: "Study Club" as const,
+            },
+          ]
+        }
+
+        return moduleDates.map((md) => {
+          const isCompleted = md.includes("[completed]")
+          const label = md.replace(" [completed]", "")
+          return {
+            title: program.title,
+            dates: label,
+            status: isCompleted ? "Completed" : program.status,
+            tag: "Study Club" as const,
+          }
+        })
+      }
+
+      // Event (fallback)
+      const dates =
+        program.startDate === program.endDate
+          ? program.startDate
+          : `${program.startDate} – ${program.endDate}`
+
+      return [
+        {
+          title: program.title,
+          dates,
+          status: program.status,
+          tag: "Event" as const,
+        },
       ]
-    }
-  ]
+    })
 
   const snapshotHighlights = [
     {
@@ -127,9 +165,10 @@ export default function SchedulePage() {
     },
   ]
 
-  const renderProgramCard = (program: typeof upcomingPrograms[number], index: number, isMobile = false) => {
+  const renderProgramCard = (program: Program, index: number, isMobile = false) => {
     const isResidency = program.type === 'Residency'
     const isEvent = program.type === 'Event'
+    const isStudyClub = program.type === 'Study Club'
     const accentGradient = isResidency
       ? 'from-primary-500/25 via-primary-500/10 to-transparent'
       : isEvent
@@ -167,6 +206,11 @@ export default function SchedulePage() {
               >
                 {program.status}
               </span>
+              {isStudyClub && (
+                <span className="px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-teal-100 text-teal-700">
+                  Ongoing Series
+                </span>
+              )}
             </div>
           </div>
 
@@ -182,11 +226,29 @@ export default function SchedulePage() {
                 <p className="text-xs uppercase tracking-wide text-secondary-500">Dates</p>
                 {program.moduleDates ? (
                   <div className="text-sm font-medium text-secondary-900 space-y-1">
-                    {program.moduleDates.map((date, idx) => (
-                      <p key={idx} className={date.includes('Live Surgery') ? 'font-semibold text-primary' : ''}>{date}</p>
-                    ))}
-                    {program.type === 'Residency' && (
+                    {program.moduleDates.map((date, idx) => {
+                      const isCompleted = date.includes('[completed]')
+                      const label = date.replace(' [completed]', '')
+                      return (
+                        <p
+                          key={idx}
+                          className={
+                            isCompleted
+                              ? 'line-through text-secondary-400'
+                              : date.includes('Live Surgery')
+                              ? 'font-semibold text-primary'
+                              : ''
+                          }
+                        >
+                          {isCompleted ? `${label} ✓` : label}
+                        </p>
+                      )
+                    })}
+                    {isResidency && (
                       <p className="text-secondary-600 text-xs mt-1">9:00 am – 5:00 pm</p>
+                    )}
+                    {isStudyClub && (
+                      <p className="text-secondary-600 text-xs mt-1">8:00 AM – 5:00 PM</p>
                     )}
                   </div>
                 ) : (
@@ -241,7 +303,7 @@ export default function SchedulePage() {
                   </div>
                 )}
               </div>
-              {program.type === 'Residency' && (
+              {isResidency && (
                 <div className="bg-secondary-50 rounded-xl p-4 border border-secondary-200">
                   <p className="text-xs uppercase tracking-wide text-secondary-600 font-semibold mb-2">Pricing Options</p>
                   <div className="text-sm text-secondary-700 space-y-1">
@@ -250,13 +312,42 @@ export default function SchedulePage() {
                   </div>
                 </div>
               )}
+              {isStudyClub && (
+                <div className="bg-secondary-50 rounded-xl p-4 border border-secondary-200">
+                  <p className="text-xs uppercase tracking-wide text-secondary-600 font-semibold mb-3">What&apos;s Included</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-secondary-700">
+                    {[
+                      'Case presentations & planning',
+                      'Live surgical execution',
+                      'Work up the cases',
+                      'Case review & recap',
+                      'Real-time feedback from Dr. Yoon',
+                      'Small-group setting',
+                    ].map((item) => (
+                      <div key={item} className="flex items-center gap-2">
+                        <CheckCircle className="h-4 w-4 text-secondary flex-shrink-0" />
+                        <span>{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm text-secondary-500">
             <div className="flex flex-col gap-0.5">
-              <span className="font-semibold text-secondary-600">Co-led by Dr. Lee & Dr. Yoon</span>
-              {(program.type === 'Residency' || program.type === 'Event') && <span>Powered by HiOssen AIC Education</span>}
+              {isStudyClub ? (
+                <>
+                  <span className="font-semibold text-secondary-600">Led by Dr. Stephen Yoon</span>
+                  <span>Coquitlam City Dentist · Spots are limited</span>
+                </>
+              ) : (
+                <>
+                  <span className="font-semibold text-secondary-600">Co-led by Dr. Lee & Dr. Yoon</span>
+                  {(isResidency || isEvent) && <span>Powered by HiOssen AIC Education</span>}
+                </>
+              )}
             </div>
             <a
               href="#registration-form"
@@ -457,7 +548,6 @@ export default function SchedulePage() {
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                     >
                       <option value="">Select program of interest</option>
-                      <option value="pdc-2026">PDC 2026 Live Surgery</option>
                       <option value="residency">Implant Residency (8-day)</option>
                       <option value="study-club">Live Surgery Study Club</option>
                       <option value="both">Both Programs</option>
@@ -557,13 +647,7 @@ export default function SchedulePage() {
           <div className="hidden sm:block relative">
             <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-secondary-200 via-secondary-300 to-transparent" />
             <div className="space-y-8 sm:space-y-10">
-              {[
-                { title: 'LIVE SURGERY at PDC 2026', dates: 'March 5, 2026', status: 'Open', tag: 'Event' },
-                { title: 'Foundations of Implant Dentistry', dates: 'April 11 – 18, 2026', status: 'Open', tag: 'Residency' },
-                { title: 'Live Surgery Study Club', dates: 'June 14, 2026', status: 'Open', tag: 'Study Club' },
-                { title: 'Live Surgery Study Club', dates: 'September 13, 2026', status: 'Open', tag: 'Study Club' },
-                { title: 'Live Surgery Study Club', dates: 'November 8, 2026', status: 'Open', tag: 'Study Club' },
-              ].map((item, idx) => {
+              {timelineItems.map((item, idx) => {
                 const isLeft = idx % 2 === 0
                 return (
                   <div key={`${item.title}-${item.dates}`} className="relative" data-aos="fade-up" data-aos-delay={idx * 80}>
@@ -595,7 +679,11 @@ export default function SchedulePage() {
                                     className={`px-3 py-1 rounded-full text-xs font-semibold ${
                                       item.status === 'Open'
                                         ? 'bg-emerald-100 text-emerald-700'
-                                        : 'bg-amber-100 text-amber-700'
+                                        : item.status === 'Waitlist'
+                                          ? 'bg-amber-100 text-amber-700'
+                                          : item.status === 'Completed'
+                                            ? 'bg-gray-100 text-gray-600'
+                                            : 'bg-rose-100 text-rose-700'
                                     }`}
                                   >
                                     {item.status}
@@ -633,7 +721,11 @@ export default function SchedulePage() {
                                     className={`px-3 py-1 rounded-full text-xs font-semibold ${
                                       item.status === 'Open'
                                         ? 'bg-emerald-100 text-emerald-700'
-                                        : 'bg-amber-100 text-amber-700'
+                                        : item.status === 'Waitlist'
+                                          ? 'bg-amber-100 text-amber-700'
+                                          : item.status === 'Completed'
+                                            ? 'bg-gray-100 text-gray-600'
+                                            : 'bg-rose-100 text-rose-700'
                                     }`}
                                   >
                                     {item.status}
@@ -660,13 +752,7 @@ export default function SchedulePage() {
           <div className="sm:hidden relative">
             <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-secondary-200 via-secondary-300 to-transparent" />
             <div className="space-y-6">
-              {[
-                { title: 'LIVE SURGERY at PDC 2026', dates: 'March 5, 2026', status: 'Open', tag: 'Event' },
-                { title: 'Foundations of Implant Dentistry', dates: 'April 11 – 18, 2026', status: 'Open', tag: 'Residency' },
-                { title: 'Live Surgery Study Club', dates: 'June 14, 2026', status: 'Open', tag: 'Study Club' },
-                { title: 'Live Surgery Study Club', dates: 'September 13, 2026', status: 'Open', tag: 'Study Club' },
-                { title: 'Live Surgery Study Club', dates: 'November 8, 2026', status: 'Open', tag: 'Study Club' },
-              ].map((item, idx) => {
+              {timelineItems.map((item, idx) => {
                 const isLeft = idx % 2 === 0
                 return (
                   <div key={`${item.title}-${item.dates}`} className="relative">
@@ -694,7 +780,11 @@ export default function SchedulePage() {
                                     className={`px-2 py-1 rounded-full text-xs font-semibold ${
                                       item.status === 'Open'
                                         ? 'bg-emerald-100 text-emerald-700'
-                                        : 'bg-amber-100 text-amber-700'
+                                        : item.status === 'Waitlist'
+                                          ? 'bg-amber-100 text-amber-700'
+                                          : item.status === 'Completed'
+                                            ? 'bg-gray-100 text-gray-600'
+                                            : 'bg-rose-100 text-rose-700'
                                     }`}
                                   >
                                     {item.status}
@@ -728,7 +818,11 @@ export default function SchedulePage() {
                                     className={`px-2 py-1 rounded-full text-xs font-semibold ${
                                       item.status === 'Open'
                                         ? 'bg-emerald-100 text-emerald-700'
-                                        : 'bg-amber-100 text-amber-700'
+                                        : item.status === 'Waitlist'
+                                          ? 'bg-amber-100 text-amber-700'
+                                          : item.status === 'Completed'
+                                            ? 'bg-gray-100 text-gray-600'
+                                            : 'bg-rose-100 text-rose-700'
                                     }`}
                                   >
                                     {item.status}

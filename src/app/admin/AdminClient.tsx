@@ -23,13 +23,14 @@ import {
   useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { GripVertical, LogOut, Lock, Home, Settings, X, Plus, Newspaper, RotateCw } from 'lucide-react';
+import { GripVertical, LogOut, Lock, Home, Settings, X, Plus, Newspaper, RotateCw, CalendarDays } from 'lucide-react';
 import imageCompression from 'browser-image-compression';
 import { compressVideos, compressVideo } from '@/lib/videoCompression';
 import { rotateImage } from '@/lib/imageRotation';
 import NewsManagementTab from './NewsManagementTab';
+import ProgramsManagementTab from './ProgramsManagementTab';
 
-// 드래그 가능한 미디어 아이템 컴포넌트
+// Draggable media item component
 function SortableMediaItem({ item, onEdit, onDelete, isDeleting }: { 
   item: MediaItem; 
   onEdit: (id: string) => void; 
@@ -161,7 +162,7 @@ function SortableMediaItem({ item, onEdit, onDelete, isDeleting }: {
 
 export default function AdminClient() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'media' | 'news'>('media');
+  const [activeTab, setActiveTab] = useState<'media' | 'news' | 'programs'>('media');
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [items, setItems] = useState<MediaItem[]>([]);
@@ -181,21 +182,21 @@ export default function AdminClient() {
   const [existingVideos, setExistingVideos] = useState<string[]>([]);
   const [deletedExistingImages, setDeletedExistingImages] = useState<string[]>([]);
   
-  // 회전된 파일 저장 (원본 파일을 키로 사용)
+  // Rotated file map (keyed by original file)
   const [rotatedThumbFiles, setRotatedThumbFiles] = useState<Map<File, File>>(new Map());
   const [rotatedImageFiles, setRotatedImageFiles] = useState<Map<File, File>>(new Map());
   const [rotatedVideoFiles, setRotatedVideoFiles] = useState<Map<File, File>>(new Map());
   
-  // 선택된 파일 저장
+  // Selected files
   const [selectedThumbFiles, setSelectedThumbFiles] = useState<File[]>([]);
   const [selectedImageFiles, setSelectedImageFiles] = useState<File[]>([]);
   const [selectedVideoFiles, setSelectedVideoFiles] = useState<File[]>([]);
   
-  // 이미지 미리보기 URL
+  // Image preview URLs
   const [imagePreviewUrls, setImagePreviewUrls] = useState<string[]>([]);
   const [videoPreviewUrls, setVideoPreviewUrls] = useState<string[]>([]);
 
-  // 드래그 앤 드롭 센서 설정
+  // Drag and drop sensor setup
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -228,7 +229,7 @@ export default function AdminClient() {
   }, []);
 
 
-  // 미리보기 URL 정리
+  // Cleanup preview URLs on unmount
   useEffect(() => {
     return () => {
       thumbnailPreviews.forEach(url => URL.revokeObjectURL(url));
@@ -237,7 +238,7 @@ export default function AdminClient() {
     };
   }, [thumbnailPreviews, imagePreviewUrls, videoPreviewUrls]);
 
-  // 드래그 앤 드롭 핸들러
+  // Drag and drop handler
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
@@ -251,7 +252,7 @@ export default function AdminClient() {
     }
   };
 
-  // 순서 저장 함수
+  // Save order
   const saveOrder = async () => {
     try {
       setIsSavingOrder(true);
@@ -360,7 +361,7 @@ export default function AdminClient() {
       setSelectedThumbFiles([]);
       setSelectedImageFiles([]);
       setSelectedVideoFiles([]);
-      // 미리보기 URL 정리
+      // Cleanup preview URLs
       imagePreviewUrls.forEach(url => URL.revokeObjectURL(url));
       videoPreviewUrls.forEach(url => URL.revokeObjectURL(url));
       setImagePreviewUrls([]);
@@ -398,7 +399,7 @@ export default function AdminClient() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     setSelectedImageFiles(files);
-    // 미리보기 URL 생성
+    // Generate preview URLs
     const urls = files.map(file => {
       const rotated = rotatedImageFiles.get(file);
       return URL.createObjectURL(rotated || file);
@@ -409,7 +410,7 @@ export default function AdminClient() {
   const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
     setSelectedVideoFiles(files);
-    // 미리보기 URL 생성
+    // Generate preview URLs
     const urls = files.map(file => {
       const rotated = rotatedVideoFiles.get(file);
       return URL.createObjectURL(rotated || file);
@@ -417,10 +418,10 @@ export default function AdminClient() {
     setVideoPreviewUrls(urls);
   };
   
-  // 회전된 파일이 변경되면 미리보기 URL 업데이트
+  // Update preview URLs when rotated files change
   useEffect(() => {
     if (selectedImageFiles.length > 0) {
-      // 기존 URL 정리
+      // Cleanup existing URLs
       imagePreviewUrls.forEach(url => URL.revokeObjectURL(url));
       const urls = selectedImageFiles.map(file => {
         const rotated = rotatedImageFiles.get(file);
@@ -433,7 +434,7 @@ export default function AdminClient() {
   
   useEffect(() => {
     if (selectedVideoFiles.length > 0) {
-      // 기존 URL 정리
+      // Cleanup existing URLs
       videoPreviewUrls.forEach(url => URL.revokeObjectURL(url));
       const urls = selectedVideoFiles.map(file => {
         const rotated = rotatedVideoFiles.get(file);
@@ -454,7 +455,7 @@ export default function AdminClient() {
       newMap.set(file, rotated);
       setRotatedThumbFiles(newMap);
       
-      // 미리보기 업데이트
+      // Update preview
       const previews = [...thumbnailPreviews];
       previews[index] = URL.createObjectURL(rotated);
       setThumbnailPreviews(previews);
@@ -472,10 +473,10 @@ export default function AdminClient() {
       const newMap = new Map(rotatedImageFiles);
       newMap.set(file, rotated);
       setRotatedImageFiles(newMap);
-      // 미리보기는 컴포넌트에서 rotated 파일을 사용하므로 자동으로 업데이트됨
+      // Preview updates automatically since the component uses the rotated file
     } catch (error) {
       console.error('Failed to rotate image:', error);
-      alert('이미지 회전에 실패했습니다. 다시 시도해주세요.');
+      alert('Failed to rotate image. Please try again.');
     }
   };
 
@@ -484,11 +485,10 @@ export default function AdminClient() {
     if (!file) return;
     
     try {
-      // 비디오 회전은 FFmpeg를 사용하므로 시간이 걸릴 수 있음
-      // 사용자에게 알림
+      // Video rotation uses FFmpeg and may take a moment
       const rotated = await compressVideo(file, {
-        maxSizeMB: 1000, // 회전만 하므로 크기 제한 없음
-        maxWidth: 9999, // 크기 제한 없음
+        maxSizeMB: 1000, // rotation only — no size limit
+        maxWidth: 9999, // no size limit
         maxHeight: 9999,
         rotate: 90,
         quality: 23,
@@ -498,7 +498,7 @@ export default function AdminClient() {
       setRotatedVideoFiles(newMap);
     } catch (error) {
       console.error('Failed to rotate video:', error);
-      alert('비디오 회전에 실패했습니다. 다시 시도해주세요.');
+      alert('Failed to rotate video. Please try again.');
     }
   };
 
@@ -517,13 +517,13 @@ export default function AdminClient() {
       if (description) formData.set('description', description);
 
       setProgress(5);
-      setProgressMessage("이미지 압축 중...");
+      setProgressMessage("Compressing images...");
       
       const thumbFiles = Array.from((form.elements.namedItem('thumbnail') as HTMLInputElement)?.files || []);
       const imageFiles = Array.from((form.elements.namedItem('images') as HTMLInputElement)?.files || []);
       const videoFiles = Array.from((form.elements.namedItem('videos') as HTMLInputElement)?.files || []);
       
-      // 회전된 파일이 있으면 사용, 없으면 원본 사용
+      // Use rotated file if available, otherwise original
       const finalThumbFiles = thumbFiles.map(file => rotatedThumbFiles.get(file) || file);
       const finalImageFiles = imageFiles.map(file => rotatedImageFiles.get(file) || file);
       const finalVideoFiles = videoFiles.map(file => rotatedVideoFiles.get(file) || file);
@@ -552,20 +552,20 @@ export default function AdminClient() {
         compressedImageFiles.push(compressedFile);
       }
 
-      // 비디오 압축
+      // Video compression
       let compressedVideoFiles: File[] = [];
       if (finalVideoFiles.length > 0) {
-        setProgressMessage("비디오 압축 중...");
+        setProgressMessage("Compressing videos...");
         try {
           compressedVideoFiles = await compressVideos(finalVideoFiles, {
-            maxSizeMB: 4.5, // Vercel 4.5MB 한도 이하로 압축
+            maxSizeMB: 4.5, // compress below Vercel 4.5MB limit
             maxWidth: 1920,
             maxHeight: 1080,
             quality: 23,
           });
         } catch (error) {
-          console.error('비디오 압축 실패:', error);
-          // 압축 실패 시 원본 파일 사용
+          console.error('Video compression failed:', error);
+          // Fall back to original files if compression fails
           compressedVideoFiles = finalVideoFiles;
         }
       }
@@ -632,7 +632,7 @@ export default function AdminClient() {
           }
         }
         
-        // 압축된 비디오 파일 추가
+        // Append compressed video files
         for (const videoFile of compressedVideoFiles) {
           firstBatch.append('videos', videoFile, videoFile.name);
         }
@@ -714,7 +714,7 @@ export default function AdminClient() {
       for (const file of compressedImageFiles) {
         formData.append('images', file, file.name);
       }
-      // 압축된 비디오 파일 추가
+      // Append compressed video files
       for (const file of compressedVideoFiles) {
         formData.append('videos', file, file.name);
       }
@@ -724,13 +724,13 @@ export default function AdminClient() {
       }
 
       setProgress(10);
-      setProgressMessage("데이터 준비 중...");
+      setProgressMessage("Preparing data...");
 
       const endpoint = editingId ? `/api/admin/media/${editingId}` : "/api/admin/media";
       const method = editingId ? "PUT" : "POST";
       
       setProgress(20);
-      setProgressMessage("서버로 전송 중...");
+      setProgressMessage("Uploading to server...");
 
       const res = await fetch(endpoint, { 
         method, 
@@ -823,10 +823,10 @@ export default function AdminClient() {
           <div className="flex-1 min-w-0">
             <div className="w-10 sm:w-12 h-1 bg-primary-600 mb-3 sm:mb-4"></div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-secondary-900 mb-1.5 sm:mb-2">
-              {activeTab === 'news' ? 'News Management' : editingId ? 'Edit Media' : 'Create Media'}
+              {activeTab === 'news' ? 'News Management' : activeTab === 'programs' ? 'Programs Management' : editingId ? 'Edit Media' : 'Create Media'}
             </h1>
             <p className="text-sm sm:text-base text-secondary-600">
-              {activeTab === 'news' ? 'Manage news articles and announcements' : 'Manage your WISE Institute media content'}
+              {activeTab === 'news' ? 'Manage news articles and announcements' : activeTab === 'programs' ? 'Manage programs, courses & events on the schedule page' : 'Manage your WISE Institute media content'}
             </p>
           </div>
           <div className="flex items-center gap-2 sm:gap-3 md:gap-4 w-full sm:w-auto">
@@ -868,6 +868,17 @@ export default function AdminClient() {
             <Newspaper className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             News
           </button>
+          <button
+            onClick={() => setActiveTab('programs')}
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base font-medium transition-colors border-b-2 flex items-center gap-1.5 sm:gap-2 whitespace-nowrap ${
+              activeTab === 'programs'
+                ? 'border-primary-600 text-primary-600'
+                : 'border-transparent text-secondary-500 hover:text-secondary-700'
+            }`}
+          >
+            <CalendarDays className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            Programs
+          </button>
         </div>
 
         {message && (
@@ -879,6 +890,11 @@ export default function AdminClient() {
         {/* News Management */}
         {activeTab === 'news' && (
           <NewsManagementTab />
+        )}
+
+        {/* Programs Management */}
+        {activeTab === 'programs' && (
+          <ProgramsManagementTab />
         )}
 
         {/* Media Management */}
@@ -1193,7 +1209,7 @@ export default function AdminClient() {
         )}
       </div>
 
-      {/* Create/Update 로딩 모달 */}
+      {/* Create/Update loading modal */}
       {submitting && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white border border-secondary-200 rounded-3xl p-8 max-w-sm w-full mx-4 shadow-2xl">
@@ -1218,7 +1234,7 @@ export default function AdminClient() {
         </div>
       )}
 
-      {/* Save Order 로딩 모달 */}
+      {/* Save Order loading modal */}
       {isSavingOrder && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white border border-secondary-200 rounded-3xl p-8 max-w-sm w-full mx-4 shadow-2xl">

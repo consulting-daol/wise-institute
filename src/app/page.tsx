@@ -518,6 +518,24 @@ export default function HomePage() {
 
   return (
     <div>
+      {/* Breadcrumbs for SEO (Home) */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://wiseinstitute.com'}/`,
+              },
+            ],
+          }),
+        }}
+      />
       {/* Hero Section - 70% height */}
       <section className="relative pt-16 lg:pt-20 bg-white overflow-visible">
         {/* White left margin (10%) - Hidden on mobile */}

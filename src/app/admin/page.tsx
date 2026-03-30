@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 export const runtime = 'nodejs';
 
-// 서버 컴포넌트에서 직접 인증 체크
+// Auth check directly in the server component
 async function checkAuth() {
   const cookieStore = await cookies();
   const session = cookieStore.get('admin-session')?.value;
@@ -27,7 +27,7 @@ async function checkAuth() {
 }
 
 export default async function AdminPage() {
-  // 서버에서 인증 체크
+  // Auth check on server
   await checkAuth();
   return <AdminClient />;
 }
