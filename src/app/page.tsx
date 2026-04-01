@@ -217,6 +217,11 @@ export default function HomePage() {
   const [featureRightImageType, setFeatureRightImageType] = useState<'image' | 'video'>('image')
   const [programStoryImages, setProgramStoryImages] = useState(['/gallery/wise2.webp', '/gallery/wise.webp', '/gallery/wise3.webp'])
   const [programStoryImageTypes, setProgramStoryImageTypes] = useState<Array<'image' | 'video'>>(['image', 'image', 'image'])
+  const [popupEnabled, setPopupEnabled] = useState(false)
+  const [popupImageSrc, setPopupImageSrc] = useState('/gallery/pdc-2026-live-surgery.png')
+  const [popupTitle, setPopupTitle] = useState('WISE Institute Popup')
+  const [popupCloseForTodayEnabled, setPopupCloseForTodayEnabled] = useState(true)
+  const [popupSettingsLoaded, setPopupSettingsLoaded] = useState(false)
 
   // Check admin status and load media items
   useEffect(() => {
@@ -228,16 +233,21 @@ export default function HomePage() {
     checkAdmin();
   }, []);
 
-  // Check if popup was closed "for today"
+  // Open popup based on CMS settings + local "close for today" state.
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const today = new Date();
-    const todayKey = today.toISOString().slice(0, 10); // YYYY-MM-DD
-    const stored = window.localStorage.getItem(POPUP_CLOSED_DATE_KEY);
-    if (stored === todayKey) {
+    if (!popupSettingsLoaded || typeof window === 'undefined') return;
+
+    if (!popupEnabled) {
       setIsWelcomePopupOpen(false);
+      return;
     }
-  }, []);
+
+    const todayKey = new Date().toISOString().slice(0, 10);
+    const stored = window.localStorage.getItem(POPUP_CLOSED_DATE_KEY);
+    const closedToday = popupCloseForTodayEnabled && stored === todayKey;
+
+    setIsWelcomePopupOpen(!closedToday);
+  }, [popupEnabled, popupCloseForTodayEnabled, popupSettingsLoaded]);
 
   const handlePopupDragStart = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -339,6 +349,31 @@ export default function HomePage() {
       }
     };
     loadSettings();
+  }, []);
+
+  useEffect(() => {
+    const loadPopupSettings = async () => {
+      try {
+        const response = await fetch(`/api/popup-settings?t=${Date.now()}`, {
+          cache: 'no-store',
+        });
+        if (!response.ok) return;
+
+        const data = await response.json();
+        if (!data?.settings) return;
+
+        setPopupEnabled(Boolean(data.settings.enabled));
+        setPopupImageSrc(data.settings.image || '/gallery/pdc-2026-live-surgery.png');
+        setPopupTitle(data.settings.title || 'WISE Institute Popup');
+        setPopupCloseForTodayEnabled(data.settings.closeForTodayEnabled !== false);
+      } catch (error) {
+        console.error('Error loading popup settings:', error);
+      } finally {
+        setPopupSettingsLoaded(true);
+      }
+    };
+
+    loadPopupSettings();
   }, []);
 
   const handleRefreshLandingSettings = async () => {
@@ -1054,8 +1089,8 @@ export default function HomePage() {
                 <div className="relative w-full shrink-0 pt-6 px-2 sm:px-3 pb-2" style={{ aspectRatio: '4/5' }}>
                   <div className="relative w-full h-full rounded-2xl overflow-hidden bg-white/95">
                     <Image
-                      src="/gallery/pdc-2026-live-surgery.png"
-                      alt="WISE Institute LIVE SURGERY at PDC 2026"
+                      src={popupImageSrc}
+                      alt={popupTitle}
                       fill
                       className="object-contain"
                       sizes="(max-width: 768px) 90vw, 640px"
@@ -1064,20 +1099,22 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="flex-shrink-0 flex flex-col sm:flex-row gap-2 sm:gap-3 px-4 sm:px-6 pb-4 sm:pb-5 pt-3 bg-white/75 border-t border-slate-200/70">
-                  <button
-                    type="button"
-                    className="w-full sm:w-auto flex-1 rounded-full border border-slate-300 bg-white/80 text-xs sm:text-sm font-medium text-slate-700 px-4 py-2 hover:bg-white transition-colors"
-                    onClick={() => {
-                      const today = new Date();
-                      const todayKey = today.toISOString().slice(0, 10);
-                      if (typeof window !== 'undefined') {
-                        window.localStorage.setItem(POPUP_CLOSED_DATE_KEY, todayKey);
-                      }
-                      setIsWelcomePopupOpen(false);
-                    }}
-                  >
-                    Close for today
-                  </button>
+                  {popupCloseForTodayEnabled && (
+                    <button
+                      type="button"
+                      className="w-full sm:w-auto flex-1 rounded-full border border-slate-300 bg-white/80 text-xs sm:text-sm font-medium text-slate-700 px-4 py-2 hover:bg-white transition-colors"
+                      onClick={() => {
+                        const today = new Date();
+                        const todayKey = today.toISOString().slice(0, 10);
+                        if (typeof window !== 'undefined') {
+                          window.localStorage.setItem(POPUP_CLOSED_DATE_KEY, todayKey);
+                        }
+                        setIsWelcomePopupOpen(false);
+                      }}
+                    >
+                      Close for today
+                    </button>
+                  )}
                   <button
                     type="button"
                     className="w-full sm:w-auto flex-1 rounded-full bg-slate-900/90 text-xs sm:text-sm font-semibold text-white px-4 py-2 hover:bg-slate-900 transition-colors"
@@ -1112,8 +1149,8 @@ export default function HomePage() {
                   <div className="px-4 pb-3">
                     <div className="relative w-full aspect-[4/5]">
                       <Image
-                        src="/gallery/pdc-2026-live-surgery.png"
-                        alt="WISE Institute LIVE SURGERY at PDC 2026"
+                        src={popupImageSrc}
+                        alt={popupTitle}
                         fill
                         className="object-contain"
                         sizes="(max-width: 768px) 100vw, 480px"
@@ -1122,20 +1159,22 @@ export default function HomePage() {
                     </div>
                   </div>
                   <div className="flex flex-col gap-2 px-4 pb-4">
-                    <button
-                      type="button"
-                      className="w-full rounded-full border border-slate-300 bg-white text-xs font-medium text-slate-700 px-4 py-2.5 hover:bg-slate-50 transition-colors"
-                      onClick={() => {
-                        const today = new Date();
-                        const todayKey = today.toISOString().slice(0, 10);
-                        if (typeof window !== 'undefined') {
-                          window.localStorage.setItem(POPUP_CLOSED_DATE_KEY, todayKey);
-                        }
-                        setIsWelcomePopupOpen(false);
-                      }}
-                    >
-                      Close for today
-                    </button>
+                    {popupCloseForTodayEnabled && (
+                      <button
+                        type="button"
+                        className="w-full rounded-full border border-slate-300 bg-white text-xs font-medium text-slate-700 px-4 py-2.5 hover:bg-slate-50 transition-colors"
+                        onClick={() => {
+                          const today = new Date();
+                          const todayKey = today.toISOString().slice(0, 10);
+                          if (typeof window !== 'undefined') {
+                            window.localStorage.setItem(POPUP_CLOSED_DATE_KEY, todayKey);
+                          }
+                          setIsWelcomePopupOpen(false);
+                        }}
+                      >
+                        Close for today
+                      </button>
+                    )}
                     <button
                       type="button"
                       className="w-full rounded-full bg-slate-900 text-xs font-semibold text-white px-4 py-2.5 hover:bg-slate-800 transition-colors"

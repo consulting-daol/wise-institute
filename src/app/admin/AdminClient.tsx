@@ -23,12 +23,13 @@ import {
   useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { GripVertical, LogOut, Lock, Home, Settings, X, Plus, Newspaper, RotateCw, CalendarDays } from 'lucide-react';
+import { GripVertical, LogOut, Lock, Home, Settings, X, Plus, Newspaper, RotateCw, CalendarDays, PanelTop } from 'lucide-react';
 import imageCompression from 'browser-image-compression';
 import { compressVideos, compressVideo } from '@/lib/videoCompression';
 import { rotateImage } from '@/lib/imageRotation';
 import NewsManagementTab from './NewsManagementTab';
 import ProgramsManagementTab from './ProgramsManagementTab';
+import PopupManagementTab from './PopupManagementTab';
 
 // Draggable media item component
 function SortableMediaItem({ item, onEdit, onDelete, isDeleting }: { 
@@ -162,7 +163,7 @@ function SortableMediaItem({ item, onEdit, onDelete, isDeleting }: {
 
 export default function AdminClient() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'media' | 'news' | 'programs'>('media');
+  const [activeTab, setActiveTab] = useState<'media' | 'news' | 'programs' | 'popup'>('media');
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [items, setItems] = useState<MediaItem[]>([]);
@@ -823,10 +824,24 @@ export default function AdminClient() {
           <div className="flex-1 min-w-0">
             <div className="w-10 sm:w-12 h-1 bg-primary-600 mb-3 sm:mb-4"></div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-secondary-900 mb-1.5 sm:mb-2">
-              {activeTab === 'news' ? 'News Management' : activeTab === 'programs' ? 'Programs Management' : editingId ? 'Edit Media' : 'Create Media'}
+              {activeTab === 'news'
+                ? 'News Management'
+                : activeTab === 'programs'
+                ? 'Programs Management'
+                : activeTab === 'popup'
+                ? 'Popup Management'
+                : editingId
+                ? 'Edit Media'
+                : 'Create Media'}
             </h1>
             <p className="text-sm sm:text-base text-secondary-600">
-              {activeTab === 'news' ? 'Manage news articles and announcements' : activeTab === 'programs' ? 'Manage programs, courses & events on the schedule page' : 'Manage your WISE Institute media content'}
+              {activeTab === 'news'
+                ? 'Manage news articles and announcements'
+                : activeTab === 'programs'
+                ? 'Manage programs, courses & events on the schedule page'
+                : activeTab === 'popup'
+                ? 'Manage homepage popup content and visibility'
+                : 'Manage your WISE Institute media content'}
             </p>
           </div>
           <div className="flex items-center gap-2 sm:gap-3 md:gap-4 w-full sm:w-auto">
@@ -879,6 +894,17 @@ export default function AdminClient() {
             <CalendarDays className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
             Programs
           </button>
+          <button
+            onClick={() => setActiveTab('popup')}
+            className={`px-4 sm:px-6 py-2.5 sm:py-3 text-sm sm:text-base font-medium transition-colors border-b-2 flex items-center gap-1.5 sm:gap-2 whitespace-nowrap ${
+              activeTab === 'popup'
+                ? 'border-primary-600 text-primary-600'
+                : 'border-transparent text-secondary-500 hover:text-secondary-700'
+            }`}
+          >
+            <PanelTop className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            Popup
+          </button>
         </div>
 
         {message && (
@@ -895,6 +921,11 @@ export default function AdminClient() {
         {/* Programs Management */}
         {activeTab === 'programs' && (
           <ProgramsManagementTab />
+        )}
+
+        {/* Popup Management */}
+        {activeTab === 'popup' && (
+          <PopupManagementTab />
         )}
 
         {/* Media Management */}
