@@ -556,7 +556,7 @@ export default function SchedulePage() {
                     >
                       <option value="">Select program of interest</option>
                       <option value="residency">Implant Residency (8-day)</option>
-                      <option value="study-club">Live Surgery Study Club</option>
+                      <option value="study-club">WISE STRAUMANN / NEODENT</option>
                       <option value="both">Both Programs</option>
                     </select>
                   </div>

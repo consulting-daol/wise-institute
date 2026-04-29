@@ -130,8 +130,8 @@ export default function HomePage() {
     },
     { 
       src: '/gallery/wise2.webp', 
-      title: 'Live Surgery Study Club',
-      description: 'Participate in our live surgery study club sessions where you can observe and learn from real surgical procedures performed by experienced implant specialists.',
+      title: 'WISE STRAUMANN / NEODENT',
+      description: 'A participant-driven, case-based surgical education program led by Dr. Stephen Yoon with real-time mentorship in a small-group setting.',
       ctaText: 'VIEW SCHEDULE',
       ctaLink: '/schedule'
     },
@@ -189,7 +189,7 @@ export default function HomePage() {
       description: "Real patient cases under expert supervision",
       ctaText: "VIEW PROGRAMS",
       ctaLink: "/programs",
-      slideLabel: "Live Surgery Study Club",
+      slideLabel: "WISE STRAUMANN / NEODENT",
       image: "/gallery/Live_Surgery.png"
     },
     {

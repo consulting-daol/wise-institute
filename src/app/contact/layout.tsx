@@ -43,11 +43,11 @@ export default function ContactLayout({
       },
       {
         '@type': 'Question',
-        name: 'Do I need to bring my own patients for the Live Surgery Study Club?',
+        name: 'Do I need to bring my own patients for WISE STRAUMANN / NEODENT?',
         acceptedAnswer: {
           '@type': 'Answer',
           text:
-            'Yes, for the Live Surgery Study Club, participants are encouraged to bring their own patients. This allows you to work on cases that are relevant to your practice while receiving direct mentorship from our experienced directors.',
+            'Yes, for WISE STRAUMANN / NEODENT, participants are encouraged to bring their own patients. This allows you to work on cases that are relevant to your practice while receiving direct mentorship from our experienced directors.',
         },
       },
       {
