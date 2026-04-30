@@ -39,7 +39,15 @@ export async function PUT(request: Request, { params }: { params: { id: string }
     }
 
     const { env } = await getManagementEnv();
-    const entry = await env.getEntry(params.id);
+    let entry;
+    try {
+      entry = await env.getEntry(params.id);
+    } catch (err: any) {
+      if (err?.status === 404 || err?.response?.status === 404) {
+        return NextResponse.json({ error: 'Media item not found (it may have been deleted already).' }, { status: 404 });
+      }
+      throw err;
+    }
 
     const contentType = entry.sys.contentType?.sys?.id;
     if (contentType !== 'wiseInstitute') {
@@ -213,7 +221,16 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     }
 
     const { env } = await getManagementEnv();
-    const entry = await env.getEntry(params.id);
+    let entry;
+    try {
+      entry = await env.getEntry(params.id);
+    } catch (err: any) {
+      if (err?.status === 404 || err?.response?.status === 404) {
+        // Treat as idempotent success: already deleted.
+        return NextResponse.json({ ok: true, alreadyDeleted: true }, { status: 200 });
+      }
+      throw err;
+    }
 
     try {
       if ((entry as any).isPublished()) {

@@ -38,13 +38,38 @@ export default function PopupManagementTab() {
 
       const settingsData: PopupSettingsResponse = await settingsRes.json();
       const mediaData: MediaItem[] = mediaRes.ok ? await mediaRes.json() : [];
+      const validMediaIds = new Set((Array.isArray(mediaData) ? mediaData : []).map((m) => m.id));
 
       setMediaItems(Array.isArray(mediaData) ? mediaData : []);
       if (settingsData?.settings) {
+        const hasStaleMediaSelection =
+          !!settingsData.settings.mediaItemId && !validMediaIds.has(settingsData.settings.mediaItemId);
+        const sanitizedEnabled =
+          hasStaleMediaSelection ? false : Boolean(settingsData.settings.enabled);
+        const sanitizedMediaItemId =
+          hasStaleMediaSelection ? "" : (settingsData.settings.mediaItemId || "");
+
         setTitle(settingsData.settings.title || "WISE Institute Popup");
-        setEnabled(Boolean(settingsData.settings.enabled));
-        setMediaItemId(settingsData.settings.mediaItemId || "");
+        setEnabled(sanitizedEnabled);
+        setMediaItemId(sanitizedMediaItemId);
         setCloseForTodayEnabled(settingsData.settings.closeForTodayEnabled !== false);
+
+        // If previously selected media was deleted, auto-clean settings in CMS.
+        if (hasStaleMediaSelection) {
+          await fetch("/api/admin/popup-settings", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({
+              title: settingsData.settings.title || "WISE Institute Popup",
+              enabled: false,
+              mediaItemId: undefined,
+              closeForTodayEnabled: settingsData.settings.closeForTodayEnabled !== false,
+            }),
+          });
+          setMessage("Deleted popup image was removed from settings automatically.");
+          setIsError(false);
+        }
       }
     } catch (error) {
       setIsError(true);
