@@ -6,9 +6,9 @@ import { Home } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 
 const COMMUNITY_PHOTOS = [
-  { src: '/gallery/about1.webp', alt: 'WISE Live Surgery Study Club - shared meals' },
-  { src: '/gallery/about2.webp', alt: 'WISE Live Surgery Study Club - community moments' },
-  { src: '/gallery/about3.webp', alt: 'WISE Live Surgery Study Club - hands-on learning' },
+  { src: '/gallery/about1.webp', alt: 'WISE STRAUMANN / NEODENT - shared meals' },
+  { src: '/gallery/about2.webp', alt: 'WISE STRAUMANN / NEODENT - community moments' },
+  { src: '/gallery/about3.webp', alt: 'WISE STRAUMANN / NEODENT - hands-on learning' },
 ]
 
 const PDC_PHOTOS = [
@@ -145,7 +145,7 @@ export default function AboutPage() {
                     A big part of our WISE and HiOssen's culture is to allow doctors to network with one another. And what better way is there than to do it over food and some drinks?
                   </p>
                   <p>
-                    These photos are from WISE Live Surgery Study Club. In between patient care and after patient care is the fun time.
+                    These photos are from WISE STRAUMANN / NEODENT. In between patient care and after patient care is the fun time.
                   </p>
                 </div>
               <div className="mb-6">
@@ -192,7 +192,7 @@ export default function AboutPage() {
                   </div>
                   <div className="bg-secondary-50 rounded-lg p-3 sm:p-4 border border-secondary-200">
                     <div className="text-2xl sm:text-3xl font-bold text-secondary-700 mb-1">3</div>
-                    <div className="text-xs sm:text-sm text-gray-700 font-medium">Live Surgery Study Clubs / year</div>
+                    <div className="text-xs sm:text-sm text-gray-700 font-medium">WISE STRAUMANN / NEODENT groups / year</div>
                     <div className="text-[10px] sm:text-xs text-gray-500 mt-1">(40 doctors)</div>
                   </div>
                   <div className="bg-primary-50 rounded-lg p-3 sm:p-4 border border-primary-200">

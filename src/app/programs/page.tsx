@@ -250,7 +250,7 @@ export default function ProgramsPage() {
         </div>
       </section>
 
-      {/* Live Surgery Study Club */}
+      {/* WISE Straumann / Neodent */}
       <section className="py-8 sm:py-10 md:py-12 lg:py-14 bg-gradient-to-br from-white via-primary/5 to-white relative overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div className="h-24 sm:h-32 w-24 sm:w-32 rounded-full bg-primary-200/30 blur-3xl absolute top-6 left-3" />
@@ -327,7 +327,7 @@ export default function ProgramsPage() {
             <div data-aos="fade-right" className="flex flex-col order-1 lg:order-2">
               <div className="flex items-center gap-3 mb-3">
                 <p className="uppercase tracking-wider text-primary-600 font-bold text-sm sm:text-base lg:text-lg">
-                  Live Surgery Study Club
+                  WISE STRAUMANN / NEODENT
                 </p>
                 <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">Ongoing Series</span>
               </div>
@@ -335,7 +335,7 @@ export default function ProgramsPage() {
                 Real patient cases with direct mentorship
               </h2>
               <p className="text-secondary-600 text-sm sm:text-lg mb-6 sm:mb-8">
-                Our Live Surgery Study Club is off to a great start — the first session was successfully completed! Registration is now open for the remaining sessions in 2026, led by Dr. Stephen Yoon. Bring your own clinical cases and perform implant surgeries in a small-group setting with expert guidance.
+                A participant-driven, case-based surgical education program led by Dr. Stephen Yoon. Bring your own patients, plan and perform implant surgeries live, and receive real-time feedback in a small-group setting. Each session covers case presentations, surgical workup, live execution & post-op review.
               </p>
               
               <div className="rounded-2xl border-2 border-secondary-200 bg-white p-4 sm:p-6 mb-6 sm:mb-8 shadow-sm">
@@ -481,7 +481,7 @@ export default function ProgramsPage() {
                     Study Club
                   </span>
                 </div>
-                <h3 className="text-xl sm:text-3xl font-extrabold text-secondary mb-2 sm:mb-3">Live Surgery Study Club</h3>
+                <h3 className="text-xl sm:text-3xl font-extrabold text-secondary mb-2 sm:mb-3">WISE STRAUMANN / NEODENT</h3>
                 <p className="text-secondary-600 mb-5 sm:mb-6 text-sm sm:text-base">Ongoing series led by Dr. Stephen Yoon. Bring your own clinical cases and perform implant surgeries with expert guidance. June, September & November 2026 — Coquitlam City Dentist.</p>
                 <div className="space-y-3 mb-6 sm:mb-8">
                   <div className="flex items-center space-x-3">

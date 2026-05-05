@@ -130,8 +130,8 @@ export default function HomePage() {
     },
     { 
       src: '/gallery/wise2.webp', 
-      title: 'Live Surgery Study Club',
-      description: 'Participate in our live surgery study club sessions where you can observe and learn from real surgical procedures performed by experienced implant specialists.',
+      title: 'WISE STRAUMANN / NEODENT',
+      description: 'A participant-driven, case-based surgical education program led by Dr. Stephen Yoon with real-time mentorship in a small-group setting.',
       ctaText: 'VIEW SCHEDULE',
       ctaLink: '/schedule'
     },
@@ -189,7 +189,7 @@ export default function HomePage() {
       description: "Real patient cases under expert supervision",
       ctaText: "VIEW PROGRAMS",
       ctaLink: "/programs",
-      slideLabel: "Live Surgery Study Club",
+      slideLabel: "WISE STRAUMANN / NEODENT",
       image: "/gallery/Live_Surgery.png"
     },
     {
@@ -218,7 +218,7 @@ export default function HomePage() {
   const [programStoryImages, setProgramStoryImages] = useState(['/gallery/wise2.webp', '/gallery/wise.webp', '/gallery/wise3.webp'])
   const [programStoryImageTypes, setProgramStoryImageTypes] = useState<Array<'image' | 'video'>>(['image', 'image', 'image'])
   const [popupEnabled, setPopupEnabled] = useState(false)
-  const [popupImageSrc, setPopupImageSrc] = useState('/gallery/pdc-2026-live-surgery.png')
+  const [popupImageSrc, setPopupImageSrc] = useState('')
   const [popupTitle, setPopupTitle] = useState('WISE Institute Popup')
   const [popupCloseForTodayEnabled, setPopupCloseForTodayEnabled] = useState(true)
   const [popupSettingsLoaded, setPopupSettingsLoaded] = useState(false)
@@ -237,7 +237,7 @@ export default function HomePage() {
   useEffect(() => {
     if (!popupSettingsLoaded || typeof window === 'undefined') return;
 
-    if (!popupEnabled) {
+    if (!popupEnabled || !popupImageSrc) {
       setIsWelcomePopupOpen(false);
       return;
     }
@@ -247,7 +247,7 @@ export default function HomePage() {
     const closedToday = popupCloseForTodayEnabled && stored === todayKey;
 
     setIsWelcomePopupOpen(!closedToday);
-  }, [popupEnabled, popupCloseForTodayEnabled, popupSettingsLoaded]);
+  }, [popupEnabled, popupCloseForTodayEnabled, popupImageSrc, popupSettingsLoaded]);
 
   const handlePopupDragStart = (e: MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -363,7 +363,7 @@ export default function HomePage() {
         if (!data?.settings) return;
 
         setPopupEnabled(Boolean(data.settings.enabled));
-        setPopupImageSrc(data.settings.image || '/gallery/pdc-2026-live-surgery.png');
+        setPopupImageSrc(data.settings.image || '');
         setPopupTitle(data.settings.title || 'WISE Institute Popup');
         setPopupCloseForTodayEnabled(data.settings.closeForTodayEnabled !== false);
       } catch (error) {

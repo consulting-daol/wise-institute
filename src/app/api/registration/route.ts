@@ -16,7 +16,7 @@ const BODY_BG = '#fafafa';
 const PROGRAM_LABELS: Record<string, string> = {
   'pdc-2026': 'PDC 2026 Live Surgery',
   'residency': 'Implant Residency (8-day)',
-  'study-club': 'Live Surgery Study Club',
+  'study-club': 'WISE STRAUMANN / NEODENT',
   'both': 'Both Programs',
 };
 

@@ -33,7 +33,8 @@ function ContactFormWithParams() {
       setFormData(prev => ({
         ...prev,
         subject: 'registration',
-        message: 'I am interested in the Live Surgery Study Club program.'
+        message:
+          'I am interested in the WISE STRAUMANN / NEODENT program. A participant-driven, case-based surgical education program led by Dr. Stephen Yoon.'
       }))
     } else if (program) {
       // Support arbitrary programs added via Programs Management (program IDs stored in Contentful)
@@ -235,12 +236,12 @@ export default function ContactPage() {
       <section className="py-6 sm:py-8 md:py-10 lg:py-12 bg-sky-50/50">
         <div className="container-custom">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-8 lg:gap-10 items-stretch">
-            {/* Live Surgery Study Club */}
+            {/* WISE STRAUMANN / NEODENT */}
             <div data-aos="fade-right" className="rounded-2xl border border-secondary-100 bg-white p-5 sm:p-6 md:p-8 shadow-md h-full flex flex-col">
               <div className="text-center mb-5 sm:mb-6">
                 <p className="text-xs uppercase tracking-wider text-secondary-400 mb-1.5 sm:mb-2">Upcoming Event</p>
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary-900 mb-1.5 sm:mb-2 leading-tight">
-                  LIVE SURGERY STUDY CLUB
+                  WISE STRAUMANN / NEODENT
                 </h2>
                 <p className="text-sm text-secondary-600">
                   Coquitlam City Dentist · June 14, 2026 · September 13, 2026 · November 8, 2026 · 8:00 AM – 5:00 PM
@@ -471,8 +472,8 @@ export default function ContactPage() {
                   answer: 'Our programs are designed for general dentists with varying levels of implant experience. We welcome beginners who have placed 0-5 implants, intermediate practitioners (5-50 implants), and advanced clinicians (50+ implants) looking to refine their skills.'
                 },
                 {
-                  question: 'Do I need to bring my own patients for the Live Surgery Study Club?',
-                  answer: 'Yes, for the Live Surgery Study Club, participants are encouraged to bring their own patients. This allows you to work on cases that are relevant to your practice while receiving direct mentorship from our experienced directors.'
+                  question: 'Do I need to bring my own patients for WISE STRAUMANN / NEODENT?',
+                  answer: 'Yes, for WISE STRAUMANN / NEODENT, participants are encouraged to bring their own patients. This allows you to work on cases that are relevant to your practice while receiving direct mentorship from our experienced directors.'
                 },
                 {
                   question: 'What materials are included in the program fees?',

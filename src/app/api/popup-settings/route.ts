@@ -9,14 +9,13 @@ export async function GET() {
   try {
     const [settings, mediaItems] = await Promise.all([getPopupSettings(), getMediaItems()]);
     const mediaItem = settings.mediaItemId ? mediaItems.find((m) => m.id === settings.mediaItemId) : undefined;
-    const popupImage =
-      mediaItem?.thumbnail?.[0] ??
-      mediaItem?.images?.[0] ??
-      '/gallery/pdc-2026-live-surgery.png';
+    const popupImage = mediaItem?.thumbnail?.[0] ?? mediaItem?.images?.[0] ?? '';
+    const hasValidImage = Boolean(popupImage);
 
     return NextResponse.json({
       settings: {
         ...settings,
+        enabled: Boolean(settings.enabled && hasValidImage),
         image: popupImage,
       },
     });
@@ -25,7 +24,7 @@ export async function GET() {
     return NextResponse.json({
       settings: {
         ...DEFAULT_POPUP_SETTINGS,
-        image: '/gallery/pdc-2026-live-surgery.png',
+        image: '',
       },
     });
   }
