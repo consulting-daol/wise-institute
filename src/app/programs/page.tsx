@@ -3,13 +3,16 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { Calendar, Users, BookOpen, Stethoscope, Award, Clock, MapPin, Home, Activity, Scissors, Heart, Target, CheckCircle2, ArrowRight, Sparkles } from 'lucide-react'
+import { useState } from 'react'
+import { Calendar, Users, BookOpen, Stethoscope, Award, Clock, MapPin, Home, Activity, Scissors, Heart, Target, CheckCircle2, ArrowRight, Sparkles, ChevronDown } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '../../components/CallToActionBanner'
 import { ResidencyPaymentLinks, StudyClubPaymentLink } from '@/components/ProgramPaymentLinks'
 
 export default function ProgramsPage() {
   const router = useRouter()
+  const [showResidencyOptions, setShowResidencyOptions] = useState(false)
+  const [showStudyClubOptions, setShowStudyClubOptions] = useState(false)
 
   const handleProgramClick = (programType: 'residency' | 'study-club') => {
     router.push(`/contact?program=${programType}`)
@@ -105,12 +108,39 @@ export default function ProgramsPage() {
                 </div>
               </div>
 
-              <ResidencyPaymentLinks className="mt-6 mb-4" />
+              <div className="mt-auto space-y-3">
+                <button
+                  type="button"
+                  onClick={() => setShowResidencyOptions((open) => !open)}
+                  aria-expanded={showResidencyOptions}
+                  aria-controls="residency-register-options"
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-secondary-900 text-white px-6 py-3 text-sm font-semibold shadow-lg shadow-secondary-900/20 hover:shadow-secondary-900/30 transition-all"
+                >
+                  Register for Upcoming Course
+                  <ChevronDown
+                    className={`h-4 w-4 transition-transform ${showResidencyOptions ? 'rotate-180' : ''}`}
+                    aria-hidden
+                  />
+                </button>
 
-              <Link href="/schedule" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-secondary-900 text-white px-6 py-3 text-sm font-semibold shadow-lg shadow-secondary-900/20 hover:shadow-secondary-900/30 transition-all mt-auto">
-                Register for Upcoming Course
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+                {showResidencyOptions && (
+                  <div
+                    id="residency-register-options"
+                    className="rounded-2xl border border-secondary-200 bg-secondary-50 p-4 sm:p-5 space-y-4"
+                  >
+                    <ResidencyPaymentLinks />
+                    <div className="pt-3 border-t border-secondary-200 text-sm">
+                      <Link
+                        href="/schedule#registration-form"
+                        className="inline-flex items-center gap-1.5 text-primary-700 font-semibold hover:text-primary-800"
+                      >
+                        Or complete the registration form
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
 
             <div data-aos="fade-left" className="rounded-3xl border-2 border-secondary-200 bg-white p-6 sm:p-10 shadow-lg">
@@ -372,12 +402,39 @@ export default function ProgramsPage() {
                 </div>
               </div>
 
-              <StudyClubPaymentLink className="mb-4" />
+              <div className="mt-auto space-y-3">
+                <button
+                  type="button"
+                  onClick={() => setShowStudyClubOptions((open) => !open)}
+                  aria-expanded={showStudyClubOptions}
+                  aria-controls="study-club-register-options"
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-secondary-900 text-white px-6 py-3 text-sm font-semibold shadow-lg shadow-secondary-900/20 hover:shadow-secondary-900/30 transition-all"
+                >
+                  Register Now
+                  <ChevronDown
+                    className={`h-4 w-4 transition-transform ${showStudyClubOptions ? 'rotate-180' : ''}`}
+                    aria-hidden
+                  />
+                </button>
 
-              <Link href="/contact?program=study-club" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-secondary-900 text-white px-6 py-3 text-sm font-semibold shadow-lg shadow-secondary-900/20 hover:shadow-secondary-900/30 transition-all mt-auto">
-                Register Now
-                <ArrowRight className="h-4 w-4" />
-              </Link>
+                {showStudyClubOptions && (
+                  <div
+                    id="study-club-register-options"
+                    className="rounded-2xl border border-secondary-200 bg-secondary-50 p-4 sm:p-5 space-y-4"
+                  >
+                    <StudyClubPaymentLink />
+                    <div className="pt-3 border-t border-secondary-200 text-sm">
+                      <Link
+                        href="/contact?program=study-club"
+                        className="inline-flex items-center gap-1.5 text-primary-700 font-semibold hover:text-primary-800"
+                      >
+                        Or contact us about the program
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>

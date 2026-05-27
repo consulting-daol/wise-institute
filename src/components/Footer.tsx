@@ -30,7 +30,7 @@ export default function Footer() {
                 href="/schedule#payments"
                 className="text-xs md:text-sm text-primary-600 hover:text-primary-700 font-medium transition-colors"
               >
-                Tuition &amp; payments
+                Tuition &amp; Payments
               </Link>
                 {/* Phone is temporarily disabled (no phone available) */}
               <div className="flex items-start space-x-2 md:space-x-3">

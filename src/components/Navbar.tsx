@@ -14,7 +14,7 @@ const navigation = [
     megaMenu: [
       { name: 'Program Overview', href: '/programs' },
       { name: 'Course Structure', href: '/schedule' },
-      { name: 'Pay online', href: '/schedule#payments' },
+      { name: 'Pay Online', href: '/schedule#payments' },
       { name: 'Support & Resources', href: '/contact' },
     ]
   },
@@ -25,7 +25,7 @@ const navigation = [
       { name: 'About Us', href: '/about' },
       { name: 'Our Directors', href: '/directors' },
       { name: 'Contact Us', href: '/contact' },
-      { name: 'Pay online', href: '/schedule#payments' },
+      { name: 'Pay Online', href: '/schedule#payments' },
     ],
   },
   { 
