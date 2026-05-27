@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Calendar, Users, BookOpen, Stethoscope, Award, Clock, MapPin, Home, Activity, Scissors, Heart, Target, CheckCircle2, ArrowRight, Sparkles } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '../../components/CallToActionBanner'
+import { ResidencyPaymentLinks, StudyClubPaymentLink } from '@/components/ProgramPaymentLinks'
 
 export default function ProgramsPage() {
   const router = useRouter()
@@ -103,6 +104,8 @@ export default function ProgramsPage() {
                   </div>
                 </div>
               </div>
+
+              <ResidencyPaymentLinks className="mt-6 mb-4" />
 
               <Link href="/schedule" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-secondary-900 text-white px-6 py-3 text-sm font-semibold shadow-lg shadow-secondary-900/20 hover:shadow-secondary-900/30 transition-all mt-auto">
                 Register for Upcoming Course
@@ -345,7 +348,7 @@ export default function ProgramsPage() {
                 <cite className="text-sm sm:text-base text-primary font-semibold">— WISE Institute Directors</cite>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 mb-6 sm:mb-8">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6 sm:mb-8">
                 <div className="rounded-2xl border-2 border-secondary-200 bg-white p-3.5 sm:p-6 shadow-sm hover:-translate-y-0.5 transition-transform duration-300">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-3 sm:mb-4 ring-1 ring-inset bg-primary-50 ring-primary-600/10">
                     <Calendar className="h-5 w-5 text-primary-700" />
@@ -354,6 +357,13 @@ export default function ProgramsPage() {
                   <p className="text-sm sm:text-base font-medium text-secondary-900 mt-1">36 CE Credits</p>
                 </div>
                 <div className="rounded-2xl border-2 border-secondary-200 bg-white p-3.5 sm:p-6 shadow-sm hover:-translate-y-0.5 transition-transform duration-300">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-3 sm:mb-4 ring-1 ring-inset bg-primary-50 ring-primary-600/10">
+                    <Stethoscope className="h-5 w-5 text-primary-700" />
+                  </div>
+                  <p className="text-xs font-semibold uppercase tracking-wide text-secondary-500">Price</p>
+                  <p className="text-sm sm:text-base font-medium text-secondary-900 mt-1">$4,999 CAD + Tax</p>
+                </div>
+                <div className="rounded-2xl border-2 border-secondary-200 bg-white p-3.5 sm:p-6 shadow-sm hover:-translate-y-0.5 transition-transform duration-300 col-span-2 sm:col-span-1">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center mb-3 sm:mb-4 ring-1 ring-inset bg-secondary-50 ring-secondary-500/20">
                     <Users className="h-5 w-5 text-secondary-700" />
                   </div>
@@ -361,6 +371,8 @@ export default function ProgramsPage() {
                   <p className="text-sm sm:text-base font-medium text-secondary-900 mt-1">Small groups</p>
                 </div>
               </div>
+
+              <StudyClubPaymentLink className="mb-4" />
 
               <Link href="/contact?program=study-club" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-secondary-900 text-white px-6 py-3 text-sm font-semibold shadow-lg shadow-secondary-900/20 hover:shadow-secondary-900/30 transition-all mt-auto">
                 Register Now
