@@ -4,8 +4,15 @@ import { useState, useRef, useEffect } from 'react'
 import { Calendar, Clock, Users, MapPin, CheckCircle, ArrowRight, Home, Mail } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '@/components/CallToActionBanner'
+import SquarePaymentButton from '@/components/SquarePaymentButton'
 import { useReCaptchaToken } from '@/hooks/useReCaptchaToken'
 import { Program, DEFAULT_PROGRAMS } from '@/lib/programs'
+import RegistrationPaymentPrompt from '@/components/RegistrationPaymentPrompt'
+import {
+  getResidencyPaymentOptions,
+  getSponsorshipPaymentOption,
+  getStudyClubPaymentOption,
+} from '@/lib/squarePayments'
 
 export default function SchedulePage() {
   const [formData, setFormData] = useState({
@@ -18,7 +25,9 @@ export default function SchedulePage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [submittedProgram, setSubmittedProgram] = useState('')
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const paymentPromptRef = useRef<HTMLDivElement>(null)
   const [programs, setPrograms] = useState<Program[]>(DEFAULT_PROGRAMS)
   const { getToken } = useReCaptchaToken('registration')
   const websiteRef = useRef<HTMLInputElement>(null)
@@ -31,6 +40,11 @@ export default function SchedulePage() {
       })
       .catch(() => {})
   }, [])
+
+  useEffect(() => {
+    if (submitStatus !== 'success') return
+    paymentPromptRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+  }, [submitStatus])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData((prev) => ({
@@ -56,6 +70,7 @@ export default function SchedulePage() {
         }),
       })
       if (response.ok) {
+        setSubmittedProgram(formData.program)
         setSubmitStatus('success')
         setFormData({ name: '', email: '', clinic: '', experience: '', program: '', message: '' })
       } else {
@@ -172,10 +187,14 @@ export default function SchedulePage() {
     },
   ]
 
+  const sponsorshipPayment = getSponsorshipPaymentOption()
+
   const renderProgramCard = (program: Program, index: number, isMobile = false) => {
     const isResidency = program.type === 'Residency'
     const isEvent = program.type === 'Event'
     const isStudyClub = program.type === 'Study Club'
+    const residencyPayments = isResidency ? getResidencyPaymentOptions() : []
+    const studyClubPayment = isStudyClub ? getStudyClubPaymentOption() : undefined
     const accentGradient = isResidency
       ? 'from-primary-500/25 via-primary-500/10 to-transparent'
       : isEvent
@@ -189,50 +208,48 @@ export default function SchedulePage() {
         key={`${program.id}-${isMobile ? 'mobile' : 'desktop'}`}
         data-aos="fade-up"
         data-aos-delay={index * 100}
-        className={`group relative rounded-3xl border border-white/70 bg-white/90 backdrop-blur-sm p-6 sm:p-10 shadow-lg overflow-hidden ${
+        className={`group relative rounded-3xl border border-white/70 bg-white/90 backdrop-blur-sm p-5 sm:p-10 shadow-lg overflow-hidden flex flex-col ${
           isMobile ? 'min-w-[85%] snap-start' : ''
         }`}
       >
         <div
           className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${accentGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
         />
-        <div className="relative">
-          <div className="flex flex-wrap items-center gap-3 justify-between mb-5 sm:mb-6">
-            <div className="flex items-center gap-3">
-              <span className={`px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold ${badgeColor}`}>
-                {program.type}
+        <div className="relative flex flex-col flex-1">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-6">
+            <span className={`px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-sm font-semibold ${badgeColor}`}>
+              {program.type}
+            </span>
+            <span
+              className={`px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-sm font-semibold ${
+                program.status === 'Open'
+                  ? 'bg-emerald-100 text-emerald-700'
+                  : program.status === 'Waitlist'
+                  ? 'bg-amber-100 text-amber-700'
+                  : 'bg-rose-100 text-rose-700'
+              }`}
+            >
+              {program.status}
+            </span>
+            {isStudyClub && (
+              <span className="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[11px] sm:text-sm font-semibold bg-teal-100 text-teal-700">
+                Ongoing
               </span>
-              <span
-                className={`px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold ${
-                  program.status === 'Open'
-                    ? 'bg-emerald-100 text-emerald-700'
-                    : program.status === 'Waitlist'
-                    ? 'bg-amber-100 text-amber-700'
-                    : 'bg-rose-100 text-rose-700'
-                }`}
-              >
-                {program.status}
-              </span>
-              {isStudyClub && (
-                <span className="px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-teal-100 text-teal-700">
-                  Ongoing Series
-                </span>
-              )}
-            </div>
+            )}
           </div>
 
-          <h3 className="text-xl sm:text-3xl font-extrabold text-secondary mb-2 sm:mb-3">{program.title}</h3>
-          <p className="text-secondary-600 mb-5 sm:mb-6 text-sm sm:text-base">{program.description}</p>
+          <h3 className="text-lg sm:text-3xl font-extrabold text-secondary mb-1.5 sm:mb-3 leading-tight">{program.title}</h3>
+          <p className="text-secondary-600 mb-4 sm:mb-6 text-[13px] sm:text-base leading-relaxed line-clamp-3 sm:line-clamp-none">{program.description}</p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6 sm:mb-8">
-            <div className="flex items-start gap-3">
-              <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
-                <Calendar className={`h-5 w-5 ${iconColor}`} />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-5 sm:mb-8">
+            <div className="flex items-start gap-2 sm:gap-3 col-span-2 lg:col-span-1">
+              <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-xl sm:rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
+                <Calendar className={`h-4 w-4 sm:h-5 sm:w-5 ${iconColor}`} />
               </div>
-              <div>
-                <p className="text-xs uppercase tracking-wide text-secondary-500">Dates</p>
+              <div className="min-w-0">
+                <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-500">Dates</p>
                 {program.moduleDates ? (
-                  <div className="text-sm font-medium text-secondary-900 space-y-1">
+                  <div className="text-xs sm:text-sm font-medium text-secondary-900 space-y-0.5 sm:space-y-1">
                     {program.moduleDates.map((date, idx) => {
                       const isCompleted = date.includes('[completed]')
                       const label = date.replace(' [completed]', '')
@@ -252,77 +269,99 @@ export default function SchedulePage() {
                       )
                     })}
                     {isResidency && (
-                      <p className="text-secondary-600 text-xs mt-1">9:00 am – 5:00 pm</p>
+                      <p className="text-secondary-600 text-[11px] sm:text-xs mt-1">9:00 am – 5:00 pm</p>
                     )}
                     {isStudyClub && (
-                      <p className="text-secondary-600 text-xs mt-1">8:00 AM – 5:00 PM</p>
+                      <p className="text-secondary-600 text-[11px] sm:text-xs mt-1">8:00 AM – 5:00 PM</p>
                     )}
                   </div>
                 ) : (
-                  <p className="text-sm font-medium text-secondary-900">
+                  <p className="text-xs sm:text-sm font-medium text-secondary-900">
                     {program.startDate === program.endDate ? program.startDate : `${program.startDate} – ${program.endDate}`}
                   </p>
                 )}
               </div>
             </div>
-            <div className="flex items-start gap-3">
-              <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center">
-                <Clock className={`h-5 w-5 ${iconColor}`} />
+            <div className="flex items-start gap-2 sm:gap-3">
+              <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-xl sm:rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
+                <Clock className={`h-4 w-4 sm:h-5 sm:w-5 ${iconColor}`} />
               </div>
-              <div>
-                <p className="text-xs uppercase tracking-wide text-secondary-500">Duration</p>
-                <p className="text-sm font-medium text-secondary-900">{program.duration}</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center">
-                <Users className={`h-5 w-5 ${iconColor}`} />
-              </div>
-              <div>
-                <p className="text-xs uppercase tracking-wide text-secondary-500">Capacity</p>
-                <p className="text-sm font-medium text-secondary-900">{program.capacity}</p>
+              <div className="min-w-0">
+                <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-500">Duration</p>
+                <p className="text-xs sm:text-sm font-medium text-secondary-900">{program.duration}</p>
               </div>
             </div>
-            <div className="flex items-start gap-3">
-              <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center">
-                <MapPin className={`h-5 w-5 ${iconColor}`} />
+            <div className="flex items-start gap-2 sm:gap-3">
+              <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-xl sm:rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
+                <Users className={`h-4 w-4 sm:h-5 sm:w-5 ${iconColor}`} />
               </div>
-              <div>
-                <p className="text-xs uppercase tracking-wide text-secondary-500">Location</p>
-                <p className="text-sm font-medium text-secondary-900">{program.location}</p>
+              <div className="min-w-0">
+                <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-500">Capacity</p>
+                <p className="text-xs sm:text-sm font-medium text-secondary-900">{program.capacity}</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2 sm:gap-3 col-span-2 lg:col-span-1">
+              <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-xl sm:rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
+                <MapPin className={`h-4 w-4 sm:h-5 sm:w-5 ${iconColor}`} />
+              </div>
+              <div className="min-w-0">
+                <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-500">Location</p>
+                <p className="text-xs sm:text-sm font-medium text-secondary-900">{program.location}</p>
               </div>
             </div>
           </div>
 
           {(program.price || program.ceCredits) && (
-            <div className="mb-6 sm:mb-8">
-              <div className="flex flex-wrap gap-4 mb-4">
+            <div className="mb-5 sm:mb-8">
+              <div className="flex flex-wrap gap-2 sm:gap-4 mb-3 sm:mb-4">
                 {program.price && (
-                  <div className="px-4 py-2 rounded-xl bg-primary/10 border border-primary/20">
-                    <p className="text-xs uppercase tracking-wide text-primary-600 font-semibold">Price</p>
-                    <p className="text-base font-bold text-primary">{program.price}</p>
+                  <div className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-primary/10 border border-primary/20">
+                    <p className="text-[10px] sm:text-xs uppercase tracking-wide text-primary-600 font-semibold">Price</p>
+                    <p className="text-sm sm:text-base font-bold text-primary">{program.price}</p>
                   </div>
                 )}
                 {program.ceCredits && (
-                  <div className="px-4 py-2 rounded-xl bg-secondary/10 border border-secondary/20">
-                    <p className="text-xs uppercase tracking-wide text-secondary-600 font-semibold">CE Credits</p>
-                    <p className="text-base font-bold text-secondary">{program.ceCredits}</p>
+                  <div className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-secondary/10 border border-secondary/20">
+                    <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-600 font-semibold">CE Credits</p>
+                    <p className="text-sm sm:text-base font-bold text-secondary">{program.ceCredits}</p>
                   </div>
                 )}
               </div>
               {isResidency && (
-                <div className="bg-secondary-50 rounded-xl p-4 border border-secondary-200">
-                  <p className="text-xs uppercase tracking-wide text-secondary-600 font-semibold mb-2">Pricing Options</p>
-                  <div className="text-sm text-secondary-700 space-y-1">
-                    <p><span className="font-semibold">$9,500 CAD</span> + Tax (Modules 1-4 / Includes Live Surgery)</p>
-                    <p><span className="font-semibold">$7,500 CAD</span> + Tax (Modules 1-3 / No Surgery)</p>
+                <div className="bg-secondary-50 rounded-xl p-3 sm:p-4 border border-secondary-200">
+                  <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-600 font-semibold mb-1.5 sm:mb-2">Pricing Options</p>
+                  <div className="text-[13px] sm:text-sm text-secondary-700 space-y-0.5 sm:space-y-1">
+                    <p><span className="font-semibold">$9,500 CAD</span> + Tax — Modules 1-4 (Live Surgery)</p>
+                    <p><span className="font-semibold">$7,500 CAD</span> + Tax — Modules 1-3 (No Surgery)</p>
                   </div>
+                  {residencyPayments.length > 0 && (
+                    <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-secondary-200 space-y-2">
+                      <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-600 font-semibold">Pay by credit card</p>
+                      <div className="flex flex-col gap-2">
+                        {residencyPayments.map((option) => (
+                          <SquarePaymentButton
+                            key={option.url}
+                            href={option.url}
+                            label={option.label}
+                            variant="outline"
+                          />
+                        ))}
+                      </div>
+                      <p className="text-[11px] sm:text-xs text-secondary-500 leading-snug">
+                        Payment and registration are separate. After paying, please also{' '}
+                        <a href="#registration-form" className="text-primary-600 hover:text-primary-700 font-medium underline">
+                          complete the registration form
+                        </a>{' '}
+                        so we can confirm your seat. Tax is calculated at checkout.
+                      </p>
+                    </div>
+                  )}
                 </div>
               )}
               {isStudyClub && (
-                <div className="bg-secondary-50 rounded-xl p-4 border border-secondary-200">
-                  <p className="text-xs uppercase tracking-wide text-secondary-600 font-semibold mb-3">What&apos;s Included</p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-secondary-700">
+                <div className="bg-secondary-50 rounded-xl p-3 sm:p-4 border border-secondary-200">
+                  <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-600 font-semibold mb-2 sm:mb-3">What&apos;s Included</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 sm:gap-2 text-[13px] sm:text-sm text-secondary-700">
                     {[
                       'Case presentations & planning',
                       'Live surgical execution',
@@ -332,17 +371,34 @@ export default function SchedulePage() {
                       'Small-group setting',
                     ].map((item) => (
                       <div key={item} className="flex items-center gap-2">
-                        <CheckCircle className="h-4 w-4 text-secondary flex-shrink-0" />
+                        <CheckCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-secondary flex-shrink-0" />
                         <span>{item}</span>
                       </div>
                     ))}
                   </div>
+                  {studyClubPayment && (
+                    <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-secondary-200 space-y-2">
+                      <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-600 font-semibold">Pay by credit card</p>
+                      <SquarePaymentButton
+                        href={studyClubPayment.url}
+                        label={studyClubPayment.label}
+                        variant="outline"
+                      />
+                      <p className="text-[11px] sm:text-xs text-secondary-500 leading-snug">
+                        Payment and registration are separate. After paying, please also{' '}
+                        <a href="#registration-form" className="text-primary-600 hover:text-primary-700 font-medium underline">
+                          complete the registration form
+                        </a>{' '}
+                        so we can confirm your seat. Tax is calculated at checkout.
+                      </p>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
           )}
 
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-sm text-secondary-500">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 text-xs sm:text-sm text-secondary-500 mt-auto border-t border-secondary-100 pt-4 sm:pt-6">
             <div className="flex flex-col gap-0.5">
               {isStudyClub ? (
                 <>
@@ -358,7 +414,7 @@ export default function SchedulePage() {
             </div>
             <a
               href="#registration-form"
-              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-secondary-900 text-white px-6 py-3 text-sm font-semibold shadow-lg shadow-secondary-900/20 hover:shadow-secondary-900/30 transition-all w-full sm:w-auto"
+              className="inline-flex items-center justify-center gap-2 rounded-xl sm:rounded-2xl bg-secondary-900 text-white px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold shadow-lg shadow-secondary-900/20 hover:shadow-secondary-900/30 transition-all w-full sm:w-auto"
             >
               Register interest
               <ArrowRight className="h-4 w-4" />
@@ -419,7 +475,7 @@ export default function SchedulePage() {
       </section>
 
       {/* Upcoming Programs */}
-      <section className="py-12 sm:py-16 bg-gradient-to-br from-white via-primary/5 to-white relative overflow-hidden">
+      <section id="payments" className="py-12 sm:py-16 bg-gradient-to-br from-white via-primary/5 to-white relative overflow-hidden scroll-mt-24">
         <div className="absolute inset-0 pointer-events-none">
           <div className="h-24 sm:h-32 w-24 sm:w-32 rounded-full bg-primary-200/30 blur-3xl absolute top-6 left-3" />
           <div className="h-24 sm:h-32 w-24 sm:w-32 rounded-full bg-secondary-200/30 blur-3xl absolute bottom-10 right-6" />
@@ -450,6 +506,42 @@ export default function SchedulePage() {
         </div>
       </section>
 
+      {sponsorshipPayment && (
+        <section className="py-8 sm:py-10 bg-gradient-to-br from-secondary-50 to-white border-y border-secondary-100">
+          <div className="container-custom">
+            <div
+              data-aos="fade-up"
+              className="max-w-2xl mx-auto rounded-2xl sm:rounded-3xl border border-secondary-100 bg-white p-6 sm:p-8 shadow-lg text-center"
+            >
+              <p className="uppercase tracking-wider text-primary-600 font-bold text-xs sm:text-sm mb-2">
+                Sponsorship &amp; organizations
+              </p>
+              <h2 className="text-xl sm:text-2xl font-bold text-secondary mb-2">
+                Pay by credit card (custom amount)
+              </h2>
+              <p className="text-sm sm:text-base text-secondary-600 mb-4">
+                For sponsorships or payments arranged with our team, use the link below. Enter the amount we agreed on
+                with you at checkout.
+              </p>
+              <SquarePaymentButton
+                href={sponsorshipPayment.url}
+                label={sponsorshipPayment.label}
+                sublabel={sponsorshipPayment.sublabel}
+                variant="primary"
+                className="w-full sm:w-auto mx-auto"
+              />
+              <p className="text-[11px] sm:text-xs text-secondary-500 leading-snug mt-3">
+                If this payment is for a doctor attending a program, please also have them{' '}
+                <a href="#registration-form" className="text-primary-600 hover:text-primary-700 font-medium underline">
+                  complete the registration form
+                </a>{' '}
+                so we can confirm their seat.
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Registration Form */}
       <section id="registration-form" className="py-8 sm:py-10 md:py-12 lg:py-14 bg-white">
         <div className="container-custom">
@@ -464,12 +556,23 @@ export default function SchedulePage() {
                   <p className="text-sm sm:text-base text-secondary-600">
                     We'll follow up with cohort availability, tuition, and what to prep before live surgery days.
                   </p>
+                  <p className="mt-3 text-xs sm:text-sm text-secondary-500 leading-snug rounded-lg bg-primary/5 border border-primary/10 px-3 py-2">
+                    <span className="font-semibold text-primary-700">Recommended:</span> Submit this form first,
+                    then complete payment on the next screen. If you&apos;ve already paid via Square, still submit
+                    the form so we can match your payment to your seat.
+                  </p>
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 md:space-y-5">
                   {submitStatus === 'success' && (
-                    <p className="text-sm text-emerald-600">
-                      Thank you — we received your registration. We&apos;ll follow up at the email you provided and send a confirmation there as well.
-                    </p>
+                    <div className="space-y-3">
+                      <p className="text-sm text-emerald-600">
+                        Thank you — we received your registration. We&apos;ll follow up at the email you
+                        provided and send a confirmation there as well.
+                      </p>
+                      <div ref={paymentPromptRef}>
+                        <RegistrationPaymentPrompt programInterest={submittedProgram} />
+                      </div>
+                    </div>
                   )}
                   {submitStatus === 'error' && (
                     <p className="text-sm text-red-600" role="alert">

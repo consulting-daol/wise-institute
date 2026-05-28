@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { Home, Mail, MapPin, Clock, Send, HelpCircle, Plus, Minus } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '@/components/CallToActionBanner'
+import { ResidencyPaymentLinks, StudyClubPaymentLink } from '@/components/ProgramPaymentLinks'
 import { useReCaptchaToken } from '@/hooks/useReCaptchaToken'
 
 function ContactFormWithParams() {
@@ -277,6 +278,8 @@ export default function ContactPage() {
                   <li>Small group — spots are limited</li>
                 </ul>
 
+                <StudyClubPaymentLink className="mb-4" />
+
                 <div className="mt-auto pt-4 border-t border-secondary-100">
                   <p className="text-xs sm:text-sm text-secondary-600 mb-1">
                     Led by: <span className="font-medium">Dr. Stephen Yoon</span>
@@ -326,6 +329,8 @@ export default function ContactPage() {
                   <li>Module 3: Prosthetic (hands-on & theory)</li>
                   <li>Module 4: Live Surgery</li>
                 </ul>
+
+                <ResidencyPaymentLinks className="mb-4" />
 
                 <div className="mt-auto pt-4 border-t border-secondary-100">
                   <p className="text-xs sm:text-sm text-secondary-600 mb-1">
