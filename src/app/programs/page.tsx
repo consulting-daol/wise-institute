@@ -4,10 +4,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Calendar, Users, BookOpen, Stethoscope, Award, Clock, MapPin, Home, Activity, Scissors, Heart, Target, CheckCircle2, ArrowRight, Sparkles, ChevronDown } from 'lucide-react'
+import { Calendar, Users, BookOpen, Stethoscope, Award, Clock, MapPin, Home, Activity, Scissors, Heart, Target, CheckCircle2, ArrowRight, Sparkles, ChevronDown, Info } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '../../components/CallToActionBanner'
-import { ResidencyPaymentLinks, StudyClubPaymentLink } from '@/components/ProgramPaymentLinks'
+import { StudyClubPaymentLink } from '@/components/ProgramPaymentLinks'
 
 export default function ProgramsPage() {
   const router = useRouter()
@@ -126,17 +126,15 @@ export default function ProgramsPage() {
                 {showResidencyOptions && (
                   <div
                     id="residency-register-options"
-                    className="rounded-2xl border border-secondary-200 bg-secondary-50 p-4 sm:p-5 space-y-4"
+                    className="rounded-2xl border border-secondary-200 bg-secondary-50 p-4 sm:p-5"
                   >
-                    <ResidencyPaymentLinks />
-                    <div className="pt-3 border-t border-secondary-200 text-sm">
-                      <Link
-                        href="/schedule#registration-form"
-                        className="inline-flex items-center gap-1.5 text-primary-700 font-semibold hover:text-primary-800"
-                      >
-                        Or complete the registration form
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
+                    <div className="flex items-start gap-3">
+                      <div className="h-9 w-9 rounded-xl bg-white shadow-sm ring-1 ring-secondary-200 flex items-center justify-center flex-shrink-0">
+                        <Info className="h-4 w-4 text-primary" aria-hidden />
+                      </div>
+                      <p className="text-sm sm:text-base text-secondary-800 leading-relaxed">
+                        To register for this program, please contact your Hiossen Representative.
+                      </p>
                     </div>
                   </div>
                 )}

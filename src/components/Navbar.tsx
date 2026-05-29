@@ -25,7 +25,6 @@ const navigation = [
       { name: 'About Us', href: '/about' },
       { name: 'Our Directors', href: '/directors' },
       { name: 'Contact Us', href: '/contact' },
-      { name: 'Pay Online', href: '/schedule#payments' },
     ],
   },
   { 

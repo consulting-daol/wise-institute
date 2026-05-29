@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import { Calendar, Clock, Users, MapPin, CheckCircle, ArrowRight, Home, Mail } from 'lucide-react'
+import { Calendar, Clock, Users, MapPin, CheckCircle, ArrowRight, Home, Mail, Info } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '@/components/CallToActionBanner'
 import SquarePaymentButton from '@/components/SquarePaymentButton'
@@ -10,7 +10,6 @@ import { Program, DEFAULT_PROGRAMS } from '@/lib/programs'
 import RegistrationPaymentPrompt from '@/components/RegistrationPaymentPrompt'
 import {
   getResidencyPaymentOptions,
-  getSponsorshipPaymentOption,
   getStudyClubPaymentOption,
 } from '@/lib/squarePayments'
 
@@ -187,13 +186,16 @@ export default function SchedulePage() {
     },
   ]
 
-  const sponsorshipPayment = getSponsorshipPaymentOption()
-
   const renderProgramCard = (program: Program, index: number, isMobile = false) => {
     const isResidency = program.type === 'Residency'
     const isEvent = program.type === 'Event'
     const isStudyClub = program.type === 'Study Club'
-    const residencyPayments = isResidency ? getResidencyPaymentOptions() : []
+    // Only the Spring 2026 Vancouver "Foundations of Implant Dentistry" cohort
+    // routes registration through a Hiossen Representative. Other residency
+    // cohorts (WISE HIOSSEN GROUP 1/2, etc.) keep the Square credit-card flow.
+    const isFoundationsResidency =
+      isResidency && program.title.trim().toUpperCase() === 'FOUNDATIONS OF IMPLANT DENTISTRY'
+    const residencyPayments = isResidency && !isFoundationsResidency ? getResidencyPaymentOptions() : []
     const studyClubPayment = isStudyClub ? getStudyClubPaymentOption() : undefined
     const accentGradient = isResidency
       ? 'from-primary-500/25 via-primary-500/10 to-transparent'
@@ -334,27 +336,40 @@ export default function SchedulePage() {
                     <p><span className="font-semibold">$9,500 CAD</span> + Tax — Modules 1-4 (Live Surgery)</p>
                     <p><span className="font-semibold">$7,500 CAD</span> + Tax — Modules 1-3 (No Surgery)</p>
                   </div>
-                  {residencyPayments.length > 0 && (
-                    <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-secondary-200 space-y-2">
-                      <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-600 font-semibold">Pay by credit card</p>
-                      <div className="flex flex-col gap-2">
-                        {residencyPayments.map((option) => (
-                          <SquarePaymentButton
-                            key={option.url}
-                            href={option.url}
-                            label={option.label}
-                            variant="outline"
-                          />
-                        ))}
+                  {isFoundationsResidency ? (
+                    <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-secondary-200">
+                      <div className="flex items-start gap-2.5 sm:gap-3">
+                        <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-lg sm:rounded-xl bg-white shadow-sm ring-1 ring-secondary-200 flex items-center justify-center flex-shrink-0">
+                          <Info className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" aria-hidden />
+                        </div>
+                        <p className="text-[13px] sm:text-sm text-secondary-800 leading-relaxed">
+                          To register for this program, please contact your Hiossen Representative.
+                        </p>
                       </div>
-                      <p className="text-[11px] sm:text-xs text-secondary-500 leading-snug">
-                        Payment and registration are separate. After paying, please also{' '}
-                        <a href="#registration-form" className="text-primary-600 hover:text-primary-700 font-medium underline">
-                          complete the registration form
-                        </a>{' '}
-                        so we can confirm your seat. Tax is calculated at checkout.
-                      </p>
                     </div>
+                  ) : (
+                    residencyPayments.length > 0 && (
+                      <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-secondary-200 space-y-2">
+                        <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-600 font-semibold">Pay by credit card</p>
+                        <div className="flex flex-col gap-2">
+                          {residencyPayments.map((option) => (
+                            <SquarePaymentButton
+                              key={option.url}
+                              href={option.url}
+                              label={option.label}
+                              variant="outline"
+                            />
+                          ))}
+                        </div>
+                        <p className="text-[11px] sm:text-xs text-secondary-500 leading-snug">
+                          Payment and registration are separate. After paying, please also{' '}
+                          <a href="#registration-form" className="text-primary-600 hover:text-primary-700 font-medium underline">
+                            complete the registration form
+                          </a>{' '}
+                          so we can confirm your seat. Tax is calculated at checkout.
+                        </p>
+                      </div>
+                    )
                   )}
                 </div>
               )}
@@ -505,42 +520,6 @@ export default function SchedulePage() {
           </div>
         </div>
       </section>
-
-      {sponsorshipPayment && (
-        <section className="py-8 sm:py-10 bg-gradient-to-br from-secondary-50 to-white border-y border-secondary-100">
-          <div className="container-custom">
-            <div
-              data-aos="fade-up"
-              className="max-w-2xl mx-auto rounded-2xl sm:rounded-3xl border border-secondary-100 bg-white p-6 sm:p-8 shadow-lg text-center"
-            >
-              <p className="uppercase tracking-wider text-primary-600 font-bold text-xs sm:text-sm mb-2">
-                Sponsorship &amp; organizations
-              </p>
-              <h2 className="text-xl sm:text-2xl font-bold text-secondary mb-2">
-                Pay by credit card (custom amount)
-              </h2>
-              <p className="text-sm sm:text-base text-secondary-600 mb-4">
-                For sponsorships or payments arranged with our team, use the link below. Enter the amount we agreed on
-                with you at checkout.
-              </p>
-              <SquarePaymentButton
-                href={sponsorshipPayment.url}
-                label={sponsorshipPayment.label}
-                sublabel={sponsorshipPayment.sublabel}
-                variant="primary"
-                className="w-full sm:w-auto mx-auto"
-              />
-              <p className="text-[11px] sm:text-xs text-secondary-500 leading-snug mt-3">
-                If this payment is for a doctor attending a program, please also have them{' '}
-                <a href="#registration-form" className="text-primary-600 hover:text-primary-700 font-medium underline">
-                  complete the registration form
-                </a>{' '}
-                so we can confirm their seat.
-              </p>
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* Registration Form */}
       <section id="registration-form" className="py-8 sm:py-10 md:py-12 lg:py-14 bg-white">
