@@ -2,10 +2,10 @@
 
 import { useState, useEffect, useRef, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { Home, Mail, MapPin, Clock, Send, HelpCircle, Plus, Minus } from 'lucide-react'
+import { Home, Mail, MapPin, Clock, Send, HelpCircle, Plus, Minus, Info } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '@/components/CallToActionBanner'
-import { ResidencyPaymentLinks, StudyClubPaymentLink } from '@/components/ProgramPaymentLinks'
+import { StudyClubPaymentLink } from '@/components/ProgramPaymentLinks'
 import { useReCaptchaToken } from '@/hooks/useReCaptchaToken'
 
 function ContactFormWithParams() {
@@ -330,7 +330,16 @@ export default function ContactPage() {
                   <li>Module 4: Live Surgery</li>
                 </ul>
 
-                <ResidencyPaymentLinks className="mb-4" />
+                <div className="mb-4 rounded-2xl border border-secondary-200 bg-secondary-50 p-4 sm:p-5">
+                  <div className="flex items-start gap-3">
+                    <div className="h-9 w-9 rounded-xl bg-white shadow-sm ring-1 ring-secondary-200 flex items-center justify-center flex-shrink-0">
+                      <Info className="h-4 w-4 text-primary" aria-hidden />
+                    </div>
+                    <p className="text-sm sm:text-base text-secondary-800 leading-relaxed">
+                      To register for this program, please contact your Hiossen Representative.
+                    </p>
+                  </div>
+                </div>
 
                 <div className="mt-auto pt-4 border-t border-secondary-100">
                   <p className="text-xs sm:text-sm text-secondary-600 mb-1">
