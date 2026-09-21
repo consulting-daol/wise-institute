@@ -6,7 +6,7 @@ import PageHero from '../../components/PageHero'
 import CallToActionBanner from '@/components/CallToActionBanner'
 import SquarePaymentButton from '@/components/SquarePaymentButton'
 import { useReCaptchaToken } from '@/hooks/useReCaptchaToken'
-import { Program, DEFAULT_PROGRAMS } from '@/lib/programs'
+import { Program, DEFAULT_PROGRAMS, isHiossenRepProgram } from '@/lib/programs'
 import RegistrationPaymentPrompt from '@/components/RegistrationPaymentPrompt'
 import {
   getResidencyPaymentOptions,
@@ -190,13 +190,13 @@ export default function SchedulePage() {
     const isResidency = program.type === 'Residency'
     const isEvent = program.type === 'Event'
     const isStudyClub = program.type === 'Study Club'
-    // Only the Spring 2026 Vancouver "Foundations of Implant Dentistry" cohort
-    // routes registration through a Hiossen Representative. Other residency
-    // cohorts (WISE HIOSSEN GROUP 1/2, etc.) keep the Square credit-card flow.
-    const isFoundationsResidency =
-      isResidency && program.title.trim().toUpperCase() === 'FOUNDATIONS OF IMPLANT DENTISTRY'
-    const residencyPayments = isResidency && !isFoundationsResidency ? getResidencyPaymentOptions() : []
+    // Foundations + Hiossen Residency register via Hiossen Representative.
+    // Other residency cohorts (WISE HIOSSEN GROUP 1/2, etc.) keep Square checkout.
+    const usesHiossenRepRegistration = isResidency && isHiossenRepProgram(program)
+    const residencyPayments = isResidency && !usesHiossenRepRegistration ? getResidencyPaymentOptions() : []
     const studyClubPayment = isStudyClub ? getStudyClubPaymentOption() : undefined
+    const hasPricingDetails = Boolean(program.price)
+    const showResidencyRegistrationBox = isResidency && (hasPricingDetails || usesHiossenRepRegistration)
     const accentGradient = isResidency
       ? 'from-primary-500/25 via-primary-500/10 to-transparent'
       : isEvent
@@ -313,7 +313,7 @@ export default function SchedulePage() {
             </div>
           </div>
 
-          {(program.price || program.ceCredits) && (
+          {(program.price || program.ceCredits || usesHiossenRepRegistration) && (
             <div className="mb-5 sm:mb-8">
               <div className="flex flex-wrap gap-2 sm:gap-4 mb-3 sm:mb-4">
                 {program.price && (
@@ -329,15 +329,19 @@ export default function SchedulePage() {
                   </div>
                 )}
               </div>
-              {isResidency && (
+              {showResidencyRegistrationBox && (
                 <div className="bg-secondary-50 rounded-xl p-3 sm:p-4 border border-secondary-200">
-                  <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-600 font-semibold mb-1.5 sm:mb-2">Pricing Options</p>
-                  <div className="text-[13px] sm:text-sm text-secondary-700 space-y-0.5 sm:space-y-1">
-                    <p><span className="font-semibold">$9,500 CAD</span> + Tax — Modules 1-4 (Live Surgery)</p>
-                    <p><span className="font-semibold">$7,500 CAD</span> + Tax — Modules 1-3 (No Surgery)</p>
-                  </div>
-                  {isFoundationsResidency ? (
-                    <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-secondary-200">
+                  {hasPricingDetails && (
+                    <>
+                      <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-600 font-semibold mb-1.5 sm:mb-2">Pricing Options</p>
+                      <div className="text-[13px] sm:text-sm text-secondary-700 space-y-0.5 sm:space-y-1">
+                        <p><span className="font-semibold">$9,500 CAD</span> + Tax — Modules 1-4 (Live Surgery)</p>
+                        <p><span className="font-semibold">$7,500 CAD</span> + Tax — Modules 1-3 (No Surgery)</p>
+                      </div>
+                    </>
+                  )}
+                  {usesHiossenRepRegistration ? (
+                    <div className={hasPricingDetails ? 'mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-secondary-200' : ''}>
                       <div className="flex items-start gap-2.5 sm:gap-3">
                         <div className="h-8 w-8 sm:h-9 sm:w-9 rounded-lg sm:rounded-xl bg-white shadow-sm ring-1 ring-secondary-200 flex items-center justify-center flex-shrink-0">
                           <Info className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" aria-hidden />
@@ -349,7 +353,7 @@ export default function SchedulePage() {
                     </div>
                   ) : (
                     residencyPayments.length > 0 && (
-                      <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-secondary-200 space-y-2">
+                      <div className={hasPricingDetails ? 'mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-secondary-200 space-y-2' : 'space-y-2'}>
                         <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-600 font-semibold">Pay by credit card</p>
                         <div className="flex flex-col gap-2">
                           {residencyPayments.map((option) => (

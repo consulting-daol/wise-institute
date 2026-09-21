@@ -12,6 +12,7 @@ import { StudyClubPaymentLink } from '@/components/ProgramPaymentLinks'
 export default function ProgramsPage() {
   const router = useRouter()
   const [showResidencyOptions, setShowResidencyOptions] = useState(false)
+  const [showHiossenResidencyOptions, setShowHiossenResidencyOptions] = useState(false)
   const [showStudyClubOptions, setShowStudyClubOptions] = useState(false)
 
   const handleProgramClick = (programType: 'residency' | 'study-club') => {
@@ -275,6 +276,118 @@ export default function ProgramsPage() {
                 <p className="font-semibold mb-2" style={{ color: '#219281' }}>Dates: July 11-12, 2026 (Live Surgery Days)</p>
                 <p className="text-secondary-600">9:00 am – 5:00 pm</p>
                 <p className="text-secondary-500 mt-1">Optional: Available with full program ($9,500) or separately</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Hiossen Residency 2027 */}
+      <section className="py-8 sm:py-10 md:py-12 lg:py-14 bg-white">
+        <div className="container-custom">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-stretch">
+            <div data-aos="fade-right" className="flex flex-col">
+              <p className="uppercase tracking-wider text-primary-600 font-bold text-sm sm:text-base lg:text-lg mb-3">
+                Hiossen Residency
+              </p>
+              <h2 className="text-2xl sm:text-4xl font-bold text-secondary leading-tight mb-3 sm:mb-4">
+                Hiossen Residency – 2027
+              </h2>
+              <p className="text-secondary-600 text-sm sm:text-lg mb-6 sm:mb-8">
+                Four progressive modules across Spring and Summer 2027. Modules 1–3 at Hiossen Implant Canada; Module 4 at New Westminster City Dentist.
+              </p>
+
+              <div className="space-y-4 mb-6 sm:mb-8">
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
+                    <Calendar className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-secondary-500">Module Dates</p>
+                    <div className="text-sm font-medium text-secondary-900 space-y-1">
+                      <p>Module 1: April 17-18, 2027</p>
+                      <p>Module 2: May 15-16, 2027</p>
+                      <p>Module 3: June 19-20, 2027</p>
+                      <p className="font-semibold text-primary">Module 4: July 10-11, 2027</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-secondary-500">Locations</p>
+                    <div className="text-sm font-medium text-secondary-900 space-y-1">
+                      <p>Modules 1–3: Hiossen Implant Canada</p>
+                      <p>Module 4: New Westminster City Dentist</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
+                    <Clock className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-secondary-500">Duration</p>
+                    <p className="text-sm font-medium text-secondary-900">8 days (4 modules)</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-auto space-y-3">
+                <button
+                  type="button"
+                  onClick={() => setShowHiossenResidencyOptions((open) => !open)}
+                  aria-expanded={showHiossenResidencyOptions}
+                  aria-controls="hiossen-residency-register-options"
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-secondary-900 text-white px-6 py-3 text-sm font-semibold shadow-lg shadow-secondary-900/20 hover:shadow-secondary-900/30 transition-all"
+                >
+                  Register for Upcoming Course
+                  <ChevronDown
+                    className={`h-4 w-4 transition-transform ${showHiossenResidencyOptions ? 'rotate-180' : ''}`}
+                    aria-hidden
+                  />
+                </button>
+
+                {showHiossenResidencyOptions && (
+                  <div
+                    id="hiossen-residency-register-options"
+                    className="rounded-2xl border border-secondary-200 bg-secondary-50 p-4 sm:p-5"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="h-9 w-9 rounded-xl bg-white shadow-sm ring-1 ring-secondary-200 flex items-center justify-center flex-shrink-0">
+                        <Info className="h-4 w-4 text-primary" aria-hidden />
+                      </div>
+                      <p className="text-sm sm:text-base text-secondary-800 leading-relaxed">
+                        To register for this program, please contact your Hiossen Representative.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div data-aos="fade-left" className="rounded-3xl border-2 border-secondary-200 bg-white p-6 sm:p-10 shadow-lg">
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary mb-4 sm:mb-6">Session Overview</h3>
+              <div className="space-y-4">
+                {[
+                  { module: 'Module 1', dates: 'April 17-18, 2027', location: 'Hiossen Implant Canada' },
+                  { module: 'Module 2', dates: 'May 15-16, 2027', location: 'Hiossen Implant Canada' },
+                  { module: 'Module 3', dates: 'June 19-20, 2027', location: 'Hiossen Implant Canada' },
+                  { module: 'Module 4', dates: 'July 10-11, 2027', location: 'New Westminster City Dentist' },
+                ].map((session) => (
+                  <div key={session.module} className="flex items-start gap-3">
+                    <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
+                      <Calendar className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <h4 className="text-sm sm:text-base font-semibold text-secondary">{session.module}</h4>
+                      <p className="text-xs sm:text-sm text-secondary-600">{session.dates}</p>
+                      <p className="text-xs sm:text-sm text-secondary-500">{session.location}</p>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
