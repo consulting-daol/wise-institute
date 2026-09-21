@@ -12,6 +12,7 @@ import {
   getResidencyPaymentOptions,
   getStudyClubPaymentOption,
 } from '@/lib/squarePayments'
+import { isSessionCompleted } from '@/lib/sessionDates'
 
 export default function SchedulePage() {
   const [formData, setFormData] = useState({
@@ -128,12 +129,12 @@ export default function SchedulePage() {
         }
 
         return moduleDates.map((md) => {
-          const isCompleted = md.includes("[completed]")
-          const label = md.replace(" [completed]", "")
+          const completed = isSessionCompleted(md)
+          const label = md.replace(/\s*\[completed\]/gi, '').trim()
           return {
             title: program.title,
             dates: label,
-            status: isCompleted ? "Completed" : program.status,
+            status: completed ? "Completed" : program.status,
             tag: 'Study Club',
           }
         })
@@ -253,8 +254,8 @@ export default function SchedulePage() {
                 {program.moduleDates ? (
                   <div className="text-xs sm:text-sm font-medium text-secondary-900 space-y-0.5 sm:space-y-1">
                     {program.moduleDates.map((date, idx) => {
-                      const isCompleted = date.includes('[completed]')
-                      const label = date.replace(' [completed]', '')
+                      const isCompleted = isSessionCompleted(date)
+                      const label = date.replace(/\s*\[completed\]/gi, '').trim()
                       return (
                         <p
                           key={idx}

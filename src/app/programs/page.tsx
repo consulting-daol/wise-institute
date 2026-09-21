@@ -3,17 +3,34 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Calendar, Users, BookOpen, Stethoscope, Award, Clock, MapPin, Home, Activity, Scissors, Heart, Target, CheckCircle2, ArrowRight, Sparkles, ChevronDown, Info } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '../../components/CallToActionBanner'
 import { StudyClubPaymentLink } from '@/components/ProgramPaymentLinks'
+import { formatSessionLabel, isSessionCompleted } from '@/lib/sessionDates'
+
+const STUDY_CLUB_SESSIONS_2026 = [
+  'March 22, 2026',
+  'June 14, 2026',
+  'September 13, 2026',
+  'November 8, 2026',
+] as const
 
 export default function ProgramsPage() {
   const router = useRouter()
   const [showResidencyOptions, setShowResidencyOptions] = useState(false)
   const [showHiossenResidencyOptions, setShowHiossenResidencyOptions] = useState(false)
   const [showStudyClubOptions, setShowStudyClubOptions] = useState(false)
+  const [completedSessions, setCompletedSessions] = useState<Record<string, boolean>>({})
+
+  useEffect(() => {
+    const next: Record<string, boolean> = {}
+    for (const sessionDate of STUDY_CLUB_SESSIONS_2026) {
+      next[sessionDate] = isSessionCompleted(sessionDate)
+    }
+    setCompletedSessions(next)
+  }, [])
 
   const handleProgramClick = (programType: 'residency' | 'study-club') => {
     router.push(`/contact?program=${programType}`)
@@ -443,26 +460,31 @@ export default function ProgramsPage() {
                 </div>
               </div>
 
-              {/* Upcoming Sessions */}
+              {/* Upcoming Sessions — auto-marks past dates as Completed */}
               <div className="mt-6 pt-6 border-t border-secondary-100">
                 <h4 className="text-sm font-semibold text-secondary mb-3 uppercase tracking-wide">Upcoming Sessions — 2026</h4>
                 <div className="space-y-2">
-                  <div className="flex items-center gap-3">
-                    <span className="w-2 h-2 rounded-full bg-gray-300 flex-shrink-0" />
-                    <span className="text-sm text-secondary-400 line-through">March 22, 2026 — Completed</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
-                    <span className="text-sm text-secondary-700 font-medium">June 14, 2026</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
-                    <span className="text-sm text-secondary-700 font-medium">September 13, 2026</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
-                    <span className="text-sm text-secondary-700 font-medium">November 8, 2026</span>
-                  </div>
+                  {STUDY_CLUB_SESSIONS_2026.map((sessionDate) => {
+                    const completed = completedSessions[sessionDate] ?? false
+                    return (
+                      <div key={sessionDate} className="flex items-center gap-3">
+                        <span
+                          className={`w-2 h-2 rounded-full flex-shrink-0 ${
+                            completed ? 'bg-gray-300' : 'bg-emerald-500'
+                          }`}
+                        />
+                        <span
+                          className={
+                            completed
+                              ? 'text-sm text-secondary-400 line-through'
+                              : 'text-sm text-secondary-700 font-medium'
+                          }
+                        >
+                          {formatSessionLabel(sessionDate, completed)}
+                        </span>
+                      </div>
+                    )
+                  })}
                   <p className="text-xs text-secondary-500 mt-2">8:00 AM – 5:00 PM · Coquitlam City Dentist</p>
                 </div>
               </div>

@@ -127,7 +127,7 @@ export const DEFAULT_PROGRAMS: Program[] = [
     price: '$4,999 CAD',
     ceCredits: '36 CE Credits',
     moduleDates: [
-      'March 22, 2026 [completed]',
+      'March 22, 2026',
       'June 14, 2026',
       'September 13, 2026',
       'November 8, 2026',
