@@ -46,6 +46,27 @@ export const DEFAULT_PROGRAMS: Program[] = [
     isVisible: true,
   },
   {
+    id: 'hiossen-residency-2027',
+    title: 'HIOSSEN RESIDENCY',
+    type: 'Residency',
+    startDate: 'April 17, 2027',
+    endDate: 'July 11, 2027',
+    duration: '8 days (4 modules)',
+    capacity: 'Limited seats',
+    location: 'Hiossen Implant Canada (Modules 1–3); New Westminster City Dentist (Module 4)',
+    status: 'Open',
+    description:
+      'Hiossen Residency – Spring/Summer 2027. Module 1–3 at Hiossen Implant Canada; Module 4 at New Westminster City Dentist. Register through your Hiossen Representative. Powered by HiOssen AIC Education.',
+    moduleDates: [
+      'Module 1: April 17-18, 2027 — Hiossen Implant Canada',
+      'Module 2: May 15-16, 2027 — Hiossen Implant Canada',
+      'Module 3: June 19-20, 2027 — Hiossen Implant Canada',
+      'Module 4: July 10-11, 2027 — New Westminster City Dentist',
+    ],
+    timelineDates: 'April 17 – July 11, 2027',
+    isVisible: true,
+  },
+  {
     id: 'hiossen-group-1-2026-2027',
     title: 'WISE HIOSSEN GROUP 1',
     type: 'Residency',
@@ -115,6 +136,21 @@ export const DEFAULT_PROGRAMS: Program[] = [
     isVisible: true,
   },
 ];
+
+/** Programs that register via Hiossen Representative (no Square checkout). */
+export const HIOSSEN_REP_PROGRAM_IDS = new Set([
+  'residency-2026',
+  'hiossen-residency-2027',
+]);
+
+export function isHiossenRepProgram(program: Pick<Program, 'id' | 'title'>): boolean {
+  if (HIOSSEN_REP_PROGRAM_IDS.has(program.id)) return true;
+  const title = program.title.trim().toUpperCase();
+  return (
+    title === 'FOUNDATIONS OF IMPLANT DENTISTRY' ||
+    title === 'HIOSSEN RESIDENCY'
+  );
+}
 
 export async function getPrograms(): Promise<Program[]> {
   try {
