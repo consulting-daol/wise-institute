@@ -7,6 +7,20 @@ import PageHero from '../../components/PageHero'
 import CallToActionBanner from '@/components/CallToActionBanner'
 import { StudyClubPaymentLink } from '@/components/ProgramPaymentLinks'
 import { useReCaptchaToken } from '@/hooks/useReCaptchaToken'
+import { SessionDateBullet, SessionDateText } from '@/components/SessionDateText'
+
+const STUDY_CLUB_SESSIONS_2026 = [
+  'June 14, 2026',
+  'September 13, 2026',
+  'November 8, 2026',
+] as const
+
+const FOUNDATIONS_MODULE_DATES = [
+  'Module 1: April 11-12, 2026',
+  'Module 2: May 2-3, 2026',
+  'Module 3: June 6-7, 2026',
+  'Module 4: July 11-12, 2026 (Live Surgery Days)',
+] as const
 
 function ContactFormWithParams() {
   const searchParams = useSearchParams()
@@ -244,9 +258,14 @@ export default function ContactPage() {
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary-900 mb-1.5 sm:mb-2 leading-tight">
                   WISE STRAUMANN / NEODENT
                 </h2>
-                <p className="text-sm text-secondary-600">
-                  Coquitlam City Dentist · June 14, 2026 · September 13, 2026 · November 8, 2026 · 8:00 AM – 5:00 PM
+                <p className="text-sm text-secondary-600 mb-2">
+                  Coquitlam City Dentist · 8:00 AM – 5:00 PM
                 </p>
+                <div className="space-y-1.5 inline-flex flex-col items-start text-left mx-auto">
+                  {STUDY_CLUB_SESSIONS_2026.map((sessionDate) => (
+                    <SessionDateBullet key={sessionDate} date={sessionDate} />
+                  ))}
+                </div>
               </div>
 
               <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-5 sm:mb-6">
@@ -295,9 +314,26 @@ export default function ContactPage() {
                 <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary-900 mb-1.5 sm:mb-2 leading-tight">
                   FOUNDATIONS OF IMPLANT DENTISTRY
                 </h2>
-                <p className="text-sm text-secondary-600">
-                  AIC Training Centre, 122-8337 Eastlake Dr, Burnaby, BC | Starts April 11, 2026
+                <p className="text-sm text-secondary-600 mb-2">
+                  AIC Training Centre, 122-8337 Eastlake Dr, Burnaby, BC
                 </p>
+                <p className="text-sm text-secondary-600 mb-1">
+                  <SessionDateText
+                    as="span"
+                    date="Starts April 11, 2026"
+                    activeClassName="text-secondary-600"
+                  />
+                </p>
+                <div className="space-y-1 text-left inline-flex flex-col mx-auto mt-2">
+                  {FOUNDATIONS_MODULE_DATES.map((date) => (
+                    <SessionDateText
+                      key={date}
+                      date={date}
+                      className="text-xs sm:text-sm"
+                      activeClassName="text-secondary-700"
+                    />
+                  ))}
+                </div>
               </div>
 
               <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-5 sm:mb-6">

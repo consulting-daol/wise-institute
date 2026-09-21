@@ -13,6 +13,7 @@ import {
   getStudyClubPaymentOption,
 } from '@/lib/squarePayments'
 import { isSessionCompleted } from '@/lib/sessionDates'
+import { SessionDateText } from '@/components/SessionDateText'
 
 export default function SchedulePage() {
   const [formData, setFormData] = useState({
@@ -104,11 +105,13 @@ export default function SchedulePage() {
           (program.startDate === program.endDate
             ? program.startDate
             : `${program.startDate} – ${program.endDate}`)
+        const completed =
+          isSessionCompleted(dates) || isSessionCompleted(program.endDate ?? '')
         return [
           {
             title: program.title,
             dates,
-            status: program.status,
+            status: completed ? 'Completed' : program.status,
             tag: 'Residency',
           },
         ]
@@ -118,11 +121,12 @@ export default function SchedulePage() {
         const moduleDates = program.moduleDates ?? []
         if (moduleDates.length === 0) {
           // If the admin didn't provide per-session dates, at least show the main startDate.
+          const completed = isSessionCompleted(program.startDate)
           return [
             {
               title: program.title,
               dates: program.startDate,
-              status: program.status,
+              status: completed ? 'Completed' : program.status,
               tag: 'Study Club',
             },
           ]
@@ -145,12 +149,14 @@ export default function SchedulePage() {
         program.startDate === program.endDate
           ? program.startDate
           : `${program.startDate} – ${program.endDate}`
+      const completed =
+        isSessionCompleted(dates) || isSessionCompleted(program.endDate ?? '')
 
       return [
         {
           title: program.title,
           dates,
-          status: program.status,
+          status: completed ? 'Completed' : program.status,
           tag: 'Event',
         },
       ]
@@ -253,24 +259,15 @@ export default function SchedulePage() {
                 <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-500">Dates</p>
                 {program.moduleDates ? (
                   <div className="text-xs sm:text-sm font-medium text-secondary-900 space-y-0.5 sm:space-y-1">
-                    {program.moduleDates.map((date, idx) => {
-                      const isCompleted = isSessionCompleted(date)
-                      const label = date.replace(/\s*\[completed\]/gi, '').trim()
-                      return (
-                        <p
-                          key={idx}
-                          className={
-                            isCompleted
-                              ? 'line-through text-secondary-400'
-                              : date.includes('Live Surgery')
-                              ? 'font-semibold text-primary'
-                              : ''
-                          }
-                        >
-                          {isCompleted ? `${label} ✓` : label}
-                        </p>
-                      )
-                    })}
+                    {program.moduleDates.map((date, idx) => (
+                      <SessionDateText
+                        key={idx}
+                        date={date}
+                        activeClassName={
+                          date.includes('Live Surgery') ? 'font-semibold text-primary' : ''
+                        }
+                      />
+                    ))}
                     {isResidency && (
                       <p className="text-secondary-600 text-[11px] sm:text-xs mt-1">9:00 am – 5:00 pm</p>
                     )}
@@ -279,9 +276,15 @@ export default function SchedulePage() {
                     )}
                   </div>
                 ) : (
-                  <p className="text-xs sm:text-sm font-medium text-secondary-900">
-                    {program.startDate === program.endDate ? program.startDate : `${program.startDate} – ${program.endDate}`}
-                  </p>
+                  <SessionDateText
+                    date={
+                      program.startDate === program.endDate
+                        ? program.startDate
+                        : `${program.startDate} – ${program.endDate}`
+                    }
+                    className="text-xs sm:text-sm font-medium"
+                    activeClassName="text-secondary-900"
+                  />
                 )}
               </div>
             </div>
@@ -786,7 +789,12 @@ export default function SchedulePage() {
                                 <h3 className="text-lg sm:text-xl font-bold text-secondary">{item.title}</h3>
                                 <div className="flex items-center gap-2 justify-center text-secondary-600 text-sm font-medium">
                                   <Calendar className="h-4 w-4 text-secondary-400" />
-                                  <p>{item.dates}</p>
+                                  <SessionDateText
+                                    date={item.dates}
+                                    as="span"
+                                    suffix="none"
+                                    activeClassName="text-secondary-600"
+                                  />
                                 </div>
                               </div>
                             </div>
@@ -828,7 +836,12 @@ export default function SchedulePage() {
                                 <h3 className="text-lg sm:text-xl font-bold text-secondary">{item.title}</h3>
                                 <div className="flex items-center gap-2 justify-center text-secondary-600 text-sm font-medium">
                                   <Calendar className="h-4 w-4 text-secondary-400" />
-                                  <p>{item.dates}</p>
+                                  <SessionDateText
+                                    date={item.dates}
+                                    as="span"
+                                    suffix="none"
+                                    activeClassName="text-secondary-600"
+                                  />
                                 </div>
                               </div>
                             </div>
@@ -887,7 +900,12 @@ export default function SchedulePage() {
                                 <h3 className="text-sm font-bold text-secondary">{item.title}</h3>
                                 <div className="flex items-center gap-1.5 justify-center text-xs text-secondary-600 font-medium">
                                   <Calendar className="h-3.5 w-3.5 text-secondary-400" />
-                                  <p>{item.dates}</p>
+                                  <SessionDateText
+                                    date={item.dates}
+                                    as="span"
+                                    suffix="none"
+                                    activeClassName="text-secondary-600"
+                                  />
                                 </div>
                               </div>
                             </div>
@@ -925,7 +943,12 @@ export default function SchedulePage() {
                                 <h3 className="text-sm font-bold text-secondary">{item.title}</h3>
                                 <div className="flex items-center gap-1.5 justify-center text-xs text-secondary-600 font-medium">
                                   <Calendar className="h-3.5 w-3.5 text-secondary-400" />
-                                  <p>{item.dates}</p>
+                                  <SessionDateText
+                                    date={item.dates}
+                                    as="span"
+                                    suffix="none"
+                                    activeClassName="text-secondary-600"
+                                  />
                                 </div>
                               </div>
                             </div>

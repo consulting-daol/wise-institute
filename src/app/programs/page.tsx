@@ -8,13 +8,27 @@ import { Calendar, Users, BookOpen, Stethoscope, Award, Clock, MapPin, Home, Act
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '../../components/CallToActionBanner'
 import { StudyClubPaymentLink } from '@/components/ProgramPaymentLinks'
-import { formatSessionLabel, isSessionCompleted } from '@/lib/sessionDates'
+import { SessionDateBullet, SessionDateText } from '@/components/SessionDateText'
 
 const STUDY_CLUB_SESSIONS_2026 = [
   'March 22, 2026',
   'June 14, 2026',
   'September 13, 2026',
   'November 8, 2026',
+] as const
+
+const FOUNDATIONS_MODULE_DATES = [
+  'Module 1: April 11-12, 2026',
+  'Module 2: May 2-3, 2026',
+  'Module 3: June 6-7, 2026',
+  'Module 4: July 11-12, 2026 (Live Surgery Days)',
+] as const
+
+const HIOSSEN_MODULE_DATES = [
+  'Module 1: April 17-18, 2027',
+  'Module 2: May 15-16, 2027',
+  'Module 3: June 19-20, 2027',
+  'Module 4: July 10-11, 2027',
 ] as const
 
 export default function ProgramsPage() {
@@ -67,10 +81,15 @@ export default function ProgramsPage() {
                   <div>
                     <p className="text-xs uppercase tracking-wide text-secondary-500">Module Dates</p>
                     <div className="text-sm font-medium text-secondary-900 space-y-1">
-                      <p>Module 1: April 11-12, 2026</p>
-                      <p>Module 2: May 2-3, 2026</p>
-                      <p>Module 3: June 6-7, 2026</p>
-                      <p className="font-semibold text-primary">Module 4: July 11-12, 2026 (Live Surgery Days)</p>
+                      {FOUNDATIONS_MODULE_DATES.map((date) => (
+                        <SessionDateText
+                          key={date}
+                          date={date}
+                          activeClassName={
+                            date.includes('Live Surgery') ? 'font-semibold text-primary' : ''
+                          }
+                        />
+                      ))}
                     </div>
                     <p className="text-xs text-secondary-500 mt-2">Registration: 8:30 am | Course: 9:00 am – 5:00 pm</p>
                   </div>
@@ -233,7 +252,11 @@ export default function ProgramsPage() {
                 Introduction to implantology, patient assessment, treatment planning, CBCT-based planning, and hands-on guided and freehand implant placement.
               </p>
               <div className="text-xs sm:text-sm text-secondary-500">
-                <p className="font-semibold mb-2" style={{ color: '#219281' }}>Dates: April 11-12, 2026</p>
+                <SessionDateText
+                  date="Dates: April 11-12, 2026"
+                  className="font-semibold mb-2"
+                  activeClassName="text-[#219281]"
+                />
                 <p className="text-secondary-600">9:00 am – 5:00 pm</p>
               </div>
             </div>
@@ -249,7 +272,11 @@ export default function ProgramsPage() {
                 Principles of sinus augmentation and basic bone grafting techniques with hands-on practice in sinus lift and GBR procedures.
               </p>
               <div className="text-xs sm:text-sm text-secondary-500">
-                <p className="font-semibold mb-2" style={{ color: '#219281' }}>Dates: May 2-3, 2026</p>
+                <SessionDateText
+                  date="Dates: May 2-3, 2026"
+                  className="font-semibold mb-2"
+                  activeClassName="text-[#219281]"
+                />
                 <p className="text-secondary-600">9:00 am – 5:00 pm</p>
               </div>
             </div>
@@ -265,7 +292,11 @@ export default function ProgramsPage() {
                 Implant prosthetic concepts, impression and digital workflows, PRF applications, and restorative-driven implant treatment planning.
               </p>
               <div className="text-xs sm:text-sm text-secondary-500">
-                <p className="font-semibold mb-2" style={{ color: '#219281' }}>Dates: June 6-7, 2026</p>
+                <SessionDateText
+                  date="Dates: June 6-7, 2026"
+                  className="font-semibold mb-2"
+                  activeClassName="text-[#219281]"
+                />
                 <p className="text-secondary-600">9:00 am – 5:00 pm</p>
               </div>
             </div>
@@ -281,7 +312,11 @@ export default function ProgramsPage() {
                 Two days of live implant surgery observation with expert mentorship, focusing on real-time clinical decision-making and case discussion.
               </p>
               <div className="text-xs sm:text-sm text-primary-600">
-                <p className="font-semibold mb-2" style={{ color: '#219281' }}>Dates: July 11-12, 2026 (Live Surgery Days)</p>
+                <SessionDateText
+                  date="Dates: July 11-12, 2026 (Live Surgery Days)"
+                  className="font-semibold mb-2"
+                  activeClassName="text-[#219281]"
+                />
                 <p className="text-secondary-600">9:00 am – 5:00 pm</p>
                 <p className="text-secondary-500 mt-1">Optional: Available with full program ($9,500) or separately</p>
               </div>
@@ -313,10 +348,13 @@ export default function ProgramsPage() {
                   <div>
                     <p className="text-xs uppercase tracking-wide text-secondary-500">Module Dates</p>
                     <div className="text-sm font-medium text-secondary-900 space-y-1">
-                      <p>Module 1: April 17-18, 2027</p>
-                      <p>Module 2: May 15-16, 2027</p>
-                      <p>Module 3: June 19-20, 2027</p>
-                      <p className="font-semibold text-primary">Module 4: July 10-11, 2027</p>
+                      {HIOSSEN_MODULE_DATES.map((date, idx) => (
+                        <SessionDateText
+                          key={date}
+                          date={date}
+                          activeClassName={idx === HIOSSEN_MODULE_DATES.length - 1 ? 'font-semibold text-primary' : ''}
+                        />
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -391,7 +429,11 @@ export default function ProgramsPage() {
                     </div>
                     <div>
                       <h4 className="text-sm sm:text-base font-semibold text-secondary">{session.module}</h4>
-                      <p className="text-xs sm:text-sm text-secondary-600">{session.dates}</p>
+                      <SessionDateText
+                        date={session.dates}
+                        className="text-xs sm:text-sm"
+                        activeClassName="text-secondary-600"
+                      />
                       <p className="text-xs sm:text-sm text-secondary-500">{session.location}</p>
                     </div>
                   </div>
@@ -455,27 +497,9 @@ export default function ProgramsPage() {
               <div className="mt-6 pt-6 border-t border-secondary-100">
                 <h4 className="text-sm font-semibold text-secondary mb-3 uppercase tracking-wide">Upcoming Sessions — 2026</h4>
                 <div className="space-y-2">
-                  {STUDY_CLUB_SESSIONS_2026.map((sessionDate) => {
-                    const completed = isSessionCompleted(sessionDate)
-                    return (
-                      <div key={sessionDate} className="flex items-center gap-3">
-                        <span
-                          className={`w-2 h-2 rounded-full flex-shrink-0 ${
-                            completed ? 'bg-gray-300' : 'bg-emerald-500'
-                          }`}
-                        />
-                        <span
-                          className={
-                            completed
-                              ? 'text-sm text-secondary-400 line-through'
-                              : 'text-sm text-secondary-700 font-medium'
-                          }
-                        >
-                          {formatSessionLabel(sessionDate, completed)}
-                        </span>
-                      </div>
-                    )
-                  })}
+                  {STUDY_CLUB_SESSIONS_2026.map((sessionDate) => (
+                    <SessionDateBullet key={sessionDate} date={sessionDate} />
+                  ))}
                   <p className="text-xs text-secondary-500 mt-2">8:00 AM – 5:00 PM · Coquitlam City Dentist</p>
                 </div>
               </div>
@@ -657,7 +681,10 @@ export default function ProgramsPage() {
                 </div>
                 <div className="pt-6 border-t border-secondary-200">
                   <p className="text-xs sm:text-sm text-secondary-500 mb-2">Perfect for:</p>
-                  <p className="text-sm sm:text-base text-secondary-600">Busy clinicians who want comprehensive implant training in a structured format. Starts April 11, 2026.</p>
+                  <p className="text-sm sm:text-base text-secondary-600">
+                    Busy clinicians who want comprehensive implant training in a structured format.{' '}
+                    <SessionDateText as="span" date="Starts April 11, 2026" activeClassName="text-secondary-600" />
+                  </p>
                 </div>
               </div>
             </div>
@@ -675,7 +702,17 @@ export default function ProgramsPage() {
                   </span>
                 </div>
                 <h3 className="text-xl sm:text-3xl font-extrabold text-secondary mb-2 sm:mb-3">WISE STRAUMANN / NEODENT</h3>
-                <p className="text-secondary-600 mb-5 sm:mb-6 text-sm sm:text-base">Ongoing series led by Dr. Stephen Yoon. Bring your own clinical cases and perform implant surgeries with expert guidance. June, September & November 2026 — Coquitlam City Dentist.</p>
+                <p className="text-secondary-600 mb-3 sm:mb-4 text-sm sm:text-base">Ongoing series led by Dr. Stephen Yoon. Bring your own clinical cases and perform implant surgeries with expert guidance — Coquitlam City Dentist.</p>
+                <div className="space-y-1 mb-5 sm:mb-6">
+                  {STUDY_CLUB_SESSIONS_2026.map((sessionDate) => (
+                    <SessionDateText
+                      key={sessionDate}
+                      date={sessionDate}
+                      className="text-sm"
+                      activeClassName="text-secondary-700 font-medium"
+                    />
+                  ))}
+                </div>
                 <div className="space-y-3 mb-6 sm:mb-8">
                   <div className="flex items-center space-x-3">
                     <CheckCircle2 className="h-5 w-5 text-secondary flex-shrink-0" />
