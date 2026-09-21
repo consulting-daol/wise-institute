@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Calendar, Users, BookOpen, Stethoscope, Award, Clock, MapPin, Home, Activity, Scissors, Heart, Target, CheckCircle2, ArrowRight, Sparkles, ChevronDown, Info } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '../../components/CallToActionBanner'
@@ -22,15 +22,6 @@ export default function ProgramsPage() {
   const [showResidencyOptions, setShowResidencyOptions] = useState(false)
   const [showHiossenResidencyOptions, setShowHiossenResidencyOptions] = useState(false)
   const [showStudyClubOptions, setShowStudyClubOptions] = useState(false)
-  const [completedSessions, setCompletedSessions] = useState<Record<string, boolean>>({})
-
-  useEffect(() => {
-    const next: Record<string, boolean> = {}
-    for (const sessionDate of STUDY_CLUB_SESSIONS_2026) {
-      next[sessionDate] = isSessionCompleted(sessionDate)
-    }
-    setCompletedSessions(next)
-  }, [])
 
   const handleProgramClick = (programType: 'residency' | 'study-club') => {
     router.push(`/contact?program=${programType}`)
@@ -465,7 +456,7 @@ export default function ProgramsPage() {
                 <h4 className="text-sm font-semibold text-secondary mb-3 uppercase tracking-wide">Upcoming Sessions — 2026</h4>
                 <div className="space-y-2">
                   {STUDY_CLUB_SESSIONS_2026.map((sessionDate) => {
-                    const completed = completedSessions[sessionDate] ?? false
+                    const completed = isSessionCompleted(sessionDate)
                     return (
                       <div key={sessionDate} className="flex items-center gap-3">
                         <span
