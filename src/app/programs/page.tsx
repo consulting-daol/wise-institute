@@ -28,12 +28,11 @@ const HIOSSEN_MODULE_DATES = [
   'Module 1: April 17-18, 2027',
   'Module 2: May 15-16, 2027',
   'Module 3: June 19-20, 2027',
-  'Module 4: July 10-11, 2027',
+  'Module 4: July 10-11, 2027 (Live Surgery Days)',
 ] as const
 
 export default function ProgramsPage() {
   const router = useRouter()
-  const [showResidencyOptions, setShowResidencyOptions] = useState(false)
   const [showHiossenResidencyOptions, setShowHiossenResidencyOptions] = useState(false)
   const [showStudyClubOptions, setShowStudyClubOptions] = useState(false)
 
@@ -57,8 +56,8 @@ export default function ProgramsPage() {
         ]}
       />
 
-      {/* Implant Residency */}
-      <section className="py-8 sm:py-10 md:py-12 lg:py-14 bg-white">
+      {/* Foundations Spring 2027 */}
+      <section id="foundations-spring-2027" className="py-8 sm:py-10 md:py-12 lg:py-14 bg-white">
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-stretch">
             <div data-aos="fade-right" className="flex flex-col">
@@ -66,13 +65,12 @@ export default function ProgramsPage() {
                 Implant Residency
               </p>
               <h2 className="text-2xl sm:text-4xl font-bold text-secondary leading-tight mb-3 sm:mb-4">
-                Foundations of Implant Dentistry – Spring 2026 Vancouver
+                Foundations of Implant Dentistry – Spring 2027 Vancouver
               </h2>
               <p className="text-secondary-600 text-sm sm:text-lg mb-6 sm:mb-8">
-                <span className="font-semibold text-primary">56 CE Credits | Up to 4 modules | 8 days</span>. AIC Implant Master Program with HiOssen AIC Education: Surgical (Modules 1–2), Prosthetic (Module 3), and Live Surgery (Module 4). We deliver comprehensive training in the least number of days possible.
+                <span className="font-semibold text-primary">56 CE Credits | Up to 4 modules | 8 days</span>. AIC Implant Master Program with HiOssen AIC Education: Surgical (Modules 1–2), Prosthetic & Treatment Planning (Module 3), and Live Surgery (Module 4). We deliver comprehensive training in the least number of days possible.
               </p>
-              
-              {/* Key Features */}
+
               <div className="space-y-4 mb-6 sm:mb-8">
                 <div className="flex items-start gap-3">
                   <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
@@ -81,7 +79,7 @@ export default function ProgramsPage() {
                   <div>
                     <p className="text-xs uppercase tracking-wide text-secondary-500">Module Dates</p>
                     <div className="text-sm font-medium text-secondary-900 space-y-1">
-                      {FOUNDATIONS_MODULE_DATES.map((date) => (
+                      {HIOSSEN_MODULE_DATES.map((date) => (
                         <SessionDateText
                           key={date}
                           date={date}
@@ -92,6 +90,18 @@ export default function ProgramsPage() {
                       ))}
                     </div>
                     <p className="text-xs text-secondary-500 mt-2">Registration: 8:30 am | Course: 9:00 am – 5:00 pm</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-secondary-500">Locations</p>
+                    <div className="text-sm font-medium text-secondary-900 space-y-1">
+                      <p>Modules 1–3: AIC Training Centre (#122-8337 Eastlake Dr, Burnaby, BC V5A 4W2)</p>
+                      <p>Module 4: New Westminster City Dentist (#240-522 Seventh St, New Westminster, BC V3M 5T5)</p>
+                    </div>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -129,8 +139,8 @@ export default function ProgramsPage() {
                   <div>
                     <p className="text-xs uppercase tracking-wide text-secondary-500">Pricing</p>
                     <div className="text-sm font-medium text-secondary-900 space-y-1">
-                      <p><span className="font-semibold">$9,500 CAD</span> + Tax (Modules 1-4 / Includes Live Surgery)</p>
-                      <p><span className="font-semibold">$7,500 CAD</span> + Tax (Modules 1-3 / No Surgery)</p>
+                      <p><span className="font-semibold">$10,500 CAD</span> + Tax (Modules 1-4 / Includes Live Surgery)</p>
+                      <p><span className="font-semibold">$8,500 CAD</span> + Tax (Modules 1-3 / No Surgery)</p>
                     </div>
                   </div>
                 </div>
@@ -139,21 +149,21 @@ export default function ProgramsPage() {
               <div className="mt-auto space-y-3">
                 <button
                   type="button"
-                  onClick={() => setShowResidencyOptions((open) => !open)}
-                  aria-expanded={showResidencyOptions}
-                  aria-controls="residency-register-options"
+                  onClick={() => setShowHiossenResidencyOptions((open) => !open)}
+                  aria-expanded={showHiossenResidencyOptions}
+                  aria-controls="hiossen-residency-register-options"
                   className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-secondary-900 text-white px-6 py-3 text-sm font-semibold shadow-lg shadow-secondary-900/20 hover:shadow-secondary-900/30 transition-all"
                 >
                   Register for Upcoming Course
                   <ChevronDown
-                    className={`h-4 w-4 transition-transform ${showResidencyOptions ? 'rotate-180' : ''}`}
+                    className={`h-4 w-4 transition-transform ${showHiossenResidencyOptions ? 'rotate-180' : ''}`}
                     aria-hidden
                   />
                 </button>
 
-                {showResidencyOptions && (
+                {showHiossenResidencyOptions && (
                   <div
-                    id="residency-register-options"
+                    id="hiossen-residency-register-options"
                     className="rounded-2xl border border-secondary-200 bg-secondary-50 p-4 sm:p-5"
                   >
                     <div className="flex items-start gap-3">
@@ -161,7 +171,15 @@ export default function ProgramsPage() {
                         <Info className="h-4 w-4 text-primary" aria-hidden />
                       </div>
                       <p className="text-sm sm:text-base text-secondary-800 leading-relaxed">
-                        To register for this program, please contact your Hiossen Representative.
+                        To register for this program, please contact your Hiossen Representative. To learn more, please visit:{' '}
+                        <a
+                          href="https://www.aiceducation.ca/product/foundations-of-implant-dentistry-a-comprehensive-residency-program-spring-2027-vancouver/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-semibold text-primary underline underline-offset-2 hover:text-primary-700"
+                        >
+                          Foundations of Implant Dentistry: A Comprehensive Residency Program – Spring 2027- Vancouver
+                        </a>
                       </p>
                     </div>
                   </div>
@@ -170,7 +188,7 @@ export default function ProgramsPage() {
             </div>
 
             <div data-aos="fade-left" className="rounded-3xl border-2 border-secondary-200 bg-white p-6 sm:p-10 shadow-lg">
-              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary mb-4 sm:mb-6">What You'll Learn</h3>
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary mb-4 sm:mb-6">What You&apos;ll Learn</h3>
               <div className="space-y-4 mb-6">
                 <div className="flex items-start gap-3">
                   <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
@@ -209,7 +227,7 @@ export default function ProgramsPage() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="pt-6 border-t border-secondary-200">
                 <h4 className="text-sm sm:text-base font-semibold text-secondary mb-3">Learning Objectives</h4>
                 <ul className="space-y-2 text-xs sm:text-sm text-secondary-600 list-disc list-inside">
@@ -252,12 +270,8 @@ export default function ProgramsPage() {
                 Introduction to implantology, patient assessment, treatment planning, CBCT-based planning, and hands-on guided and freehand implant placement.
               </p>
               <div className="text-xs sm:text-sm text-secondary-500">
-                <SessionDateText
-                  date="Dates: April 11-12, 2026"
-                  className="font-semibold mb-2"
-                  activeClassName="text-[#219281]"
-                />
-                <p className="text-secondary-600">9:00 am – 5:00 pm</p>
+                <p className="font-semibold mb-1" style={{ color: '#219281' }}>Location</p>
+                <p className="text-secondary-600">AIC Training Centre (#122-8337 Eastlake Dr, Burnaby, BC V5A 4W2)</p>
               </div>
             </div>
 
@@ -272,12 +286,8 @@ export default function ProgramsPage() {
                 Principles of sinus augmentation and basic bone grafting techniques with hands-on practice in sinus lift and GBR procedures.
               </p>
               <div className="text-xs sm:text-sm text-secondary-500">
-                <SessionDateText
-                  date="Dates: May 2-3, 2026"
-                  className="font-semibold mb-2"
-                  activeClassName="text-[#219281]"
-                />
-                <p className="text-secondary-600">9:00 am – 5:00 pm</p>
+                <p className="font-semibold mb-1" style={{ color: '#219281' }}>Location</p>
+                <p className="text-secondary-600">AIC Training Centre (#122-8337 Eastlake Dr, Burnaby, BC V5A 4W2)</p>
               </div>
             </div>
 
@@ -292,12 +302,8 @@ export default function ProgramsPage() {
                 Implant prosthetic concepts, impression and digital workflows, PRF applications, and restorative-driven implant treatment planning.
               </p>
               <div className="text-xs sm:text-sm text-secondary-500">
-                <SessionDateText
-                  date="Dates: June 6-7, 2026"
-                  className="font-semibold mb-2"
-                  activeClassName="text-[#219281]"
-                />
-                <p className="text-secondary-600">9:00 am – 5:00 pm</p>
+                <p className="font-semibold mb-1" style={{ color: '#219281' }}>Location</p>
+                <p className="text-secondary-600">AIC Training Centre (#122-8337 Eastlake Dr, Burnaby, BC V5A 4W2)</p>
               </div>
             </div>
 
@@ -312,132 +318,9 @@ export default function ProgramsPage() {
                 Two days of live implant surgery observation with expert mentorship, focusing on real-time clinical decision-making and case discussion.
               </p>
               <div className="text-xs sm:text-sm text-primary-600">
-                <SessionDateText
-                  date="Dates: July 11-12, 2026 (Live Surgery Days)"
-                  className="font-semibold mb-2"
-                  activeClassName="text-[#219281]"
-                />
-                <p className="text-secondary-600">9:00 am – 5:00 pm</p>
-                <p className="text-secondary-500 mt-1">Optional: Available with full program ($9,500) or separately</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Hiossen Residency 2027 */}
-      <section className="py-8 sm:py-10 md:py-12 lg:py-14 bg-white">
-        <div className="container-custom">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-stretch">
-            <div data-aos="fade-right" className="flex flex-col">
-              <p className="uppercase tracking-wider text-primary-600 font-bold text-sm sm:text-base lg:text-lg mb-3">
-                Hiossen Residency
-              </p>
-              <h2 className="text-2xl sm:text-4xl font-bold text-secondary leading-tight mb-3 sm:mb-4">
-                Hiossen Residency – 2027
-              </h2>
-              <p className="text-secondary-600 text-sm sm:text-lg mb-6 sm:mb-8">
-                Four progressive modules across Spring and Summer 2027. Modules 1–3 at Hiossen Implant Canada; Module 4 at New Westminster City Dentist.
-              </p>
-
-              <div className="space-y-4 mb-6 sm:mb-8">
-                <div className="flex items-start gap-3">
-                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
-                    <Calendar className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-wide text-secondary-500">Module Dates</p>
-                    <div className="text-sm font-medium text-secondary-900 space-y-1">
-                      {HIOSSEN_MODULE_DATES.map((date, idx) => (
-                        <SessionDateText
-                          key={date}
-                          date={date}
-                          activeClassName={idx === HIOSSEN_MODULE_DATES.length - 1 ? 'font-semibold text-primary' : ''}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-wide text-secondary-500">Locations</p>
-                    <div className="text-sm font-medium text-secondary-900 space-y-1">
-                      <p>Modules 1–3: Hiossen Implant Canada</p>
-                      <p>Module 4: New Westminster City Dentist</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
-                    <Clock className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-xs uppercase tracking-wide text-secondary-500">Duration</p>
-                    <p className="text-sm font-medium text-secondary-900">8 days (4 modules)</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-auto space-y-3">
-                <button
-                  type="button"
-                  onClick={() => setShowHiossenResidencyOptions((open) => !open)}
-                  aria-expanded={showHiossenResidencyOptions}
-                  aria-controls="hiossen-residency-register-options"
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-secondary-900 text-white px-6 py-3 text-sm font-semibold shadow-lg shadow-secondary-900/20 hover:shadow-secondary-900/30 transition-all"
-                >
-                  Register for Upcoming Course
-                  <ChevronDown
-                    className={`h-4 w-4 transition-transform ${showHiossenResidencyOptions ? 'rotate-180' : ''}`}
-                    aria-hidden
-                  />
-                </button>
-
-                {showHiossenResidencyOptions && (
-                  <div
-                    id="hiossen-residency-register-options"
-                    className="rounded-2xl border border-secondary-200 bg-secondary-50 p-4 sm:p-5"
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="h-9 w-9 rounded-xl bg-white shadow-sm ring-1 ring-secondary-200 flex items-center justify-center flex-shrink-0">
-                        <Info className="h-4 w-4 text-primary" aria-hidden />
-                      </div>
-                      <p className="text-sm sm:text-base text-secondary-800 leading-relaxed">
-                        To register for this program, please contact your Hiossen Representative.
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            <div data-aos="fade-left" className="rounded-3xl border-2 border-secondary-200 bg-white p-6 sm:p-10 shadow-lg">
-              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary mb-4 sm:mb-6">Session Overview</h3>
-              <div className="space-y-4">
-                {[
-                  { module: 'Module 1', dates: 'April 17-18, 2027', location: 'Hiossen Implant Canada' },
-                  { module: 'Module 2', dates: 'May 15-16, 2027', location: 'Hiossen Implant Canada' },
-                  { module: 'Module 3', dates: 'June 19-20, 2027', location: 'Hiossen Implant Canada' },
-                  { module: 'Module 4', dates: 'July 10-11, 2027', location: 'New Westminster City Dentist' },
-                ].map((session) => (
-                  <div key={session.module} className="flex items-start gap-3">
-                    <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
-                      <Calendar className="h-5 w-5 text-primary" />
-                    </div>
-                    <div>
-                      <h4 className="text-sm sm:text-base font-semibold text-secondary">{session.module}</h4>
-                      <SessionDateText
-                        date={session.dates}
-                        className="text-xs sm:text-sm"
-                        activeClassName="text-secondary-600"
-                      />
-                      <p className="text-xs sm:text-sm text-secondary-500">{session.location}</p>
-                    </div>
-                  </div>
-                ))}
+                <p className="font-semibold mb-1" style={{ color: '#219281' }}>Location</p>
+                <p className="text-secondary-600">New Westminster City Dentist (#240-522 Seventh St, New Westminster, BC V3M 5T5)</p>
+                <p className="text-secondary-500 mt-1">Optional: Available with full program ($10,500) or separately</p>
               </div>
             </div>
           </div>
@@ -656,7 +539,9 @@ export default function ProgramsPage() {
                   </span>
                 </div>
                 <h3 className="text-xl sm:text-3xl font-extrabold text-secondary mb-2 sm:mb-3">Implant Residency</h3>
-                <p className="text-secondary-600 mb-5 sm:mb-6 text-sm sm:text-base">Foundations of Implant Dentistry: A Comprehensive Residency Program – Spring 2026 Vancouver. 56 CE Credits, up to 4 modules, 8 days. AIC Training Centre, Burnaby, BC. $7,500 – $9,500 + Tax.</p>
+                <p className="text-secondary-600 mb-5 sm:mb-6 text-sm sm:text-base">
+                  Foundations of Implant Dentistry – Spring 2027 Vancouver. 56 CE Credits | Up to 4 modules | 8 days. AIC Implant Master Program with HiOssen AIC Education: Surgical (Modules 1–2), Prosthetic & Treatment Planning (Module 3), and Live Surgery (Module 4). $8,500 – $10,500 + Tax.
+                </p>
                 <div className="space-y-3 mb-6 sm:mb-8">
                   <div className="flex items-center space-x-3">
                     <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
@@ -664,26 +549,27 @@ export default function ProgramsPage() {
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span className="text-sm sm:text-base text-secondary-600">Modules 1–2: Surgical, Module 3: Prosthetic, Module 4: Live Surgery</span>
+                    <span className="text-sm sm:text-base text-secondary-600">Modules 1–2: Surgical, Module 3: Prosthetic & Treatment Planning, Module 4: Live Surgery</span>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
+                    <span className="text-sm sm:text-base text-secondary-600">
+                      Modules 1–3: AIC Training Centre · Module 4: New Westminster City Dentist
+                    </span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span className="text-sm sm:text-base text-secondary-600">Hands-on & theory, pig jaw surgeries, mentored live surgeries</span>
+                    <span className="text-sm sm:text-base text-secondary-600">6 Workshop Days + 2 Live Surgery Days · $8,500 – $10,500 + Tax</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span className="text-sm sm:text-base text-secondary-600">Co-led by Dr. Lee & Dr. Yoon</span>
-                  </div>
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                    <span className="text-sm sm:text-base text-secondary-600">Powered by HiOssen AIC Education</span>
+                    <span className="text-sm sm:text-base text-secondary-600">Co-led by Dr. Lee & Dr. Yoon · Powered by HiOssen AIC Education</span>
                   </div>
                 </div>
                 <div className="pt-6 border-t border-secondary-200">
                   <p className="text-xs sm:text-sm text-secondary-500 mb-2">Perfect for:</p>
                   <p className="text-sm sm:text-base text-secondary-600">
-                    Busy clinicians who want comprehensive implant training in a structured format.{' '}
-                    <SessionDateText as="span" date="Starts April 11, 2026" activeClassName="text-secondary-600" />
+                    Busy clinicians who want comprehensive implant training in a structured format. Starts April 17, 2027.
                   </p>
                 </div>
               </div>
@@ -739,6 +625,160 @@ export default function ProgramsPage() {
                   <p className="text-xs sm:text-sm text-secondary-500 mb-2">Perfect for:</p>
                   <p className="text-sm sm:text-base text-secondary-600">Dentists ready to elevate confidence in implant dentistry with real surgical experience</p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Implant Residency — Spring 2026 (Completed) */}
+      <section className="py-8 sm:py-10 md:py-12 lg:py-14 bg-white">
+        <div className="container-custom">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 items-stretch opacity-60 grayscale-[0.25]">
+            <div data-aos="fade-right" className="flex flex-col">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3">
+                <p className="uppercase tracking-wider text-secondary-400 font-bold text-sm sm:text-base lg:text-lg">
+                  Implant Residency
+                </p>
+                <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">
+                  Completed
+                </span>
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-bold text-secondary-500 leading-tight mb-3 sm:mb-4">
+                Foundations of Implant Dentistry – Spring 2026 Vancouver
+              </h2>
+              <p className="text-secondary-500 text-sm sm:text-lg mb-6 sm:mb-8">
+                <span className="font-semibold text-secondary-500">56 CE Credits | Up to 4 modules | 8 days</span>. AIC Implant Master Program with HiOssen AIC Education: Surgical (Modules 1–2), Prosthetic (Module 3), and Live Surgery (Module 4). We deliver comprehensive training in the least number of days possible.
+              </p>
+              
+              {/* Key Features */}
+              <div className="space-y-4 mb-6 sm:mb-8">
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
+                    <Calendar className="h-5 w-5 text-secondary-400" />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-secondary-400">Module Dates</p>
+                    <div className="text-sm font-medium text-secondary-700 space-y-1">
+                      {FOUNDATIONS_MODULE_DATES.map((date) => (
+                        <SessionDateText
+                          key={date}
+                          date={date}
+                          activeClassName={
+                            date.includes('Live Surgery') ? 'font-semibold text-primary' : ''
+                          }
+                        />
+                      ))}
+                    </div>
+                    <p className="text-xs text-secondary-400 mt-2">Registration: 8:30 am | Course: 9:00 am – 5:00 pm</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
+                    <Clock className="h-5 w-5 text-secondary-400" />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-secondary-400">Course Structure</p>
+                    <p className="text-sm font-medium text-secondary-600">6 Workshop Days + 2 Live Surgery Days</p>
+                    <p className="text-xs text-secondary-500 mt-1">Includes case presentations, case work-up, and case review & recap</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center">
+                    <Users className="h-5 w-5 text-secondary-400" />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-secondary-400">Capacity</p>
+                    <p className="text-sm font-medium text-secondary-600">20 doctors per cohort for personalized attention</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center">
+                    <BookOpen className="h-5 w-5 text-secondary-400" />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-secondary-400">Materials</p>
+                    <p className="text-sm font-medium text-secondary-600">Printed course notes included for review</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center">
+                    <Stethoscope className="h-5 w-5 text-secondary-400" />
+                  </div>
+                  <div>
+                    <p className="text-xs uppercase tracking-wide text-secondary-400">Pricing</p>
+                    <div className="text-sm font-medium text-secondary-600 space-y-1">
+                      <p><span className="font-semibold">$9,500 CAD</span> + Tax (Modules 1-4 / Includes Live Surgery)</p>
+                      <p><span className="font-semibold">$7,500 CAD</span> + Tax (Modules 1-3 / No Surgery)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-auto">
+                <button
+                  type="button"
+                  disabled
+                  aria-disabled="true"
+                  className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-secondary-300 text-white px-6 py-3 text-sm font-semibold cursor-not-allowed"
+                >
+                  Registration Closed
+                </button>
+              </div>
+            </div>
+
+            <div data-aos="fade-left" className="rounded-3xl border-2 border-secondary-200 bg-white/80 p-6 sm:p-10 shadow-lg">
+              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-secondary-500 mb-4 sm:mb-6">What You&apos;ll Learn</h3>
+              <div className="space-y-4 mb-6">
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
+                    <Scissors className="h-5 w-5 text-secondary-400" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm sm:text-base font-semibold text-secondary-500">Surgical Techniques</h4>
+                    <p className="text-xs sm:text-sm text-secondary-500">Flap reflection, bone grafting, suturing</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
+                    <Activity className="h-5 w-5 text-secondary-400" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm sm:text-base font-semibold text-secondary-500">Hands-On Practice</h4>
+                    <p className="text-xs sm:text-sm text-secondary-500">We use pig jaws to give more realistic feel for things like incision, flap reflection, bone grafting and suturing</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
+                    <Heart className="h-5 w-5 text-secondary-400" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm sm:text-base font-semibold text-secondary-500">Live Surgery</h4>
+                    <p className="text-xs sm:text-sm text-secondary-500">Real patient cases under supervision</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="h-10 w-10 rounded-2xl bg-white shadow ring-1 ring-secondary-100 flex items-center justify-center flex-shrink-0">
+                    <Target className="h-5 w-5 text-secondary-400" />
+                  </div>
+                  <div>
+                    <h4 className="text-sm sm:text-base font-semibold text-secondary-500">Clinical Application</h4>
+                    <p className="text-xs sm:text-sm text-secondary-500">Ready to apply skills in your practice</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="pt-6 border-t border-secondary-200">
+                <h4 className="text-sm sm:text-base font-semibold text-secondary-500 mb-3">Learning Objectives</h4>
+                <ul className="space-y-2 text-xs sm:text-sm text-secondary-500 list-disc list-inside">
+                  <li>Perform comprehensive pre-surgical patient evaluation and case selection</li>
+                  <li>Develop predictable implant treatment plans using clinical and CBCT data</li>
+                  <li>Understand surgical principles for implant placement and guided surgery</li>
+                  <li>Perform basic sinus lift and GBR techniques</li>
+                  <li>Understand implant prosthetic components and workflows</li>
+                  <li>Apply implant treatment planning concepts through real clinical cases</li>
+                  <li>Observe and learn live implant surgeries under expert mentorship</li>
+                </ul>
               </div>
             </div>
           </div>

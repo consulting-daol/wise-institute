@@ -2,25 +2,11 @@
 
 import { useState, useEffect, useRef, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
-import { Home, Mail, MapPin, Clock, Send, HelpCircle, Plus, Minus, Info } from 'lucide-react'
+import { Home, Mail, MapPin, Clock, Send, HelpCircle, Plus, Minus } from 'lucide-react'
 import PageHero from '../../components/PageHero'
 import CallToActionBanner from '@/components/CallToActionBanner'
-import { StudyClubPaymentLink } from '@/components/ProgramPaymentLinks'
+import ContactUpcomingCards from '@/components/ContactUpcomingCards'
 import { useReCaptchaToken } from '@/hooks/useReCaptchaToken'
-import { SessionDateBullet, SessionDateText } from '@/components/SessionDateText'
-
-const STUDY_CLUB_SESSIONS_2026 = [
-  'June 14, 2026',
-  'September 13, 2026',
-  'November 8, 2026',
-] as const
-
-const FOUNDATIONS_MODULE_DATES = [
-  'Module 1: April 11-12, 2026',
-  'Module 2: May 2-3, 2026',
-  'Module 3: June 6-7, 2026',
-  'Module 4: July 11-12, 2026 (Live Surgery Days)',
-] as const
 
 function ContactFormWithParams() {
   const searchParams = useSearchParams()
@@ -247,147 +233,10 @@ export default function ContactPage() {
         ]}
       />
 
-      {/* Upcoming Events Section */}
+      {/* Upcoming Events Section — driven by CMS / DEFAULT_PROGRAMS dates */}
       <section className="py-6 sm:py-8 md:py-10 lg:py-12 bg-sky-50/50">
         <div className="container-custom">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 md:gap-8 lg:gap-10 items-stretch">
-            {/* WISE STRAUMANN / NEODENT */}
-            <div data-aos="fade-right" className="rounded-2xl border border-secondary-100 bg-white p-5 sm:p-6 md:p-8 shadow-md h-full flex flex-col">
-              <div className="text-center mb-5 sm:mb-6">
-                <p className="text-xs uppercase tracking-wider text-secondary-400 mb-1.5 sm:mb-2">Upcoming Event</p>
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary-900 mb-1.5 sm:mb-2 leading-tight">
-                  WISE STRAUMANN / NEODENT
-                </h2>
-                <p className="text-sm text-secondary-600 mb-2">
-                  Coquitlam City Dentist · 8:00 AM – 5:00 PM
-                </p>
-                <div className="space-y-1.5 inline-flex flex-col items-start text-left mx-auto">
-                  {STUDY_CLUB_SESSIONS_2026.map((sessionDate) => (
-                    <SessionDateBullet key={sessionDate} date={sessionDate} />
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-5 sm:mb-6">
-                <div className="px-4 py-3 rounded-xl bg-secondary-50 border border-secondary-100 min-w-[120px] text-center">
-                  <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-500 font-semibold mb-0.5">Price</p>
-                  <p className="text-sm sm:text-base font-bold text-secondary-900">$4,999 CAD</p>
-                </div>
-                <div className="px-4 py-3 rounded-xl bg-white border border-secondary-100 min-w-[120px] text-center">
-                  <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-500 font-semibold mb-0.5">Duration</p>
-                  <p className="text-sm sm:text-base font-bold text-secondary-900">8:00 AM – 5:00 PM</p>
-                </div>
-                <div className="px-4 py-3 rounded-xl bg-white border border-secondary-100 min-w-[120px] text-center">
-                  <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-500 font-semibold mb-0.5">CE Credits</p>
-                  <p className="text-sm sm:text-base font-bold text-secondary-900">36 CE</p>
-                </div>
-              </div>
-
-              <div className="flex-1 flex flex-col">
-                <h3 className="text-base sm:text-lg font-bold text-secondary-900 mb-2.5 sm:mb-3">
-                  What you&apos;ll do
-                </h3>
-                <p className="text-sm text-secondary-600 mb-3">
-                  Work on your own clinical cases and perform implant surgeries with real-time guidance in a small-group setting.
-                </p>
-                <ul className="space-y-2 text-sm text-secondary-700 mb-4 list-disc list-inside">
-                  <li>Case planning, workup, execution & recap</li>
-                  <li>Live surgical execution with expert feedback</li>
-                  <li>Real-time mentorship from Dr. Stephen Yoon</li>
-                  <li>Small group — spots are limited</li>
-                </ul>
-
-                <StudyClubPaymentLink className="mb-4" />
-
-                <div className="mt-auto pt-4 border-t border-secondary-100">
-                  <p className="text-xs sm:text-sm text-secondary-600 mb-1">
-                    Led by: <span className="font-medium">Dr. Stephen Yoon</span>
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Foundations of Implant Dentistry – Spring 2026 Vancouver */}
-            <div data-aos="fade-left" className="rounded-2xl border border-secondary-100 bg-white p-5 sm:p-6 md:p-8 shadow-md h-full flex flex-col">
-              <div className="text-center mb-5 sm:mb-6">
-                <p className="text-xs uppercase tracking-wider text-secondary-400 mb-1.5 sm:mb-2">Spring 2026 – Vancouver</p>
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-secondary-900 mb-1.5 sm:mb-2 leading-tight">
-                  FOUNDATIONS OF IMPLANT DENTISTRY
-                </h2>
-                <p className="text-sm text-secondary-600 mb-2">
-                  AIC Training Centre, 122-8337 Eastlake Dr, Burnaby, BC
-                </p>
-                <p className="text-sm text-secondary-600 mb-1">
-                  <SessionDateText
-                    as="span"
-                    date="Starts April 11, 2026"
-                    activeClassName="text-secondary-600"
-                  />
-                </p>
-                <div className="space-y-1 text-left inline-flex flex-col mx-auto mt-2">
-                  {FOUNDATIONS_MODULE_DATES.map((date) => (
-                    <SessionDateText
-                      key={date}
-                      date={date}
-                      className="text-xs sm:text-sm"
-                      activeClassName="text-secondary-700"
-                    />
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-5 sm:mb-6">
-                <div className="px-4 py-3 rounded-xl bg-sky-50 border border-sky-100 min-w-[120px] text-center">
-                  <p className="text-[10px] sm:text-xs uppercase tracking-wide text-sky-600 font-semibold mb-0.5">CE Credits</p>
-                  <p className="text-sm sm:text-base font-bold text-secondary-900">56 CE</p>
-                </div>
-                <div className="px-4 py-3 rounded-xl bg-white border border-secondary-100 min-w-[120px] text-center">
-                  <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-500 font-semibold mb-0.5">Price</p>
-                  <p className="text-sm sm:text-base font-bold text-secondary-900">$7,500 – $9,500 + Tax</p>
-                </div>
-              </div>
-
-              <div className="flex-1 flex flex-col">
-                <h3 className="text-base sm:text-lg font-bold text-secondary-900 mb-2.5 sm:mb-3">
-                  Registration details
-                </h3>
-                <p className="text-sm text-secondary-700 mb-2">56 CE Credits | Up to 4 Modules | 8 Days</p>
-                <ul className="space-y-1.5 text-sm text-secondary-700 mb-3 list-disc list-inside">
-                  <li>All 4 modules (Including Live Surgery): $9,500 + Tax</li>
-                  <li>Lecture & Hands-on (No Surgery): $7,500 + Tax</li>
-                  <li>Registration: 8:30 am | Course: 9:00 am – 5:00 pm</li>
-                </ul>
-                <h3 className="text-base sm:text-lg font-bold text-secondary-900 mb-2 mt-2">
-                  Modules
-                </h3>
-                <ul className="space-y-1.5 text-sm text-secondary-700 mb-4 list-disc list-inside">
-                  <li>Modules 1–2: Surgical (hands-on & theory)</li>
-                  <li>Module 3: Prosthetic (hands-on & theory)</li>
-                  <li>Module 4: Live Surgery</li>
-                </ul>
-
-                <div className="mb-4 rounded-2xl border border-secondary-200 bg-secondary-50 p-4 sm:p-5">
-                  <div className="flex items-start gap-3">
-                    <div className="h-9 w-9 rounded-xl bg-white shadow-sm ring-1 ring-secondary-200 flex items-center justify-center flex-shrink-0">
-                      <Info className="h-4 w-4 text-primary" aria-hidden />
-                    </div>
-                    <p className="text-sm sm:text-base text-secondary-800 leading-relaxed">
-                      To register for this program, please contact your Hiossen Representative.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-auto pt-4 border-t border-secondary-100">
-                  <p className="text-xs sm:text-sm text-secondary-600 mb-1">
-                    Co-led by: <span className="font-medium">Dr. Lee (B.SC. PHARM, DMD)</span> ▪ <span className="font-medium">Dr. Yoon (B.SC., DMD)</span>
-                  </p>
-                  <p className="text-xs text-secondary-400 text-center mt-3">
-                    Powered by HiOssen AIC Education
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ContactUpcomingCards />
         </div>
       </section>
 
