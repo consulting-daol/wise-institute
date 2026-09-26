@@ -16,6 +16,8 @@ export type Program = {
   description: string;
   price?: string;
   ceCredits?: string;
+  /** Shown under “Pricing Options” on Schedule residency cards */
+  pricingOptions?: Array<{ amount: string; note: string }>;
   moduleDates?: string[];
   timelineDates?: string;
   isVisible: boolean;
@@ -23,47 +25,51 @@ export type Program = {
 
 export const DEFAULT_PROGRAMS: Program[] = [
   {
-    id: 'residency-2026',
-    title: 'FOUNDATIONS OF IMPLANT DENTISTRY',
-    type: 'Residency',
-    startDate: 'April 11, 2026',
-    endDate: 'July 12, 2026',
-    duration: '8 days (4 modules)',
-    capacity: 'Limited seats',
-    location: 'AIC Training Centre, 122-8337 Eastlake Dr, Burnaby, BC',
-    status: 'Open',
-    description:
-      'Foundations of Implant Dentistry: A Comprehensive Residency Program – Spring 2026 Vancouver. Module 1: April 11-12 (Surgical Foundations & Guided Surgery), Module 2: May 2-3 (Sinus Lift & Basic GBR), Module 3: June 6-7 (Prosthetic & Treatment Planning), Module 4: July 11-12 (Live Surgery Days). 56 CE Credits. 6 Workshop Days + 2 Live Surgery Days. Co-led by Dr. Lee & Dr. Yoon. Powered by HiOssen AIC Education.',
-    price: '$7,500 – $9,500 + Tax',
-    ceCredits: '56 CE Credits',
-    moduleDates: [
-      'Module 1: April 11-12, 2026',
-      'Module 2: May 2-3, 2026',
-      'Module 3: June 6-7, 2026',
-      'Module 4: July 11-12, 2026 (Live Surgery)',
-    ],
-    timelineDates: 'April 11 – July 12, 2026',
-    isVisible: true,
-  },
-  {
     id: 'hiossen-residency-2027',
-    title: 'HIOSSEN RESIDENCY',
+    title: 'FOUNDATIONS OF IMPLANT DENTISTRY',
     type: 'Residency',
     startDate: 'April 17, 2027',
     endDate: 'July 11, 2027',
     duration: '8 days (4 modules)',
     capacity: 'Limited seats',
-    location: 'Hiossen Implant Canada (Modules 1–3); New Westminster City Dentist (Module 4)',
+    location: 'AIC Training Centre, 122-8337 Eastlake Dr, Burnaby, BC',
     status: 'Open',
-    description:
-      'Hiossen Residency – Spring/Summer 2027. Module 1–3 at Hiossen Implant Canada; Module 4 at New Westminster City Dentist. Register through your Hiossen Representative. Powered by HiOssen AIC Education.',
+    description: 'Foundations of Implant Dentistry: A Comprehensive Residency Program – Spring 2027 Vancouver. Module 1: April 17-18 (Surgical), Module 2: May 15-16 (Surgical), Module 3: June 19-20 (Prosthetic & Treatment Planning), Module 4: July 10-11 (Live Surgery Days). 56 CE Credits. 6 Workshop Days + 2 Live Surgery Days. Co-led by Dr. Lee & Dr. Yoon. Powered by HiOssen AIC Education.',
+    price: '$8,500 – $10,500 + Tax',
+    ceCredits: '56 CE Credits',
+    pricingOptions: [
+      { amount: '$10,500 CAD', note: '+ Tax — Modules 1-4 (Live Surgery)' },
+      { amount: '$8,500 CAD', note: '+ Tax — Modules 1-3 (No Surgery)' },
+    ],
     moduleDates: [
-      'Module 1: April 17-18, 2027 — Hiossen Implant Canada',
-      'Module 2: May 15-16, 2027 — Hiossen Implant Canada',
-      'Module 3: June 19-20, 2027 — Hiossen Implant Canada',
-      'Module 4: July 10-11, 2027 — New Westminster City Dentist',
+      'Module 1: April 17-18, 2027',
+      'Module 2: May 15-16, 2027',
+      'Module 3: June 19-20, 2027',
+      'Module 4: July 10-11, 2027 (Live Surgery)',
     ],
     timelineDates: 'April 17 – July 11, 2027',
+    isVisible: true,
+  },
+  {
+    id: 'straumann-neodent-2026',
+    title: 'WISE STRAUMANN / NEODENT',
+    type: 'Study Club',
+    startDate: 'June 14, 2026',
+    endDate: 'November 8, 2026',
+    duration: '4 sessions',
+    capacity: 'Limited seats',
+    location: 'Coquitlam City Dentist',
+    status: 'Open',
+    description: 'WISE Straumann/Neodent group is currently accepting enrollment. Participant-driven, case-based live surgical education program.',
+    price: '$4,999 CAD',
+    ceCredits: '36 CE Credits',
+    moduleDates: [
+      'March 22, 2026',
+      'June 14, 2026',
+      'September 13, 2026',
+      'November 8, 2026',
+    ],
+    timelineDates: 'June 14 – November 8, 2026',
     isVisible: true,
   },
   {
@@ -76,8 +82,7 @@ export const DEFAULT_PROGRAMS: Program[] = [
     capacity: 'Limited seats',
     location: 'AIC Training Centre, 122-8337 Eastlake Dr, Burnaby, BC',
     status: 'Waitlist',
-    description:
-      'WISE Hiossen Group 1 (2026–2027). Cohort is currently on waitlist for next year. Powered by HiOssen AIC Education.',
+    description: 'WISE Hiossen Group 1 (2026–2027). Cohort is currently on waitlist for next year. Powered by HiOssen AIC Education.',
     price: '$7,500 – $9,500 + Tax',
     ceCredits: '56 CE Credits',
     moduleDates: [
@@ -99,8 +104,7 @@ export const DEFAULT_PROGRAMS: Program[] = [
     capacity: 'Limited seats',
     location: 'AIC Training Centre, 122-8337 Eastlake Dr, Burnaby, BC',
     status: 'Waitlist',
-    description:
-      'WISE Hiossen Group 2 (2026–2027). Cohort is currently on waitlist for next year. Powered by HiOssen AIC Education.',
+    description: 'WISE Hiossen Group 2 (2026–2027). Cohort is currently on waitlist for next year. Powered by HiOssen AIC Education.',
     price: '$7,500 – $9,500 + Tax',
     ceCredits: '56 CE Credits',
     moduleDates: [
@@ -113,26 +117,29 @@ export const DEFAULT_PROGRAMS: Program[] = [
     isVisible: true,
   },
   {
-    id: 'straumann-neodent-2026',
-    title: 'WISE STRAUMANN / NEODENT',
-    type: 'Study Club',
-    startDate: 'June 14, 2026',
-    endDate: 'November 8, 2026',
-    duration: '4 sessions',
+    id: 'residency-2026',
+    title: 'FOUNDATIONS OF IMPLANT DENTISTRY',
+    type: 'Residency',
+    startDate: 'April 11, 2026',
+    endDate: 'July 12, 2026',
+    duration: '8 days (4 modules)',
     capacity: 'Limited seats',
-    location: 'Coquitlam City Dentist',
-    status: 'Open',
-    description:
-      'WISE Straumann/Neodent group is currently accepting enrollment. Participant-driven, case-based live surgical education program.',
-    price: '$4,999 CAD',
-    ceCredits: '36 CE Credits',
-    moduleDates: [
-      'March 22, 2026',
-      'June 14, 2026',
-      'September 13, 2026',
-      'November 8, 2026',
+    location: 'AIC Training Centre, 122-8337 Eastlake Dr, Burnaby, BC',
+    status: 'Completed',
+    description: 'Foundations of Implant Dentistry: A Comprehensive Residency Program – Spring 2026 Vancouver. Module 1: April 11-12 (Surgical Foundations & Guided Surgery), Module 2: May 2-3 (Sinus Lift & Basic GBR), Module 3: June 6-7 (Prosthetic & Treatment Planning), Module 4: July 11-12 (Live Surgery Days). 56 CE Credits. 6 Workshop Days + 2 Live Surgery Days. Co-led by Dr. Lee & Dr. Yoon. Powered by HiOssen AIC Education.',
+    price: '$7,500 – $9,500 + Tax',
+    ceCredits: '56 CE Credits',
+    pricingOptions: [
+      { amount: '$9,500 CAD', note: '+ Tax — Modules 1-4 (Live Surgery)' },
+      { amount: '$7,500 CAD', note: '+ Tax — Modules 1-3 (No Surgery)' },
     ],
-    timelineDates: 'June 14 – November 8, 2026',
+    moduleDates: [
+      'Module 1: April 11-12, 2026',
+      'Module 2: May 2-3, 2026',
+      'Module 3: June 6-7, 2026',
+      'Module 4: July 11-12, 2026 (Live Surgery)',
+    ],
+    timelineDates: 'April 11 – July 12, 2026',
     isVisible: true,
   },
 ];
@@ -147,7 +154,7 @@ export function isHiossenRepProgram(program: Pick<Program, 'id' | 'title'>): boo
   if (HIOSSEN_REP_PROGRAM_IDS.has(program.id)) return true;
   const title = program.title.trim().toUpperCase();
   return (
-    title === 'FOUNDATIONS OF IMPLANT DENTISTRY' ||
+    title.includes('FOUNDATIONS OF IMPLANT DENTISTRY') ||
     title === 'HIOSSEN RESIDENCY'
   );
 }

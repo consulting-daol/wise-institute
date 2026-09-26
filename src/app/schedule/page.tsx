@@ -12,7 +12,7 @@ import {
   getResidencyPaymentOptions,
   getStudyClubPaymentOption,
 } from '@/lib/squarePayments'
-import { isSessionCompleted } from '@/lib/sessionDates'
+import { isSessionCompleted, parseSessionEndDate } from '@/lib/sessionDates'
 import { SessionDateText } from '@/components/SessionDateText'
 
 export default function SchedulePage() {
@@ -87,13 +87,22 @@ export default function SchedulePage() {
     }
   }
 
-  const upcomingPrograms = programs
+  const upcomingPrograms = [...programs].sort((a, b) => {
+    const rank = (status: Program['status']) => (status === 'Completed' ? 1 : 0)
+    return rank(a.status) - rank(b.status)
+  })
 
   type TimelineItem = {
     title: string
     dates: string
     status: Program['status']
     tag: 'Residency' | 'Study Club' | 'Event'
+  }
+
+  const residencyTimelineTitle = (program: Program) => {
+    if (!isHiossenRepProgram(program)) return program.title
+    const year = program.startDate.match(/\d{4}/)?.[0]
+    return year ? `${program.title} – SPRING ${year}` : program.title
   }
 
   const timelineItems: TimelineItem[] = upcomingPrograms
@@ -106,10 +115,12 @@ export default function SchedulePage() {
             ? program.startDate
             : `${program.startDate} – ${program.endDate}`)
         const completed =
-          isSessionCompleted(dates) || isSessionCompleted(program.endDate ?? '')
+          program.status === 'Completed' ||
+          isSessionCompleted(dates) ||
+          isSessionCompleted(program.endDate ?? '')
         return [
           {
-            title: program.title,
+            title: residencyTimelineTitle(program),
             dates,
             status: completed ? 'Completed' : program.status,
             tag: 'Residency',
@@ -120,8 +131,8 @@ export default function SchedulePage() {
       if (program.type === "Study Club") {
         const moduleDates = program.moduleDates ?? []
         if (moduleDates.length === 0) {
-          // If the admin didn't provide per-session dates, at least show the main startDate.
-          const completed = isSessionCompleted(program.startDate)
+          const completed =
+            program.status === 'Completed' || isSessionCompleted(program.startDate)
           return [
             {
               title: program.title,
@@ -150,7 +161,9 @@ export default function SchedulePage() {
           ? program.startDate
           : `${program.startDate} – ${program.endDate}`
       const completed =
-        isSessionCompleted(dates) || isSessionCompleted(program.endDate ?? '')
+        program.status === 'Completed' ||
+        isSessionCompleted(dates) ||
+        isSessionCompleted(program.endDate ?? '')
 
       return [
         {
@@ -161,6 +174,26 @@ export default function SchedulePage() {
         },
       ]
     })
+    .sort((a, b) => {
+      const aDone = a.status === 'Completed' ? 1 : 0
+      const bDone = b.status === 'Completed' ? 1 : 0
+      if (aDone !== bDone) return aDone - bDone
+      const aTime = parseSessionEndDate(a.dates)?.getTime() ?? Number.MAX_SAFE_INTEGER
+      const bTime = parseSessionEndDate(b.dates)?.getTime() ?? Number.MAX_SAFE_INTEGER
+      return aTime - bTime
+    })
+
+  const timelineYears = timelineItems
+    .map((item) => parseSessionEndDate(item.dates)?.getFullYear())
+    .filter((year): year is number => typeof year === 'number')
+  const timelineYearMin = timelineYears.length ? Math.min(...timelineYears) : null
+  const timelineYearMax = timelineYears.length ? Math.max(...timelineYears) : null
+  const timelineCalendarTitle =
+    timelineYearMin && timelineYearMax
+      ? timelineYearMin === timelineYearMax
+        ? `${timelineYearMin} Program Calendar`
+        : `${timelineYearMin}–${timelineYearMax} Program Calendar`
+      : 'Program Calendar'
 
   const snapshotHighlights = [
     {
@@ -219,7 +252,7 @@ export default function SchedulePage() {
         data-aos-delay={index * 100}
         className={`group relative rounded-3xl border border-white/70 bg-white/90 backdrop-blur-sm p-5 sm:p-10 shadow-lg overflow-hidden flex flex-col ${
           isMobile ? 'min-w-[85%] snap-start' : ''
-        }`}
+        } ${program.status === 'Completed' ? 'opacity-60 grayscale-[0.2]' : ''}`}
       >
         <div
           className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${accentGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
@@ -235,6 +268,8 @@ export default function SchedulePage() {
                   ? 'bg-emerald-100 text-emerald-700'
                   : program.status === 'Waitlist'
                   ? 'bg-amber-100 text-amber-700'
+                  : program.status === 'Completed'
+                  ? 'bg-gray-100 text-gray-600'
                   : 'bg-rose-100 text-rose-700'
               }`}
             >
@@ -339,8 +374,16 @@ export default function SchedulePage() {
                     <>
                       <p className="text-[10px] sm:text-xs uppercase tracking-wide text-secondary-600 font-semibold mb-1.5 sm:mb-2">Pricing Options</p>
                       <div className="text-[13px] sm:text-sm text-secondary-700 space-y-0.5 sm:space-y-1">
-                        <p><span className="font-semibold">$9,500 CAD</span> + Tax — Modules 1-4 (Live Surgery)</p>
-                        <p><span className="font-semibold">$7,500 CAD</span> + Tax — Modules 1-3 (No Surgery)</p>
+                        {(
+                          program.pricingOptions ?? [
+                            { amount: '$9,500 CAD', note: '+ Tax — Modules 1-4 (Live Surgery)' },
+                            { amount: '$7,500 CAD', note: '+ Tax — Modules 1-3 (No Surgery)' },
+                          ]
+                        ).map((option) => (
+                          <p key={option.amount}>
+                            <span className="font-semibold">{option.amount}</span> {option.note}
+                          </p>
+                        ))}
                       </div>
                     </>
                   )}
@@ -734,7 +777,7 @@ export default function SchedulePage() {
             <p className="uppercase tracking-wider text-primary-600 font-bold text-sm sm:text-base lg:text-lg mb-3">
               Timeline
             </p>
-            <h2 className="text-2xl sm:text-4xl font-bold text-secondary mt-3 mb-2">2025–2026 Program Calendar</h2>
+            <h2 className="text-2xl sm:text-4xl font-bold text-secondary mt-3 mb-2">{timelineCalendarTitle}</h2>
             <p className="text-secondary-600 text-sm sm:text-lg">
               Residency and study club windows laid out so you can plan clinic coverage early.
             </p>
@@ -750,7 +793,13 @@ export default function SchedulePage() {
                   <div key={`${item.title}-${item.dates}`} className="relative" data-aos="fade-up" data-aos-delay={idx * 80}>
                     {/* Timeline dot */}
                     <div className={`absolute left-1/2 -translate-x-1/2 top-6 w-4 h-4 rounded-full border-2 border-white shadow-lg z-10 ${
-                      item.tag === 'Residency' ? 'bg-primary-500' : item.tag === 'Event' ? 'bg-accent-500' : 'bg-secondary-500'
+                      item.status === 'Completed'
+                        ? 'bg-gray-300'
+                        : item.tag === 'Residency'
+                          ? 'bg-primary-500'
+                          : item.tag === 'Event'
+                            ? 'bg-accent-500'
+                            : 'bg-secondary-500'
                     }`} />
                     
                     {/* Card - Alternating left/right */}
@@ -758,7 +807,12 @@ export default function SchedulePage() {
                       {isLeft ? (
                         <>
                           <div className="pr-8">
-                            <div className="bg-white rounded-2xl border border-secondary-100 shadow-md p-5 sm:p-6 mx-auto" style={{ maxWidth: '500px' }}>
+                            <div
+                              className={`bg-white rounded-2xl border border-secondary-100 shadow-md p-5 sm:p-6 mx-auto ${
+                                item.status === 'Completed' ? 'opacity-60 grayscale-[0.25]' : ''
+                              }`}
+                              style={{ maxWidth: '500px' }}
+                            >
                               <div className="flex flex-col items-center gap-2 text-center">
                                 <div className="flex items-center gap-2 justify-center mb-1">
                                   <span
@@ -805,7 +859,12 @@ export default function SchedulePage() {
                         <>
                           <div></div>
                           <div className="pl-8">
-                            <div className="bg-white rounded-2xl border border-secondary-100 shadow-md p-5 sm:p-6 mx-auto" style={{ maxWidth: '500px' }}>
+                            <div
+                              className={`bg-white rounded-2xl border border-secondary-100 shadow-md p-5 sm:p-6 mx-auto ${
+                                item.status === 'Completed' ? 'opacity-60 grayscale-[0.25]' : ''
+                              }`}
+                              style={{ maxWidth: '500px' }}
+                            >
                               <div className="flex flex-col items-center gap-2 text-center">
                                 <div className="flex items-center gap-2 justify-center mb-1">
                                   <span
@@ -865,7 +924,13 @@ export default function SchedulePage() {
                   <div key={`${item.title}-${item.dates}`} className="relative">
                     {/* Timeline dot */}
                     <div className={`absolute left-1/2 -translate-x-1/2 top-6 w-3 h-3 rounded-full border-2 border-white shadow-lg z-10 ${
-                      item.tag === 'Residency' ? 'bg-primary-500' : item.tag === 'Event' ? 'bg-accent-500' : 'bg-secondary-500'
+                      item.status === 'Completed'
+                        ? 'bg-gray-300'
+                        : item.tag === 'Residency'
+                          ? 'bg-primary-500'
+                          : item.tag === 'Event'
+                            ? 'bg-accent-500'
+                            : 'bg-secondary-500'
                     }`} />
                     
                     {/* Card - Alternating left/right */}
@@ -873,7 +938,12 @@ export default function SchedulePage() {
                       {isLeft ? (
                         <>
                           <div className="pr-3">
-                            <div className="bg-white rounded-2xl border border-secondary-100 shadow-md p-4 mx-auto" style={{ maxWidth: '100%' }}>
+                            <div
+                              className={`bg-white rounded-2xl border border-secondary-100 shadow-md p-4 mx-auto ${
+                                item.status === 'Completed' ? 'opacity-60 grayscale-[0.25]' : ''
+                              }`}
+                              style={{ maxWidth: '100%' }}
+                            >
                               <div className="flex flex-col items-center gap-1.5 text-center">
                                 <div className="flex items-center gap-1.5 justify-center flex-wrap mb-0.5">
                                   <span
@@ -916,7 +986,12 @@ export default function SchedulePage() {
                         <>
                           <div></div>
                           <div className="pl-3">
-                            <div className="bg-white rounded-2xl border border-secondary-100 shadow-md p-4 mx-auto" style={{ maxWidth: '100%' }}>
+                            <div
+                              className={`bg-white rounded-2xl border border-secondary-100 shadow-md p-4 mx-auto ${
+                                item.status === 'Completed' ? 'opacity-60 grayscale-[0.25]' : ''
+                              }`}
+                              style={{ maxWidth: '100%' }}
+                            >
                               <div className="flex flex-col items-center gap-1.5 text-center">
                                 <div className="flex items-center gap-1.5 justify-center flex-wrap mb-0.5">
                                   <span
